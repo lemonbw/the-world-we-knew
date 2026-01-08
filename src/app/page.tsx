@@ -1,7 +1,10 @@
 import Main from "./components/Main";
+import BookCard from "./components/BookCard";
 
 export default function Home() {
   return (
-    <Main>Home</Main>
+    <Main>
+      <BookCard></BookCard>
+    </Main>
   );
 }
