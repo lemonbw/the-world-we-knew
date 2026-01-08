@@ -9,7 +9,7 @@ export default function Rating() {
 
   const getStarType = (i: number) => {
     if (hoveredIndex !== null) {
-      return i < hoveredIndex ? "★" : "☆";
+      return i <= hoveredIndex ? "★" : "☆";
     } else if (i < rating) {
       return "★";
     } else {
