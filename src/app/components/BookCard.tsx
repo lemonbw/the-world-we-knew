@@ -25,6 +25,7 @@ export default function BookCard() {
   const stars =
     Array.from({ length: 5 }, (_, i) => (
       <span
+        className="text-5xl select-none cursor-pointer"
         key={i}
         onMouseEnter={() => setHoveredIndex(i)}
         onMouseLeave={() => setHoveredIndex(null)}
