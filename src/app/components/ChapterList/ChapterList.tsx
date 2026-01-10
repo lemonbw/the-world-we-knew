@@ -36,7 +36,7 @@ export default function ChapterList() {
           {chapters.map((c) => (
             <tr
               key={c.href}
-              className="border-b bg-black hover:bg-gray-950 cursor-pointer"
+              className="border-b bg-black hover:bg-white/80 hover:text-black transmition-colors duration-100 cursor-pointer"
             >
               <td className="px-4 py-2">
                 <Link href={c.href} className="block w-full h-full">{c.volume}</Link>
