@@ -3,16 +3,16 @@ import Link from "next/link";
 export default function ChapterList() {
   const chapters = [
     {
-      tom: "1",
-      glava: "1",
+      volume: "1",
+      chapter: "1",
       title: "Начало конца",
       symbols: "5К",
       date: "2026.01.09",
       href: "/chapter/1",
     },
     {
-      tom: "1",
-      glava: "2",
+      volume: "1",
+      chapter: "2",
       title: "Обыкновенные деньки",
       symbols: "5К",
       date: "2026.01.09",
@@ -39,10 +39,10 @@ export default function ChapterList() {
               className="border-b bg-black hover:bg-gray-950 cursor-pointer"
             >
               <td className="px-4 py-2">
-                <Link href={c.href} className="block w-full h-full">{c.tom}</Link>
+                <Link href={c.href} className="block w-full h-full">{c.volume}</Link>
               </td>
               <td className="px-4 py-2">
-                <Link href={c.href} className="block w-full h-full">{c.glava}</Link>
+                <Link href={c.href} className="block w-full h-full">{c.chapter}</Link>
               </td>
               <td className="px-4 py-2">
                 <Link href={c.href} className="block w-full h-full">{c.title}</Link>
