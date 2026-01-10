@@ -1,11 +1,17 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 import ChapterSort from "./ChapterSort"
 
 export default function ChapterList() {
+
+  const [hoveredIndex, setHovered] = useState(-1);
+
   const chapters = [
     {
       volume: "1",
       chapter: "1",
+      index: 0,
       title: "Начало конца",
       symbols: "5К",
       date: "2026.01.09",
@@ -14,6 +20,7 @@ export default function ChapterList() {
     {
       volume: "1",
       chapter: "2",
+      index: 1,
       title: "Обыкновенные деньки",
       symbols: "5К",
       date: "2026.01.09",
@@ -22,7 +29,7 @@ export default function ChapterList() {
   ];
 
   return (
-    <section className="w-[90%] mx-auto mt-4">
+    <section className="w-[80vw] mx-auto mt-4">
       <ChapterSort></ChapterSort>
       <table className="w-full border-collapse">
         <thead>
@@ -38,10 +45,14 @@ export default function ChapterList() {
           {chapters.map((c) => (
             <tr
               key={c.href}
-              className="border-b bg-black hover:bg-white/90 hover:text-black transmition-colors duration-100 cursor-pointer"
-            >
-              <td className="px-4 py-2">
+              className="bg-black border-b transmition-colors duration-100 cursor-pointer hover:text-black"
+              onMouseEnter={() => setHovered(c.index)}
+              onMouseLeave={() => setHovered(-1)}>
+              <td className="px-4 py-2 relative">
                 <Link href={c.href} className="block w-full h-full">{c.volume}</Link>
+                <span
+                  className="absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-300"
+                  style={{ width: hoveredIndex === c.index ? "80vw" : "0%" }}></span>
               </td>
               <td className="px-4 py-2">
                 <Link href={c.href} className="block w-full h-full">{c.chapter}</Link>
