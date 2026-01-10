@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ChapterSort from "./ChapterSort"
 
 export default function ChapterList() {
   const chapters = [
@@ -22,6 +23,7 @@ export default function ChapterList() {
 
   return (
     <section className="w-[90%] mx-auto mt-4">
+      <ChapterSort></ChapterSort>
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-200 dark:bg-black text-gray-800 dark:text-gray-200">
@@ -36,7 +38,7 @@ export default function ChapterList() {
           {chapters.map((c) => (
             <tr
               key={c.href}
-              className="border-b bg-black hover:bg-white/80 hover:text-black transmition-colors duration-100 cursor-pointer"
+              className="border-b bg-black hover:bg-white/90 hover:text-black transmition-colors duration-100 cursor-pointer"
             >
               <td className="px-4 py-2">
                 <Link href={c.href} className="block w-full h-full">{c.volume}</Link>
