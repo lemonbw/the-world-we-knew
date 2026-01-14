@@ -18,11 +18,13 @@ export default function ChapterList() {
 
   const sortedChapters = useMemo(() => ChapterSort(isAsc), [isAsc]);
 
+  const arrows = isAsc === "asc" ? "▼" : "▲"
+
   return (
     <section className="w-[80vw] mx-auto mt-4">
       <button className="relative block mx-auto font-bold cursor-pointer" onMouseEnter={() => setHovered(BUTTON_HOVER)
       } onMouseLeave={() => setHovered(NO_HOVER)} onClick={toggleOrder} >
-        <span className="">Сортировка ⇧⇩</span>
+        <span>Сортировка {arrows}</span>
         <span className={`absolute inline-block left-0 bottom-0 h-[2px] bg-white origin-left transition-all duration-300`} style={{ width: hoveredIndex === -1 ? "100%" : "0%" }}></span>
       </button >
       <table className="w-full border-collapse">
