@@ -66,8 +66,8 @@ export default function ChapterList() {
               <td className="relative px-4 pb-0 z-10 ">
                 <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.volume}</Link>
                 <span
-                  className="absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10"
-                  style={{ width: hoveredIndex === c.index ? "80vw" : "0%" }}></span>
+                  className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10
+                  ${hoveredIndex === c.index ? "w-[80vw]" : "w-0"}`}></span>
               </td>
               <td className="px-4 py-2 relative z-10">
                 <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.chapter}</Link>
