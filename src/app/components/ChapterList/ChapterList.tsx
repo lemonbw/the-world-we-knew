@@ -8,6 +8,8 @@ export default function ChapterList() {
 
   const [hoveredIndex, setHovered] = useState(-2);
 
+  const [pressedIndex, setPressed] = useState(-2);
+
   const [isAsc, setIsAsc] = useState<"asc" | "desc">("asc");
 
   const [isPressed, setIsPressed] = useState(false);
@@ -17,19 +19,23 @@ export default function ChapterList() {
 
   const toggleOrder = () => setIsAsc(prev => (prev === "asc" ? "desc" : "asc"));
 
+  const [timerIds, setTimerIds] = useState<NodeJS.Timeout[]>([]);
+
   const activateSortButton = () => {
+    timerIds.forEach(clearTimeout);
+
+    const newTimers: NodeJS.Timeout[] = [];
+
+    setPressed(-1);
+    newTimers.push(setTimeout(() => setPressed(-2), 150));
     setIsPressed(true);
-    setTimeout(() => {
-      toggleOrder();
-    }, 800)
-    setTimeout(() => {
-      setIsPressed(false);
-    }, 1000)
+    newTimers.push(setTimeout(() => toggleOrder(), 800));
+    newTimers.push(setTimeout(() => setIsPressed(false), 1000));
+
+    setTimerIds(newTimers);
   }
 
   const sortedChapters = useMemo(() => ChapterSort(isAsc), [isAsc]);
-
-  //  const arrows = isAsc === "asc" ? "▼" : "▲"
 
   return (
     <section className="w-[80vw] mx-auto mt-4">
@@ -38,7 +44,7 @@ export default function ChapterList() {
         <span className="text-[1.5rem] -ml-2">Сортировка
           <span className={`absolute inline-block transition-transform duration-800 ml-0.5 bottom-[-0.5rem] text-[2rem] ${isAsc === "asc" ? "rotate-0" : "-rotate-180"}`}>▼</span>
         </span>
-        <span className={`absolute inline-block -left-1.5 bottom-0 h-[2px] bg-white origin-left transition-all duration-300`} style={{ width: hoveredIndex === -1 ? "120%" : "0%" }}></span>
+        <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-300 ${hoveredIndex === -1 ? "w-[125%]" : "w-0"} ${pressedIndex === -1 ? "bg-black" : "bg-white"}`}></span>
       </button >
       <table className="w-full border-collapse text-[1.1rem]">
         <thead>
@@ -58,27 +64,22 @@ export default function ChapterList() {
               onMouseEnter={() => setHovered(c.index)}
               onMouseLeave={() => setHovered(NO_HOVER)}>
               <td className="relative px-4 pb-0 z-10 ">
-                <Link href={c.href} className="block w-full h-full z-10 transition-colors duration-1000"
-                  style={{ color: isPressed || hoveredIndex === c.index ? "black" : "white", }}>{c.volume}</Link>
+                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.volume}</Link>
                 <span
                   className="absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10"
                   style={{ width: hoveredIndex === c.index ? "80vw" : "0%" }}></span>
               </td>
               <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className="block w-full h-full transition-colors duration-1000"
-                  style={{ color: isPressed || hoveredIndex === c.index ? "black" : "white" }}>{c.chapter}</Link>
+                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.chapter}</Link>
               </td>
               <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className="block w-full h-full transition-colors duration-1000"
-                  style={{ color: isPressed || hoveredIndex === c.index ? "black" : "white" }}>{c.title}</Link>
+                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.title}</Link>
               </td>
               <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className="block w-full h-full transition-colors duration-1000"
-                  style={{ color: isPressed || hoveredIndex === c.index ? "black" : "white" }}>{c.symbols}</Link>
+                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.symbols}</Link>
               </td>
               <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className="block w-full h-full transition-colors duration-1000"
-                  style={{ color: isPressed || hoveredIndex === c.index ? "black" : "white" }}>{c.date}</Link>
+                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.date}</Link>
               </td>
             </tr>
           ))}
