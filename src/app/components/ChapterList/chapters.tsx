@@ -17,14 +17,5 @@ export const chapters = [
     date: "2026.01.09",
     href: "/chapter/2",
   },
-  {
-    volume: "1",
-    chapter: "3",
-    index: 2,
-    title: "Проверка",
-    symbols: "5КцПроверка",
-    date: "2026.01.11",
-    href: "/chapter/3",
-  },
 ];
 
