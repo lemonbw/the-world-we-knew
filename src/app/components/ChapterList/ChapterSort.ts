@@ -1,4 +1,3 @@
-"use client";
 import { chapters } from "./chapters";
 import { Chapter } from "./chapterTypes";
 

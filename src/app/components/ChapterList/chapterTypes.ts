@@ -1,10 +1,9 @@
 export interface Chapter {
-  volume: string;
-  chapter: string;
+  volume: number;
+  chapter: number;
   index: number;
   title: string;
   symbols: string;
-  date: string;
+  date: Date;
   href: string;
 }
-

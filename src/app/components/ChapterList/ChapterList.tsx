@@ -79,7 +79,7 @@ export default function ChapterList() {
                 <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.symbols}</Link>
               </td>
               <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.date}</Link>
+                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.date.toLocaleDateString("ru-RU")}</Link>
               </td>
             </tr>
           ))}
