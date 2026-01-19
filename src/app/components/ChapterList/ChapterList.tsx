@@ -35,7 +35,13 @@ export default function ChapterList() {
     setTimerIds(newTimers);
   }
 
-  const sortedChapters = useMemo(() => ChapterSort(isAsc), [isAsc]);
+  const FIRST_DISPLAYED_CHAPTER: number = 0;
+
+  const LAST_DISPLAYED_CHAPTER: number = 20;
+
+  const sortedChapters = useMemo(() => {
+    return ChapterSort(isAsc).slice(FIRST_DISPLAYED_CHAPTER, LAST_DISPLAYED_CHAPTER);
+  }, [isAsc]);
 
   return (
     <section className="w-[80vw] mx-auto mt-4">
@@ -46,45 +52,47 @@ export default function ChapterList() {
         </span>
         <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-300 ${hoveredIndex === -1 ? "w-[125%]" : "w-0"} ${pressedIndex === -1 ? "bg-black" : "bg-white"}`}></span>
       </button >
-      <table className="w-full border-collapse text-[1.1rem]">
-        <thead>
-          <tr className="bg-gray-200 dark:bg-black text-gray-800 dark:text-gray-200 text-[1.2rem]">
-            <th className="px-4 py-2 text-left">Том</th>
-            <th className="px-4 py-2 text-left">Глава</th>
-            <th className="px-4 py-2 text-left">Название</th>
-            <th className="px-4 py-2 text-left">Символы</th>
-            <th className="px-4 py-2 text-left">Дата</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedChapters.map((c) => (
-            <tr
-              key={c.href}
-              className="bg-black border-b transition-colors duration-1000 cursor-pointer"
-              onMouseEnter={() => setHovered(c.index)}
-              onMouseLeave={() => setHovered(NO_HOVER)}>
-              <td className="relative px-4 pb-0 z-10 ">
-                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.volume}</Link>
-                <span
-                  className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10
-                  ${hoveredIndex === c.index ? "w-[80vw]" : "w-0"}`}></span>
-              </td>
-              <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.chapter}</Link>
-              </td>
-              <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.title}</Link>
-              </td>
-              <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.symbols}</Link>
-              </td>
-              <td className="px-4 py-2 relative z-10">
-                <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.date.toLocaleDateString("ru-RU")}</Link>
-              </td>
+      <div className="border-1 rounded-xl overflow-hidden mt-10 mb-40">
+        <table className="w-full border-collapse text-[1.1rem]">
+          <thead>
+            <tr className="bg-gray-200 dark:bg-black text-gray-800 dark:text-gray-200 text-[1.2rem] border-b">
+              <th className="px-4 py-2 text-left">Том</th>
+              <th className="px-4 py-2 text-left">Глава</th>
+              <th className="px-4 py-2 text-left">Название</th>
+              <th className="px-4 py-2 text-left">Символы</th>
+              <th className="px-4 py-2 text-left">Дата</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedChapters.map((c) => (
+              <tr
+                key={c.href}
+                className="bg-black border-b transition-colors duration-1000 cursor-pointer"
+                onMouseEnter={() => setHovered(c.index)}
+                onMouseLeave={() => setHovered(NO_HOVER)}>
+                <td className="relative px-4 pb-0 z-10">
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.volume}</Link>
+                  <span
+                    className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10
+                  ${hoveredIndex === c.index ? "w-[80vw]" : "w-0"}`}></span>
+                </td>
+                <td className="px-4 py-2 relative z-10">
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.chapter}</Link>
+                </td>
+                <td className="px-4 py-2 relative z-10">
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.title}</Link>
+                </td>
+                <td className="px-4 py-2 relative z-10">
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.symbols}</Link>
+                </td>
+                <td className="px-4 py-2 relative z-10">
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.date.toLocaleDateString("ru-RU")}</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }
