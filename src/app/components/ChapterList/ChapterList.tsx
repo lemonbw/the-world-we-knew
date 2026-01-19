@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
 import ChapterSort from "./ChapterSort"
+import ChapterListToggle from "./ChapterListToggle";
 
 export default function ChapterList() {
 
@@ -92,7 +93,9 @@ export default function ChapterList() {
             ))}
           </tbody>
         </table>
+        <ChapterListToggle></ChapterListToggle>
       </div>
+
     </section>
   );
 }
