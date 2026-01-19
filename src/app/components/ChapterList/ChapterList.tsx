@@ -11,6 +11,8 @@ export default function ChapterList() {
 
   const [pressedIndex, setPressed] = useState(-2);
 
+  const [page, setPage] = useState(0)
+
   const [isAsc, setIsAsc] = useState<"asc" | "desc">("asc");
 
   const [isPressed, setIsPressed] = useState(false);
@@ -43,6 +45,8 @@ export default function ChapterList() {
   const sortedChapters = useMemo(() => {
     return ChapterSort(isAsc).slice(FIRST_DISPLAYED_CHAPTER, LAST_DISPLAYED_CHAPTER);
   }, [isAsc]);
+
+  console.log(page)
 
   return (
     <section className="w-[80vw] mx-auto mt-4">
@@ -93,7 +97,18 @@ export default function ChapterList() {
             ))}
           </tbody>
         </table>
-        <ChapterListToggle></ChapterListToggle>
+        <nav className="flex justify-center gap-4 text-[1.2rem]">
+          <button onClick={() => setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))}>⮜</button>
+          {Array.from({ length: 8 }, (_, i) => (
+            <button
+              key={i}
+              className="border-1 rounded-md my-2 py-0 px-[4px]">
+              {i + 1}
+            </button>
+          ))}
+          <button onClick={() => setPage(prevPage => prevPage + 1)}>⮞</button>
+        </nav>
+
       </div>
 
     </section>
