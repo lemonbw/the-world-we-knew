@@ -1,4 +1,4 @@
-import { chapters } from "./chapters";
+import { chapters } from "../../../content/chapters";
 import { Chapter } from "./chapterTypes";
 
 export default function ChapterSort(order: "asc" | "desc"): Chapter[] {
