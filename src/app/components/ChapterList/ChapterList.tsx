@@ -109,7 +109,7 @@ export default function ChapterList() {
               {i + 1}
             </button>
           ))}
-          <button onClick={() => setPage(prevPage => prevPage + 1)}>⮞</button>
+          <button onClick={() => setPage(prevPage => (prevPage < pages.length - 1 ? prevPage + 1 : prevPage))}>⮞</button>
         </nav>
 
       </div>
