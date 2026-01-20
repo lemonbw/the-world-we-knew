@@ -17,7 +17,7 @@ export const chapters = [
     date: new Date("2026-01-09"),
     href: "/chapter/2",
   },
-  ...Array.from({ length: 35 }, (_, i) => ({
+  ...Array.from({ length: 38 }, (_, i) => ({
     volume: 1,
     chapter: i + 3,
     index: i + 2,

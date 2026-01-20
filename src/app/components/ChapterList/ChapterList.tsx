@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
 import ChapterSort from "./ChapterSort"
-import ChapterListToggle from "./ChapterListToggle";
+import chunkChapters from "./chunkChapters";
 
 export default function ChapterList() {
 
@@ -38,15 +38,18 @@ export default function ChapterList() {
     setTimerIds(newTimers);
   }
 
-  const FIRST_DISPLAYED_CHAPTER: number = 0;
 
-  const LAST_DISPLAYED_CHAPTER: number = 20;
+  const sortedChapters = useMemo(
+    () => ChapterSort(isAsc),
+    [isAsc]
+  );
 
-  const sortedChapters = useMemo(() => {
-    return ChapterSort(isAsc).slice(FIRST_DISPLAYED_CHAPTER, LAST_DISPLAYED_CHAPTER);
-  }, [isAsc]);
+  const pages = useMemo(
+    () => chunkChapters(sortedChapters, 20),
+    [sortedChapters]
+  );
 
-  console.log(page)
+  const currentPage = pages[page] ?? [];
 
   return (
     <section className="w-[80vw] mx-auto mt-4">
@@ -69,7 +72,7 @@ export default function ChapterList() {
             </tr>
           </thead>
           <tbody>
-            {sortedChapters.map((c) => (
+            {currentPage.map((c) => (
               <tr
                 key={c.href}
                 className="bg-black border-b transition-colors duration-1000 cursor-pointer"
