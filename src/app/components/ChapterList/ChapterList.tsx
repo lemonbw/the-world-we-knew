@@ -30,10 +30,6 @@ export default function ChapterList() {
 
     const newTimers: NodeJS.Timeout[] = [];
 
-    setSortButtonPressed(true)
-
-    newTimers.push(setTimeout(() => setSortButtonPressed(false), 150));
-
     setListPhase(1);
 
     newTimers.push(setTimeout(action, 300));
@@ -46,9 +42,10 @@ export default function ChapterList() {
   }
 
   const activateSortButton = () => {
-    activateButton(() => toggleOrder())
+    activateButton(() => toggleOrder());
+    setSortButtonPressed(true)
+    setTimeout(() => setSortButtonPressed(false), 150)
   }
-
 
   const activateNextButton = () => {
     activateButton(() =>
