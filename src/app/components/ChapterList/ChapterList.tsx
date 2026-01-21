@@ -10,13 +10,13 @@ export default function ChapterList() {
 
   const [hoveredIndex, setHovered] = useState(-2);
 
-  const [pressedIndex, setPressed] = useState(-2);
+  const [isSortButtonPressed, setSortButtonPressed] = useState(false);
 
   const [page, setPage] = useState(0)
 
   const [isAsc, setIsAsc] = useState<"asc" | "desc">("asc");
 
-  const [isPressed, setIsPressed] = useState(false);
+  const [listPhase, setListPhase] = useState(0);
 
   const NO_HOVER: number = -2;
   const BUTTON_HOVER: number = -1;
@@ -30,14 +30,17 @@ export default function ChapterList() {
 
     const newTimers: NodeJS.Timeout[] = [];
 
-    setPressed(-1);
-    newTimers.push(setTimeout(() => setPressed(-2), 150));
+    setSortButtonPressed(true)
 
-    setIsPressed(true);
+    newTimers.push(setTimeout(() => setSortButtonPressed(false), 150));
 
-    newTimers.push(setTimeout(action, 800));
+    setListPhase(1);
 
-    newTimers.push(setTimeout(() => setIsPressed(false), 500));
+    newTimers.push(setTimeout(action, 300));
+
+    newTimers.push(setTimeout(() => setListPhase(2), 300));
+
+    newTimers.push(setTimeout(() => setListPhase(0), 500));
 
     setTimerIds(newTimers);
   }
@@ -77,7 +80,7 @@ export default function ChapterList() {
         <span className="text-[1.5rem] -ml-2">Сортировка
           <span className={`absolute inline-block transition-transform duration-800 ml-0.5 bottom-[-0.5rem] text-[2rem] ${isAsc === "asc" ? "rotate-0" : "-rotate-180"}`}>▼</span>
         </span>
-        <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-300 ${hoveredIndex === -1 ? "w-[125%]" : "w-0"} ${pressedIndex === -1 ? "bg-black" : "bg-white"}`}></span>
+        <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-300 ${hoveredIndex === -1 ? "w-[125%]" : "w-0"} ${isSortButtonPressed === true ? "bg-black" : "bg-white"}`}></span>
       </button >
       <div className="border-1 rounded-xl overflow-hidden mt-10 mb-40">
         <table className="w-full border-collapse text-[1.1rem] table-fixed">
@@ -98,22 +101,22 @@ export default function ChapterList() {
                 onMouseEnter={() => setHovered(c.index)}
                 onMouseLeave={() => setHovered(NO_HOVER)}>
                 <td className="relative px-4 pb-0 z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.volume}</Link>
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.volume}</Link>
                   <span
                     className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10
                   ${hoveredIndex === c.index ? "w-[80vw]" : "w-0"}`}></span>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.chapter}</Link>
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.chapter}</Link>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.title}</Link>
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.title}</Link>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.symbols}</Link>
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.symbols}</Link>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-colors duration-1000 ${isPressed || hoveredIndex === c.index ? "text-black" : "text-white"}`}>{c.date.toLocaleDateString("ru-RU")}</Link>
+                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.date.toLocaleDateString("ru-RU")}</Link>
                 </td>
               </tr>
             ))}
