@@ -5,6 +5,7 @@ import Link from "next/link";
 import ChapterSort from "./ChapterSort"
 import chunkChapters from "./chunkChapters";
 
+
 export default function ChapterList() {
 
   const [hoveredIndex, setHovered] = useState(-2);
@@ -24,20 +25,38 @@ export default function ChapterList() {
 
   const [timerIds, setTimerIds] = useState<NodeJS.Timeout[]>([]);
 
-  const activateSortButton = () => {
+  function activateButton(action: () => void) {
     timerIds.forEach(clearTimeout);
 
     const newTimers: NodeJS.Timeout[] = [];
 
     setPressed(-1);
     newTimers.push(setTimeout(() => setPressed(-2), 150));
+
     setIsPressed(true);
-    newTimers.push(setTimeout(() => toggleOrder(), 800));
+
+    newTimers.push(setTimeout(action, 800));
+
     newTimers.push(setTimeout(() => setIsPressed(false), 1000));
 
     setTimerIds(newTimers);
   }
 
+  const activateSortButton = () => {
+    activateButton(() => toggleOrder())
+  }
+
+
+  const activateNextButton = () => {
+    activateButton(() =>
+      setPage(prevPage => (prevPage < pages.length - 1 ? prevPage + 1 : prevPage))
+    );
+  };
+
+  const activatePrevButton = () => {
+    activateButton(() =>
+      (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))))
+  }
 
   const sortedChapters = useMemo(
     () => ChapterSort(isAsc),
@@ -98,10 +117,15 @@ export default function ChapterList() {
                 </td>
               </tr>
             ))}
+            {Array.from({ length: 20 - currentPage.length }, (_, i) => (
+              <tr key={`empty-${i}`} className="bg-black border-b">
+                <td colSpan={5} className="h-[43.4px]" />
+              </tr>
+            ))}
           </tbody>
         </table>
         <nav className="flex justify-center gap-4 text-[1.2rem]">
-          <button onClick={() => setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))}>⮜</button>
+          <button onClick={activatePrevButton}>⮜</button>
           {Array.from({ length: 8 }, (_, i) => (
             <button
               key={i}
@@ -109,11 +133,9 @@ export default function ChapterList() {
               {i + 1}
             </button>
           ))}
-          <button onClick={() => setPage(prevPage => (prevPage < pages.length - 1 ? prevPage + 1 : prevPage))}>⮞</button>
+          <button onClick={activateNextButton}>⮞</button>
         </nav>
-
       </div>
-
     </section>
   );
 }
