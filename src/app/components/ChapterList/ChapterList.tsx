@@ -37,7 +37,7 @@ export default function ChapterList() {
 
     newTimers.push(setTimeout(action, 800));
 
-    newTimers.push(setTimeout(() => setIsPressed(false), 1000));
+    newTimers.push(setTimeout(() => setIsPressed(false), 500));
 
     setTimerIds(newTimers);
   }
@@ -80,14 +80,14 @@ export default function ChapterList() {
         <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-300 ${hoveredIndex === -1 ? "w-[125%]" : "w-0"} ${pressedIndex === -1 ? "bg-black" : "bg-white"}`}></span>
       </button >
       <div className="border-1 rounded-xl overflow-hidden mt-10 mb-40">
-        <table className="w-full border-collapse text-[1.1rem]">
+        <table className="w-full border-collapse text-[1.1rem] table-fixed">
           <thead>
             <tr className="bg-gray-200 dark:bg-black text-gray-800 dark:text-gray-200 text-[1.2rem] border-b">
-              <th className="px-4 py-2 text-left">Том</th>
-              <th className="px-4 py-2 text-left">Глава</th>
-              <th className="px-4 py-2 text-left">Название</th>
-              <th className="px-4 py-2 text-left">Символы</th>
-              <th className="px-4 py-2 text-left">Дата</th>
+              <th className="px-4 py-2 text-left w-[6rem]">Том</th>
+              <th className="px-4 py-2 text-left w-[7rem]">Глава</th>
+              <th className="px-4 py-2 text-left w-[16rem]">Название</th>
+              <th className="px-4 py-2 text-left w-[8rem]">Символы</th>
+              <th className="px-4 py-2 text-left w-[8rem]">Дата</th>
             </tr>
           </thead>
           <tbody>
