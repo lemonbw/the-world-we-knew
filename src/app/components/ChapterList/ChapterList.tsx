@@ -58,8 +58,8 @@ export default function ChapterList() {
       (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))))
   }
 
-  const goToPage = (pageNumber: number) => {
-    activateButton(() => setPage(pageNumber))
+  const goToPage = (pageIndex: number) => {
+    activateButton(() => setPage(pageIndex))
   }
 
   const sortedChapters = useMemo(
@@ -73,6 +73,8 @@ export default function ChapterList() {
   );
 
   const currentPage = pages[page] ?? [];
+
+  console.log(page)
 
   return (
     <section className="w-[80vw] mx-auto mt-4">
@@ -128,17 +130,21 @@ export default function ChapterList() {
             ))}
           </tbody>
         </table>
-        <nav className="flex justify-center gap-4 text-[1.2rem]">
-          <button onClick={activatePrevButton}>⮜</button>
-          {Array.from({ length: pages.length }, (_, pageNumber) => (
+        <nav className="flex justify-center gap-4 text-[1.3rem] max-w-6xl">
+          <button onClick={activatePrevButton} className="text-[1.4rem]">⮜</button>
+          <span className={`translate-y-[0.3rem] text-[1.8rem] mx-[-0.5rem] w-4 ${page !== 0 && pages.length > 8 ? "" : "invisible"}`}>...</span>
+
+          {Array.from({ length: pages.length < 9 ? pages.length : 9 }, (_, i) => page < 5 ? i : i + page - 4).map((pageIndex) => (
             <button
-              key={pageNumber}
-              className="border-1 rounded-md my-2 py-0 px-[4px]"
-              onClick={() => goToPage(pageNumber)}>
-              {pageNumber + 1}
+              key={pageIndex}
+              onClick={() => goToPage(pageIndex)}
+              className={`border-1 rounded-md my-2 py-0 px-[4px] w-9 text-center ${pageIndex === page ? "bg-gray-900" : "bg-black"}`}
+            >
+              {pageIndex + 1}
             </button>
           ))}
-          <button onClick={activateNextButton}>⮞</button>
+          <span className={`translate-y-[0.3rem] text-[1.8rem] mx-[-0.5rem] w-4 ${page + 1 < pages.length && pages.length > 8 ? "" : "invisible"}`}>...</span>
+          <button onClick={activateNextButton} className="text-[1.4rem]">⮞</button>
         </nav>
       </div>
     </section>
