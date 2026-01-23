@@ -53,10 +53,24 @@ export default function ChapterList() {
     );
   };
 
+  const activateStartButton = () => {
+    activateButton(() =>
+      setPage(0)
+    );
+  };
+
+
   const activatePrevButton = () => {
     activateButton(() =>
       (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))))
   }
+
+  const activateEndButton = () => {
+    activateButton(() =>
+      setPage(pages.length - 1)
+    );
+  };
+
 
   const goToPage = (pageIndex: number) => {
     activateButton(() => setPage(pageIndex))
@@ -138,9 +152,8 @@ export default function ChapterList() {
           </tbody>
         </table>
         <nav className="flex justify-center gap-4 text-[1.3rem] max-w-6xl">
-          <button onClick={activatePrevButton} className="text-[1.4rem]">⮜</button>
-          <span className={`translate-y-[0.3rem] text-[1.8rem] mx-[-0.5rem] w-4 ${page > 6 && pages.length > 8 ? "" : "invisible"}`}>...</span>
-
+          <button onClick={activateStartButton} className={`text-[1.42rem] tracking-[-8px] transition-opacity ease-in-out duration-300 ${page - 5 < 0 ? "opacity-0 pointer-events-none" : ""}`}>⮜⮜</button>
+          <button onClick={activatePrevButton} className={`text-[1.42rem] transition-opacity ease-in-out duration-300  ${page - 1 < 0 ? "opacity-0 pointer-events-none" : ""}`}>⮜</button>
           {Array.from({ length: Math.min(panelSize, pages.length) }, (_, i) => startPage + i).map(
             (pageIndex) => (
               <button
@@ -153,9 +166,8 @@ export default function ChapterList() {
               </button>
             )
           )}
-
-          <span className={`translate-y-[0.3rem] text-[1.8rem] mx-[-0.5rem] w-4 ${page + 1 < pages.length && pages.length > 8 ? "" : "invisible"}`}>...</span>
-          <button onClick={activateNextButton} className="text-[1.4rem]">⮞</button>
+          <button onClick={activateNextButton} className={`text-[1.42rem] transition-opacity ease-in-out duration-300 ${page + 2 > pages.length ? "opacity-0 pointer-events-none" : ""}`}>⮞</button>
+          <button onClick={activateEndButton} className={`text-[1.42rem] tracking-[-8px] transition-opacity ease-in-out duration-300  ${page + 6 > pages.length ? "opacity-0 pointer-events-none" : ""}`}>⮞⮞</button>
         </nav>
       </div>
     </section>
