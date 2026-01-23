@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useMemo } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import ChapterSort from "./ChapterSort"
 import chunkChapters from "./chunkChapters";
@@ -10,7 +11,15 @@ export default function ChapterList() {
 
   const [hoveredIndex, setHovered] = useState(-2);
 
+  const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
+
+  const buttonHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [hoveredButton, setHoveredButton] = useState(-1);
+
   const [isSortButtonPressed, setSortButtonPressed] = useState(false);
+
+  const [triggerAnimationIndex, setTriggerAnimationIndex] = useState(0);
 
   const [page, setPage] = useState(0)
 
@@ -32,13 +41,18 @@ export default function ChapterList() {
 
     setListPhase(1);
 
-    newTimers.push(setTimeout(action, 300));
+    setTimeout(action, 300);
 
     newTimers.push(setTimeout(() => setListPhase(2), 300));
 
     newTimers.push(setTimeout(() => setListPhase(0), 500));
 
     setTimerIds(newTimers);
+  }
+
+  function trigger(index: number) {
+    setTriggerAnimationIndex(index)
+    setTimeout(() => setTriggerAnimationIndex(0), 200)
   }
 
   const activateSortButton = () => {
@@ -51,24 +65,28 @@ export default function ChapterList() {
     activateButton(() =>
       setPage(prevPage => (prevPage < pages.length - 1 ? prevPage + 1 : prevPage))
     );
+    trigger(3);
   };
 
   const activateStartButton = () => {
     activateButton(() =>
       setPage(0)
     );
+    trigger(1);
   };
 
 
   const activatePrevButton = () => {
     activateButton(() =>
-      (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))))
+      (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))));
+    trigger(2);
   }
 
   const activateEndButton = () => {
     activateButton(() =>
       setPage(pages.length - 1)
     );
+    trigger(4);
   };
 
 
@@ -98,13 +116,25 @@ export default function ChapterList() {
         : page - Math.floor(panelSize / 2);
 
   return (
-    <section className="w-[80vw] mx-auto mt-4">
-      <button className="relative block mx-auto font-bold cursor-pointer" onMouseEnter={() => setHovered(BUTTON_HOVER)
-      } onMouseLeave={() => setHovered(NO_HOVER)} onClick={activateSortButton} >
+    <section className="w-[80vw] mx-auto mt-4 bg-black">
+      <button className="relative block mx-auto font-bold cursor-pointer" onMouseEnter={() => {
+        buttonHoverDelayRef.current = setTimeout(() => {
+          setHoveredButton(5)
+        }, 100);
+      }}
+
+        onMouseLeave={() => {
+          if (buttonHoverDelayRef.current) {
+            clearTimeout(buttonHoverDelayRef.current);
+            buttonHoverDelayRef.current = null;
+          }
+          setHoveredButton(-1);
+        }}
+        onClick={activateSortButton} >
         <span className="text-[1.5rem] -ml-2">Сортировка
           <span className={`absolute inline-block transition-transform duration-800 ml-0.5 bottom-[-0.5rem] text-[2rem] ${isAsc === "asc" ? "rotate-0" : "-rotate-180"}`}>▼</span>
         </span>
-        <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-300 ${hoveredIndex === -1 ? "w-[125%]" : "w-0"} ${isSortButtonPressed === true ? "bg-black" : "bg-white"}`}></span>
+        <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-500 ${hoveredButton === 5 ? "w-[125%]" : "w-0"} ${isSortButtonPressed === true ? "bg-black" : "bg-white"}`}></span>
       </button >
       <div className="border-1 rounded-xl overflow-hidden mt-6 mb-40">
         <table className="w-full border-collapse text-[1.1rem] table-fixed">
@@ -122,8 +152,20 @@ export default function ChapterList() {
               <tr
                 key={c.href}
                 className="bg-black border-b transition-colors duration-1000 cursor-pointer"
-                onMouseEnter={() => setHovered(c.index)}
-                onMouseLeave={() => setHovered(NO_HOVER)}>
+                onMouseEnter={() => {
+                  rowHoverDelayRef.current = setTimeout(() => {
+                    setHovered(c.index);
+                  }, 150);
+                }}
+
+                onMouseLeave={() => {
+                  if (rowHoverDelayRef.current) {
+                    clearTimeout(rowHoverDelayRef.current);
+                    rowHoverDelayRef.current = null;
+                  }
+                  setHovered(NO_HOVER);
+                }}
+              >
                 <td className="relative px-4 pb-0 z-10">
                   <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.volume}</Link>
                   <span
@@ -152,22 +194,36 @@ export default function ChapterList() {
           </tbody>
         </table>
         <nav className="flex justify-center gap-4 text-[1.3rem] max-w-6xl">
-          <button onClick={activateStartButton} className={`text-[1.42rem] tracking-[-8px] transition-opacity ease-in-out duration-300 ${page - 5 < 0 ? "opacity-0 pointer-events-none" : ""}`}>⮜⮜</button>
-          <button onClick={activatePrevButton} className={`text-[1.42rem] transition-opacity ease-in-out duration-300  ${page - 1 < 0 ? "opacity-0 pointer-events-none" : ""}`}>⮜</button>
+          <button onClick={activateStartButton} className={`text-[1.42rem] tracking-[-8px] transition-all w-3 hover:text-[1.6rem] ease-in-out duration-300 ${page - 5 < 0 ? "opacity-0 pointer-events-none" : ""} ${triggerAnimationIndex === 1 ? "text-white/80" : "text-white"}`}>⮜⮜</button>
+          <button onClick={activatePrevButton} className={`text-[1.42rem] transition-all w-3 hover:text-[1.6rem] ml-2 ease-in-out duration-300  ${page - 1 < 0 ? "opacity-0 pointer-events-none" : ""} ${triggerAnimationIndex === 2 ? "text-white/80" : "text-white"}`}>⮜</button>
           {Array.from({ length: Math.min(panelSize, pages.length) }, (_, i) => startPage + i).map(
             (pageIndex) => (
               <button
                 key={pageIndex}
                 onClick={() => goToPage(pageIndex)}
-                className={`border-1 rounded-md my-2 py-0 px-[4px] w-9 text-center ${pageIndex === page ? "bg-gray-900" : "bg-black"
+                onMouseEnter={() => {
+                  buttonHoverDelayRef.current = setTimeout(() => {
+                    setHoveredButton(pageIndex)
+                  }, 200);
+                }}
+
+                onMouseLeave={() => {
+                  if (buttonHoverDelayRef.current) {
+                    clearTimeout(buttonHoverDelayRef.current);
+                    buttonHoverDelayRef.current = null;
+                  }
+                  setHoveredButton(-1);
+                }}
+
+                className={`border-1 rounded-md my-2 py-0 px-[4px] w-9 text-center hover:transition-colors hover:duration-500 ${hoveredButton === pageIndex ? "bg-white/80 text-black" : "bg-black"} ${pageIndex === page ? "bg-white/90 text-black" : "bg-black"
                   }`}
               >
                 {pageIndex + 1}
               </button>
             )
           )}
-          <button onClick={activateNextButton} className={`text-[1.42rem] transition-opacity ease-in-out duration-300 ${page + 2 > pages.length ? "opacity-0 pointer-events-none" : ""}`}>⮞</button>
-          <button onClick={activateEndButton} className={`text-[1.42rem] tracking-[-8px] transition-opacity ease-in-out duration-300  ${page + 6 > pages.length ? "opacity-0 pointer-events-none" : ""}`}>⮞⮞</button>
+          <button onClick={activateNextButton} className={`text-[1.42rem] transition-all w-3 hover:text-[1.6rem] ease-in-out duration-300 ${page + 2 > pages.length ? "opacity-0 pointer-events-none" : ""} ${triggerAnimationIndex === 3 ? "text-white/80" : "text-white"}`}>⮞</button>
+          <button onClick={activateEndButton} className={`text-[1.42rem] tracking-[-8px] transition-all w-3 hover:text-[1.6rem] ease-in-out duration-300  ${page + 6 > pages.length ? "opacity-0 pointer-events-none" : ""} ${triggerAnimationIndex === 4 ? "text-white/80" : "text-white"}`}>⮞⮞</button>
         </nav>
       </div>
     </section>
