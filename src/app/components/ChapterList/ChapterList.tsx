@@ -9,7 +9,7 @@ import chunkChapters from "./chunkChapters";
 
 export default function ChapterList() {
 
-  const [isNextPage, setIsNextPage] = useState(false)
+  const [direction, setDirection] = useState<"toRight" | "toLeft" | "toDown" | "toUp">("toRight")
 
   const [hoveredIndex, setHovered] = useState(-2);
 
@@ -57,20 +57,21 @@ export default function ChapterList() {
   }
 
   const activateSortButton = () => {
+    setDirection(isAsc === "asc" ? "toUp" : "toDown")
     activateButton(() => toggleOrder());
     setSortButtonPressed(true)
     setTimeout(() => setSortButtonPressed(false), 150)
   }
 
   const activatePrevButton = () => {
-    setIsNextPage(false)
+    setDirection("toRight");
     activateButton(() =>
       (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))));
     trigger(2);
   }
 
   const activateNextButton = () => {
-    setIsNextPage(true)
+    setDirection("toLeft");
     activateButton(() =>
       setPage(nextPage => (nextPage < pages.length - 1 ? nextPage + 1 : nextPage))
     );
@@ -78,7 +79,7 @@ export default function ChapterList() {
   };
 
   const activateStartButton = () => {
-    setIsNextPage(false)
+    setDirection("toRight");
     activateButton(() =>
       setPage(0)
     );
@@ -86,7 +87,7 @@ export default function ChapterList() {
   };
 
   const activateEndButton = () => {
-    setIsNextPage(true)
+    setDirection("toLeft");
     activateButton(() =>
       setPage(pages.length - 1)
     );
@@ -95,7 +96,7 @@ export default function ChapterList() {
 
 
   const goToPage = (pageIndex: number) => {
-    setIsNextPage(pageIndex > page);
+    setDirection(pageIndex > page ? "toLeft" : "toRight");
     activateButton(() => setPage(pageIndex))
   }
 
@@ -122,22 +123,39 @@ export default function ChapterList() {
 
   const getLinkClasses = (index: number) => {
     const base = "block w-full h-full z-10 transition-all duration-500";
-    const color = listPhase !== 0 || hoveredIndex === index ? "text-black" : "text-white";
+    const color = hoveredIndex === index ? "text-black" : "text-white";
+    const opacity = listPhase === 0 ? "opacity-100" : "opacity-0"
 
-    const translatePrev = listPhase === 1
+    const translateRight = listPhase === 1
       ? "translate-x-[30px]"
       : listPhase === 2
         ? "translate-x-[-30px]"
         : "translate-0";
 
-    const translateNext = listPhase === 1
+    const translateLeft = listPhase === 1
       ? "translate-x-[-30px]"
       : listPhase === 2
         ? "translate-x-[30px]"
         : "translate-0";
 
-    return `${base} ${color} ${isNextPage ? translateNext : translatePrev}`;
-  };
+    const translateDown = listPhase === 1
+      ? "translate-y-[10px]"
+      : listPhase === 2
+        ? "translate-y-[-10px]"
+        : "translate-0";
+
+    const translateUp = listPhase === 1
+      ? "translate-y-[-10px]"
+      : listPhase === 2
+        ? "translate-y-[10px]"
+        : "translate-0";
+
+    return `${base} ${color} ${opacity} ${direction === "toLeft" ? translateLeft
+      : direction === "toRight" ? translateRight
+        : direction === "toUp" ? translateUp
+          : translateDown
+      }`;
+  }
 
   return (
     <section className="w-[80vw] mx-auto mt-4 bg-black">
