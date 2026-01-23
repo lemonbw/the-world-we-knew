@@ -9,6 +9,8 @@ import chunkChapters from "./chunkChapters";
 
 export default function ChapterList() {
 
+  const [isNextPage, setIsNextPage] = useState(false)
+
   const [hoveredIndex, setHovered] = useState(-2);
 
   const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
@@ -21,14 +23,13 @@ export default function ChapterList() {
 
   const [triggerAnimationIndex, setTriggerAnimationIndex] = useState(0);
 
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(0);
 
   const [isAsc, setIsAsc] = useState<"asc" | "desc">("asc");
 
   const [listPhase, setListPhase] = useState(0);
 
   const NO_HOVER: number = -2;
-  const BUTTON_HOVER: number = -1;
 
   const toggleOrder = () => setIsAsc(prev => (prev === "asc" ? "desc" : "asc"));
 
@@ -61,28 +62,31 @@ export default function ChapterList() {
     setTimeout(() => setSortButtonPressed(false), 150)
   }
 
-  const activateNextButton = () => {
+  const activatePrevButton = () => {
+    setIsNextPage(false)
     activateButton(() =>
-      setPage(prevPage => (prevPage < pages.length - 1 ? prevPage + 1 : prevPage))
+      (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))));
+    trigger(2);
+  }
+
+  const activateNextButton = () => {
+    setIsNextPage(true)
+    activateButton(() =>
+      setPage(nextPage => (nextPage < pages.length - 1 ? nextPage + 1 : nextPage))
     );
     trigger(3);
   };
 
   const activateStartButton = () => {
+    setIsNextPage(false)
     activateButton(() =>
       setPage(0)
     );
     trigger(1);
   };
 
-
-  const activatePrevButton = () => {
-    activateButton(() =>
-      (setPage(prevPage => (prevPage > 0 ? prevPage - 1 : 0))));
-    trigger(2);
-  }
-
   const activateEndButton = () => {
+    setIsNextPage(true)
     activateButton(() =>
       setPage(pages.length - 1)
     );
@@ -91,6 +95,7 @@ export default function ChapterList() {
 
 
   const goToPage = (pageIndex: number) => {
+    setIsNextPage(pageIndex > page);
     activateButton(() => setPage(pageIndex))
   }
 
@@ -114,6 +119,25 @@ export default function ChapterList() {
       : page > pages.length - Math.ceil(panelSize / 2)
         ? pages.length - panelSize
         : page - Math.floor(panelSize / 2);
+
+  const getLinkClasses = (index: number) => {
+    const base = "block w-full h-full z-10 transition-all duration-500";
+    const color = listPhase !== 0 || hoveredIndex === index ? "text-black" : "text-white";
+
+    const translatePrev = listPhase === 1
+      ? "translate-x-[30px]"
+      : listPhase === 2
+        ? "translate-x-[-30px]"
+        : "translate-0";
+
+    const translateNext = listPhase === 1
+      ? "translate-x-[-30px]"
+      : listPhase === 2
+        ? "translate-x-[30px]"
+        : "translate-0";
+
+    return `${base} ${color} ${isNextPage ? translateNext : translatePrev}`;
+  };
 
   return (
     <section className="w-[80vw] mx-auto mt-4 bg-black">
@@ -167,22 +191,22 @@ export default function ChapterList() {
                 }}
               >
                 <td className="relative px-4 pb-0 z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.volume}</Link>
+                  <Link href={c.href} className={getLinkClasses(c.index)}>{c.volume}</Link>
                   <span
                     className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10
                   ${hoveredIndex === c.index ? "w-[80vw]" : "w-0"}`}></span>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.chapter}</Link>
+                  <Link href={c.href} className={getLinkClasses(c.index)}>{c.chapter}</Link>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.title}</Link>
+                  <Link href={c.href} className={getLinkClasses(c.index)}>{c.title}</Link>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.symbols}</Link>
+                  <Link href={c.href} className={getLinkClasses(c.index)}>{c.symbols}</Link>
                 </td>
                 <td className="px-4 py-2 relative z-10">
-                  <Link href={c.href} className={`block w-full h-full z-10 transition-all duration-500 ${listPhase !== 0 || hoveredIndex === c.index ? "text-black" : "text-white"} ${listPhase === 1 ? "translate-x-[30px]" : listPhase === 2 ? "transition-colors translate-x-[-30px]" : "translate-0"}`}>{c.date.toLocaleDateString("ru-RU")}</Link>
+                  <Link href={c.href} className={getLinkClasses(c.index)}>{c.date.toLocaleDateString("ru-RU")}</Link>
                 </td>
               </tr>
             ))}
