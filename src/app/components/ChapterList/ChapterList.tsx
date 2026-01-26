@@ -1,15 +1,15 @@
 "use client";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useMemo } from "react";
 import { useRef } from "react";
 import Link from "next/link";
 import ChapterSort from "./ChapterSort"
 import chunkChapters from "./chunkChapters";
-import ChapterSearch from "./ChapterSearch"
+import { ChapterSearch } from "./ChapterSearch"
+import { chapters } from "@/src/content/chapters";
 
 export default function ChapterList() {
-
-  const [query, setQuery] = useState("")
 
   const [direction, setDirection] = useState<"toRight" | "toLeft" | "toDown" | "toUp">("toRight")
 
@@ -159,6 +159,25 @@ export default function ChapterList() {
       }`;
   }
 
+  const [query, setQuery] = useState("");
+
+  const [filteredChapters, setFilteredChapters] = useState(sortedChapters);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFilteredChapters(
+        chapters.filter(ch =>
+          ch.title.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const list = query ? filteredChapters : currentPage
+
   return (
     <section className="w-[80vw] mx-auto mt-4 bg-black">
       <button className="relative block mx-auto font-bold cursor-pointer" onMouseEnter={() => {
@@ -193,7 +212,7 @@ export default function ChapterList() {
             </tr>
           </thead>
           <tbody>
-            {currentPage.map((c) => (
+            {list.map((c) => (
               <tr
                 key={c.href}
                 className="bg-black border-b transition-colors duration-1000 cursor-pointer"
