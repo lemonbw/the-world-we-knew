@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useDeferredValue } from "react";
 import { useState } from "react";
 import { useMemo } from "react";
 import { useRef } from "react";
@@ -7,7 +7,6 @@ import Link from "next/link";
 import ChapterSort from "./ChapterSort"
 import chunkChapters from "./chunkChapters";
 import { ChapterSearch } from "./ChapterSearch"
-import { chapters } from "@/src/content/chapters";
 
 export default function ChapterList() {
 
@@ -161,20 +160,18 @@ export default function ChapterList() {
 
   const [query, setQuery] = useState("");
 
-  const [filteredChapters, setFilteredChapters] = useState(sortedChapters);
+  const deferredQuery = useDeferredValue(query);
 
+  const filteredChapters = useMemo(() => {
+    if (!deferredQuery) return sortedChapters;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setFilteredChapters(
-        chapters.filter(ch =>
-          ch.title.toLowerCase().includes(query.toLowerCase())
-        )
-      );
-    }, 300);
+    const q = deferredQuery.toLowerCase();
 
-    return () => clearTimeout(timer);
-  }, [query]);
+    return sortedChapters.filter(ch =>
+      ch.title.toLowerCase().includes(q)
+    );
+  }, [deferredQuery, sortedChapters]);
+
 
   const list = query ? filteredChapters : currentPage
 
