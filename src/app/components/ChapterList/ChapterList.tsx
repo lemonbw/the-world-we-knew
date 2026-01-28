@@ -247,7 +247,7 @@ export default function ChapterList() {
                 </td>
               </tr>
             ))}
-            {Array.from({ length: 20 - currentPage.length }, (_, i) => (
+            {Array.from({ length: 20 - list.length }, (_, i) => (
               <tr key={`empty-${i}`} className="bg-black border-b">
                 <td colSpan={5} className="h-[43.4px]" />
               </tr>
