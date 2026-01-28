@@ -10,10 +10,10 @@ export function ChapterSearch({ query, setQuery }: ChapterSearchProps) {
     <div className="flex flex-col items-center gap-2">
       <input
         type="search"
-        placeholder="Input title of chapter"
+        placeholder="Chapter/title/date"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="text-center w-80 border rounded h-8"
+        className="mt-3 mb-2 text-center w-80 border rounded h-8"
       />
     </div>
   );

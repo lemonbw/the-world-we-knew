@@ -168,7 +168,9 @@ export default function ChapterList() {
     const q = deferredQuery.toLowerCase();
 
     return sortedChapters.filter(ch =>
-      ch.title.toLowerCase().includes(q)
+      ch.title.toLowerCase().includes(q) ||
+      ch.chapter === +q ||
+      String(ch.date.toLocaleDateString("ru-RU")).includes(q)
     );
   }, [deferredQuery, sortedChapters]);
 
