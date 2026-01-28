@@ -14,7 +14,7 @@ export const chapters = [
     index: 1,
     title: "Обыкновенные деньки",
     symbols: "5К",
-    date: new Date("2026-01-09"),
+    date: new Date("2026-01-10"),
     href: "/chapter/2",
   },
   ...Array.from({ length: 500 }, (_, i) => ({

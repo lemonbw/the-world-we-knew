@@ -1,11 +1,12 @@
 "use client";
+import { useDeferredValue } from "react";
 import { useState } from "react";
 import { useMemo } from "react";
 import { useRef } from "react";
 import Link from "next/link";
 import ChapterSort from "./ChapterSort"
 import chunkChapters from "./chunkChapters";
-
+import { ChapterSearch } from "./ChapterSearch"
 
 export default function ChapterList() {
 
@@ -157,6 +158,25 @@ export default function ChapterList() {
       }`;
   }
 
+  const [query, setQuery] = useState("");
+
+  const deferredQuery = useDeferredValue(query);
+
+  const filteredChapters = useMemo(() => {
+    if (!deferredQuery) return sortedChapters;
+
+    const q = deferredQuery.toLowerCase();
+
+    return sortedChapters.filter(ch =>
+      ch.title.toLowerCase().includes(q) ||
+      ch.chapter === +q ||
+      String(ch.date.toLocaleDateString("ru-RU")).includes(q)
+    );
+  }, [deferredQuery, sortedChapters]);
+
+
+  const list = query ? filteredChapters : currentPage
+
   return (
     <section className="w-[80vw] mx-auto mt-4 bg-black">
       <button className="relative block mx-auto font-bold cursor-pointer" onMouseEnter={() => {
@@ -179,6 +199,7 @@ export default function ChapterList() {
         <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-500 ${hoveredButton === 5 ? "w-[125%]" : "w-0"} ${isSortButtonPressed === true ? "bg-black" : "bg-white"}`}></span>
       </button >
       <div className="border-1 rounded-xl overflow-hidden mt-6 mb-40">
+        <ChapterSearch query={query} setQuery={setQuery} />
         <table className="w-full border-collapse text-[1.1rem] table-fixed">
           <thead>
             <tr className="bg-gray-200 dark:bg-black text-gray-800 dark:text-gray-200 text-[1.2rem] border-b">
@@ -190,7 +211,7 @@ export default function ChapterList() {
             </tr>
           </thead>
           <tbody>
-            {currentPage.map((c) => (
+            {list.map((c) => (
               <tr
                 key={c.href}
                 className="bg-black border-b transition-colors duration-1000 cursor-pointer"
@@ -228,7 +249,7 @@ export default function ChapterList() {
                 </td>
               </tr>
             ))}
-            {Array.from({ length: 20 - currentPage.length }, (_, i) => (
+            {Array.from({ length: 20 - list.length }, (_, i) => (
               <tr key={`empty-${i}`} className="bg-black border-b">
                 <td colSpan={5} className="h-[43.4px]" />
               </tr>
