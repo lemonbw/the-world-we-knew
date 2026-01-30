@@ -124,7 +124,7 @@ export default function ChapterList() {
 
   const getLinkClasses = (index: number) => {
     const base = "block w-full h-full z-10 transition-all duration-500";
-    const color = hoveredIndex === index ? "text-black duration-1000" : "text-white duration-1000";
+    const color = hoveredIndex === index ? "text-black duration-1000" : "text-white";
     const opacity = listPhase === 0 ? "opacity-100" : "opacity-0"
 
     const translateRight = listPhase === 1
