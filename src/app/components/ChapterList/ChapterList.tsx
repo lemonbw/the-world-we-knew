@@ -30,7 +30,11 @@ export default function ChapterList() {
 
   const [listPhase, setListPhase] = useState(0);
 
+  const [query, setQuery] = useState("");
+
   const NO_HOVER: number = -2;
+
+  const pageSize: number = 20;
 
   const toggleOrder = () => setIsAsc(prev => (prev === "asc" ? "desc" : "asc"));
 
@@ -106,12 +110,23 @@ export default function ChapterList() {
     [isAsc]
   );
 
-  const pages = useMemo(
-    () => chunkChapters(sortedChapters, 20),
-    [sortedChapters]
-  );
+  const deferredQuery = useDeferredValue(query);
 
-  const currentPage = pages[page] ?? [];
+  const filteredChapters = useMemo(() => {
+    if (!deferredQuery) return sortedChapters;
+
+    const q = deferredQuery.toLowerCase();
+
+    return sortedChapters.filter(ch =>
+      ch.searchIndex?.includes(q)
+    );
+  }, [deferredQuery, sortedChapters]);
+
+  const listSource = query ? filteredChapters : sortedChapters
+
+  const pages = useMemo(() => chunkChapters(listSource, pageSize), [listSource, pageSize]);
+
+  const currentPage = pages[page] ?? []
 
   const panelSize = 9;
 
@@ -158,23 +173,6 @@ export default function ChapterList() {
       }`;
   }
 
-  const [query, setQuery] = useState("");
-
-  const deferredQuery = useDeferredValue(query);
-
-  const filteredChapters = useMemo(() => {
-    if (!deferredQuery) return sortedChapters;
-
-    const q = deferredQuery.toLowerCase();
-
-    return sortedChapters.filter(ch =>
-      ch.searchIndex?.includes(q)
-    );
-  }, [deferredQuery, sortedChapters]);
-
-
-  const list = query ? filteredChapters : currentPage
-
   return (
     <section className="w-[80vw] mx-auto mt-4 bg-black">
       <button className="relative block mx-auto font-bold cursor-pointer" onMouseEnter={() => {
@@ -209,7 +207,7 @@ export default function ChapterList() {
             </tr>
           </thead>
           <tbody>
-            {list.map((c) => (
+            {currentPage.map((c) => (
               <tr
                 key={c.href}
                 className="bg-black border-b transition-colors duration-1000 cursor-pointer"
@@ -247,7 +245,7 @@ export default function ChapterList() {
                 </td>
               </tr>
             ))}
-            {Array.from({ length: 20 - list.length }, (_, i) => (
+            {Array.from({ length: 20 - currentPage.length }, (_, i) => (
               <tr key={`empty-${i}`} className="bg-black border-b">
                 <td colSpan={5} className="h-[43.4px]" />
               </tr>
