@@ -25,6 +25,26 @@ export default function ReadingPage() {
       document.removeEventListener("fullscreenchange", handler);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement).isContentEditable) {
+        return;
+      }
+
+      if (e.key.toLowerCase() === "f") {
+        e.preventDefault();
+        toggleFullScreen();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <Main>
       <section
