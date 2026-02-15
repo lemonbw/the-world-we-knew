@@ -13,20 +13,21 @@ export default function FontSizeSelector({ currentSize, setCurrentSize }: FontSi
 
   const [hoveredSize, setHoveredSize] = useState(0);
 
+  const [tempSize, setTempSize] = useState(currentSize);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => { if (e.key === "Enter") { setCurrentSize(tempSize); } };
+
   return (
-    <div className="relative w-25 inline-block  px-2 py-1 mr-1 h-9 mt-[1px]">
+
+    <div className="relative w-25 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
       <div className="flex border-1 rounded-sm">
-        <input
-          type="text"
-          value={currentSize}
-          onChange={(e) => setCurrentSize(Number(e.target.value))}
-          className="w-12 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
-        />
-        <button
-          type="button"
-          onClick={() => setIsHidden(!isHidden)}
-          className="material-icons text-lg w-8 border-l"
-        >
+        <input type="text" value={tempSize}
+          onChange={(e) => setTempSize(Number(e.target.value))}
+          onKeyDown={handleKeyDown} className="w-12 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]" />       <button
+            type="button"
+            onClick={() => setIsHidden(!isHidden)}
+            className="material-icons text-lg w-8 border-l"
+          >
           keyboard_arrow_down
         </button>
       </div>
