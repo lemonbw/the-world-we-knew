@@ -56,6 +56,7 @@ export default function FontSizeSelector({ currentSize, setCurrentSize }: FontSi
             type="button"
             onClick={() => {
               setCurrentSize(size);
+              setTempSize(String(size));
               setIsHidden(true);
             }}
             onMouseEnter={() => setHoveredSize(size)}
