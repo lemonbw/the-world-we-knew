@@ -15,15 +15,28 @@ export default function FontSizeSelector({ currentSize, setCurrentSize }: FontSi
 
   const [tempSize, setTempSize] = useState(currentSize.toString());
 
-  const filteredSize = tempSize.replace(/\D/g, "");
+  const filteredSize = tempSize.replace(/[^0-9+\-*/().]/g, "");
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => { if (e.key === "Enter") { setCurrentSize(Number(filteredSize)); setTempSize(filteredSize); } };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      try {
+        const result = Function(`"use strict"; return (${filteredSize})`)();
+
+        if (typeof result === "number" && isFinite(result)) {
+          setCurrentSize(result);
+          setTempSize(String(result));
+        }
+      } catch {
+        console.log("Something wrong")
+      }
+    }
+  };
 
   return (
 
     <div className="relative w-25 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
       <div className="flex border-1 rounded-sm">
-        <input type="text" value={[tempSize]}
+        <input type="text" value={tempSize}
           onChange={(e) => setTempSize(e.target.value)}
           onKeyDown={handleKeyDown} className="w-12 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]" />       <button
             type="button"
