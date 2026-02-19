@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { useDeferredValue } from "react";
+import { useState, useEffect, useRef, useDeferredValue } from "react";
+
 type FontSelectorProps = {
   currentFont: string;
   setCurrentFont: (font: string) => void;
@@ -8,79 +8,55 @@ type FontSelectorProps = {
 };
 
 const systemFonts = [
-  // Generic families
-  "system-ui",
-  "ui-serif",
-  "ui-sans-serif",
-  "ui-monospace",
-  "serif",
-  "sans-serif",
-  "monospace",
-
-  // Windows common
-  "Arial",
-  "Verdana",
-  "Tahoma",
-  "Trebuchet MS",
-  "Times New Roman",
-  "Georgia",
-  "Courier New",
-  "Segoe UI",
-  "Calibri",
-  "Cambria",
-
-  // macOS common
-  "Helvetica",
-  "Helvetica Neue",
-  "San Francisco",
-  "Menlo",
-  "Geneva",
-  "Avenir",
-  "American Typewriter",
-
-  // Linux common
-  "Ubuntu",
-  "Liberation Serif",
-  "Liberation Sans",
-  "Liberation Mono",
-  "DejaVu Serif",
-  "DejaVu Sans",
-  "DejaVu Sans Mono",
-  "Noto Serif",
-  "Noto Sans",
-  "Noto Mono"
+  "Arial", "Verdana", "Tahoma", "Times New Roman", "Courier New",
+  "Georgia", "Helvetica", "Ubuntu", "Liberation Serif", "Noto Sans"
 ];
 
-
-
 export default function FontSelector({ currentFont, setCurrentFont, query, setQuery }: FontSelectorProps) {
-
-  const [isHidden, setIsHidden] = useState(true);
-
-  const [hoveredFont, setHoveredFont] = useState<string | null>(null);
-
+  const [availableFonts, setAvailableFonts] = useState<string[]>([]);
   const [tempFont, setTempFont] = useState(currentFont);
+  const [isHidden, setIsHidden] = useState(true);
+  const [hoveredFont, setHoveredFont] = useState<string | null>(null);
 
   const deferredQuery = useDeferredValue(query);
 
-  const filteredList = useMemo(() => {
-    if (!deferredQuery) return systemFonts;
-    const q = deferredQuery.toLowerCase();
-    return systemFonts.filter(font => font.includes(q));
-  }, [deferredQuery]);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  useEffect(() => {
+    if (!canvasRef.current) {
+      canvasRef.current = document.createElement("canvas");
+    }
+    const context = canvasRef.current.getContext("2d");
+    if (!context) return;
+
+    const text = "mmmmmmmmmmlli";
+    const fontSize = "72px";
+    const baseFonts = ["monospace", "serif", "sans-serif"];
+
+    const filtered = systemFonts.filter(font => {
+      const defaultWidths = baseFonts.map(base => {
+        context.font = `${fontSize} ${base}`;
+        return context.measureText(text).width;
+      });
+
+      return baseFonts.some((base, index) => {
+        context.font = `${fontSize} '${font}', ${base}`;
+        const width = context.measureText(text).width;
+        return width !== defaultWidths[index];
+      });
+    });
+
+    setAvailableFonts(filtered);
+  }, []);
+
+  const filteredList = availableFonts.filter(f => f.toLowerCase().includes(deferredQuery.toLowerCase()));
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      try {
-        setCurrentFont(tempFont);
-        setIsHidden(true);
-      } catch {
-        console.log("Something wrong")
-      }
+      setCurrentFont(tempFont);
+      setIsHidden(true);
     }
   };
-
   return (
 
     <div className="relative w-60 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
@@ -114,7 +90,7 @@ export default function FontSelector({ currentFont, setCurrentFont, query, setQu
               setIsHidden(true);
             }}
             onMouseEnter={() => setHoveredFont(font)}
-            onMouseLeave={() => setHoveredFont("0")}
+            onMouseLeave={() => setHoveredFont(null)}
             className={`relative px-2 py-1 text-left hover:text-black ease-in-out duration-500 ${currentFont === font ? "font-bold" : ""}`}
           >
             <span className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === font ? "w-full" : "w-0"}`}></span>
@@ -126,5 +102,3 @@ export default function FontSelector({ currentFont, setCurrentFont, query, setQu
     </div>
   );
 }
-
-
