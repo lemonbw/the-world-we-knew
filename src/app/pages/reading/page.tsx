@@ -1,8 +1,8 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import Main from "../../components/Main";
-import FontSelector from "../../components/Reading/FontSelector"
-import FontSizeSelector from "../../components/Reading/FontSizeSelector"
+import FontSelector from "../../components/Reading/Fonts/FontSelector"
+import FontSizeSelector from "../../components/Reading/Fonts/FontSizeSelector"
 
 export default function ReadingPage() {
   const readingSection = useRef<HTMLElement | null>(null);
