@@ -35,3 +35,8 @@ button {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
+
+*::selection {
+  background: #ffffff;
+  color: #000000;
+}
