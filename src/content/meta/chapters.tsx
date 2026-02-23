@@ -15,7 +15,7 @@ export const chapters: {
       title: "Начало конца",
       symbols: "5К",
       date: new Date("2026-01-09"),
-      href: "/pages/reading",
+      href: "/chapters/1",
     },
     {
       volume: 1,
