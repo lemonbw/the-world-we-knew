@@ -5,7 +5,8 @@ export const chapters: {
   title: string;
   symbols: string;
   date: Date;
-  href: string;
+  slug: string;
+  href?: string;
   searchIndex?: string;
 }[] = [
     {
@@ -15,7 +16,7 @@ export const chapters: {
       title: "Начало конца",
       symbols: "5К",
       date: new Date("2026-01-09"),
-      href: "/chapters/1",
+      slug: "01-the-beginning-of-the-end",
     },
     {
       volume: 1,
@@ -24,7 +25,7 @@ export const chapters: {
       title: "Обыкновенные деньки",
       symbols: "5К",
       date: new Date("2026-01-10"),
-      href: "/chapter/2",
+      slug: "02-the-ordinary-days",
     },
     ...Array.from({ length: 500 }, (_, i) => ({
       volume: 1,
@@ -33,11 +34,12 @@ export const chapters: {
       title: "PlaceHolder",
       symbols: "5К",
       date: new Date("2026-01-09"),
-      href: `/chapter/${i + 3}`,
+      slug: `/chapter/${i + 3}`,
     })),
   ];
 
 chapters.forEach(ch => {
+  ch.href = `/reading/${ch.slug}`;
   ch.searchIndex = `${ch.chapter}, ${ch.title}, ${ch.date.toLocaleDateString("ru-RU")}`.toLowerCase();
 });
 
