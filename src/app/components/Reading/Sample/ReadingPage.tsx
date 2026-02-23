@@ -8,8 +8,6 @@ import AlignSelector from "@/src/app/components/Reading/Align/AlignSelector"
 
 export default function ReadingPage({ content }: { content: string }) {
 
-  const [currentChapter, setCurrentChapter] = useState("")
-
   const [chapterQuery, setChapterQuery] = useState("")
 
   const readingSection = useRef<HTMLElement | null>(null);
@@ -71,7 +69,7 @@ export default function ReadingPage({ content }: { content: string }) {
         className="flex flex-col h-[100vh] w-[80vw] overflow-y-auto mx-auto mt-4 p-3"
       >
         <div className="w-[70vw] h-10 flex flex-none justify-start gap-1 mb-2">
-          <ChapterSelector currentChapter={currentChapter} setCurrentChapter={setCurrentChapter} chapterQuery={chapterQuery} setChapterQuery={setChapterQuery}></ChapterSelector>
+          <ChapterSelector chapterQuery={chapterQuery} setChapterQuery={setChapterQuery}></ChapterSelector>
           <button
             className="material-icons inline-block text-[2.2rem]! hover:text-[2.4rem]! ease-in-out duration-300 w-12"
             onClick={toggleFullScreen}
