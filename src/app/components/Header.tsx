@@ -35,7 +35,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/pages/archive"
+            href="/archive"
             className="relative"
             onMouseEnter={() => setHovered(2)}
             onMouseLeave={() => setHovered(0)}
@@ -50,7 +50,7 @@ export default function Header() {
 
         <div className="flex gap-24 mr-45 lg:text-[1.5rem]">
           <Link
-            href="/pages/map"
+            href="/map"
             className="relative"
             onMouseEnter={() => setHovered(3)}
             onMouseLeave={() => setHovered(0)}
@@ -63,7 +63,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/pages/news"
+            href="/news"
             className="relative"
             onMouseEnter={() => setHovered(4)}
             onMouseLeave={() => setHovered(0)}

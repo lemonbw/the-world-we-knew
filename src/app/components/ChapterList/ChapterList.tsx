@@ -2,9 +2,9 @@
 import { useState, useMemo, useRef } from "react";
 import { useDeferredValue } from "react";
 import Link from "next/link";
-import ChapterSort from "./ChapterSort";
-import chunkChapters from "./chunkChapters";
-import { ChapterSearch } from "./ChapterSearch";
+import ChapterSort from "@/src/app/components/ChapterList/ChapterSort";
+import chunkChapters from "@/src/app/components/ChapterList/chunkChapters";
+import { ChapterSearch } from "@/src/app/components/ChapterList/ChapterSearch";
 
 export default function ChapterList() {
   const NO_HOVER = -2;

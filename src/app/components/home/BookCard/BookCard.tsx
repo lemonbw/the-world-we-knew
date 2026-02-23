@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Rating from "./Rating"
+import Rating from "@/src/app/components/home/BookCard/Rating"
 
 export default function BookCard() {
 
