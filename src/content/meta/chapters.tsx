@@ -6,7 +6,7 @@ export const chapters: {
   symbols: string;
   date: Date;
   slug: string;
-  href?: string;
+  href: string;
   searchIndex?: string;
 }[] = [
     {
@@ -17,6 +17,7 @@ export const chapters: {
       symbols: "5К",
       date: new Date("2026-01-09"),
       slug: "01-the-beginning-of-the-end",
+      href: "",
     },
     {
       volume: 1,
@@ -26,6 +27,7 @@ export const chapters: {
       symbols: "5К",
       date: new Date("2026-01-10"),
       slug: "02-the-ordinary-days",
+      href: "",
     },
     ...Array.from({ length: 500 }, (_, i) => ({
       volume: 1,
@@ -35,6 +37,7 @@ export const chapters: {
       symbols: "5К",
       date: new Date("2026-01-09"),
       slug: `/chapter/${i + 3}`,
+      href: "",
     })),
   ];
 
