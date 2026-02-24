@@ -1,29 +1,35 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
+import { useDeferredValue } from "react";
 import Link from "next/link";
 import { chapters } from "@/src/content/meta/chapters";
+import ChapterSearch from "@/src/app/components/ChapterList/ChapterSearch"
 
-type ChapterSelectorProps = {
-  chapterQuery: string;
-  setChapterQuery: (query: string) => void;
-};
-
-export default function ChapterSelector({
-  chapterQuery,
-  setChapterQuery,
-}: ChapterSelectorProps) {
+export default function ChapterSelector() {
 
   const params = useParams();
 
   const slug = params?.slug;
 
+  const [query, setQuery] = useState("")
+
+  const deferredQuery = useDeferredValue(query);
+
   const [isChaptersHidden, setIsChaptersHidden] = useState(true);
 
-  const [visibleCount, setVisibleCount] = useState(20);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const [hoveredChapter, setHoveredChapter] = useState<number | null>(null);
 
   const rowHoverDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const filteredChapters = useMemo(() => {
+    if (!deferredQuery) return chapters;
+    const q = deferredQuery.toLowerCase();
+    return chapters.filter(ch => ch.searchIndex?.includes(q));
+  }, [deferredQuery]);
+
+  const listSource = query ? filteredChapters : chapters;
 
   const getLinkClasses = (chapter: number) => {
     const base = "block w-full h-full z-10 transition-all duration-500";
@@ -62,18 +68,13 @@ export default function ChapterSelector({
     }
   }, [isChaptersHidden, slug]);
 
+  const className = "absolute left-0 w-68 p-1 h-7.5 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
+
+  const placeholder = "Chapter, title, date"
+
   return (
     <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
-      <input
-        type="search"
-        value={chapterQuery}
-        onClick={() => setIsChaptersHidden(false)}
-        onChange={(e) => {
-          setChapterQuery(e.target.value);
-        }}
-        className="absolute w-68 p-1 h-7.5 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
-      />
-
+      <ChapterSearch query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(!isChaptersHidden)} className={className} placeholder={placeholder}></ChapterSearch>
       <button
         type="button"
         onClick={() => setIsChaptersHidden(!isChaptersHidden)}
@@ -83,19 +84,19 @@ export default function ChapterSelector({
       </button>
 
       {!isChaptersHidden && (
-        <div className="border-1 rounded-sm overflow-y-auto overflow-x-hidden mt-8.5 h-102 w-[22.15vw]" ref={listRef} onScroll={(e) => {
+        <div className="border-1 rounded-sm overflow-y-auto overflow-x-hidden mt-8.5 h-[25.41rem] w-[22.15vw]" ref={listRef} onScroll={(e) => {
           const target = e.target as HTMLDivElement;
           if (target.scrollHeight - target.scrollTop <= target.clientHeight + 50) {
-            setVisibleCount((prev) => Math.min(prev + 1, chapters.length));
+            setVisibleCount((prev) => Math.min(prev + 20, chapters.length));
           }
         }}>
           <table className="bg-black z-50 rounded-sm w-[22.15vw]">
             <tbody>
-              {chapters.slice(0, visibleCount).map((chapter) => (
+              {listSource.slice(0, visibleCount + 10).map((chapter) => (
                 <tr
                   key={chapter.href}
                   ref={slug === chapter.slug ? chapterRef : null}
-                  className={`bg-black border-b transition-colors duration-1000 cursor-pointer z-50 ${slug === chapter.slug ? "font-bold" : ""}`}
+                  className={`bg-black border-b transition-colors duration-1000 cursor-pointer z-50 h-[41px] ${slug === chapter.slug ? "font-bold" : ""}`}
                   onMouseEnter={() => {
                     rowHoverDelayRef.current = setTimeout(
                       () => setHoveredChapter(chapter.index),
@@ -110,30 +111,20 @@ export default function ChapterSelector({
                     setHoveredChapter(null);
                   }}
                 >
-                  <td className="relative px-4 pb-0 z-10">
-                    <Link
-                      href={chapter.href}
-                      className={getLinkClasses(chapter.index)}
-                    >
-                      {chapter.volume}
-                    </Link>
-
-                    <span
-                      className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10 ${hoveredChapter === chapter.index ? "w-[22.2vw]" : "w-0"
-                        }`}
-                    ></span>
-                  </td>
-
-                  <td className="py-2 relative z-10">
+                  <td className="py-2 relative z-10 pl-2 pr-2 w-[28.2]">
                     <Link
                       href={chapter.href}
                       className={getLinkClasses(chapter.index)}
                     >
                       {chapter.chapter}
                     </Link>
+                    <span
+                      className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-1000 -z-10 ${hoveredChapter === chapter.index ? "w-[22.2vw]" : "w-0"
+                        }`}
+                    ></span>
                   </td>
 
-                  <td className="py-2 relative z-10">
+                  <td className="py-2 relative z-10 w-[280px]">
                     <Link
                       href={chapter.href}
                       className={getLinkClasses(chapter.index)}
@@ -141,6 +132,11 @@ export default function ChapterSelector({
                       {chapter.title}
                     </Link>
                   </td>
+                </tr>
+              ))}
+              {Array.from({ length: Math.max(0, 10 - listSource.length) }, (_, i) => (
+                <tr key={`empty-${i}`} className="bg-black border-b">
+                  <td colSpan={2} className="h-[41px]" />
                 </tr>
               ))}
             </tbody>
