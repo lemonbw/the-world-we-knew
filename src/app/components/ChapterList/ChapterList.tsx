@@ -4,7 +4,7 @@ import { useDeferredValue } from "react";
 import Link from "next/link";
 import ChapterSort from "@/src/app/components/ChapterList/ChapterSort";
 import chunkChapters from "@/src/app/components/ChapterList/chunkChapters";
-import { ChapterSearch } from "@/src/app/components/ChapterList/ChapterSearch";
+import ChapterSearch from "@/src/app/components/ChapterList/ChapterSearch";
 
 export default function ChapterList() {
   const NO_HOVER = -2;
@@ -13,6 +13,7 @@ export default function ChapterList() {
 
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
+
   const className = "mt-3 mb-2 text-center w-80 border rounded h-8"
   const placeholder = "Chapter, title, date"
 
