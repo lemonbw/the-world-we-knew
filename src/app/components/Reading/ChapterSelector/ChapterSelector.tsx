@@ -46,11 +46,27 @@ export default function ChapterSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const listRef = useRef<HTMLDivElement>(null);
+  const chapterRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    if (!isChaptersHidden && chapterRef.current && listRef.current) {
+      const container = listRef.current;
+      const element = chapterRef.current;
+
+      const offsetTop = element.offsetTop;
+      container.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+    }
+  }, [isChaptersHidden, slug]);
+
   return (
     <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
       <input
         type="search"
-        value={""}
+        value={chapterQuery}
         onClick={() => setIsChaptersHidden(false)}
         onChange={(e) => {
           setChapterQuery(e.target.value);
@@ -67,7 +83,7 @@ export default function ChapterSelector({
       </button>
 
       {!isChaptersHidden && (
-        <div className="border-1 rounded-sm overflow-y-auto overflow-x-hidden mt-8.5 h-102 w-[22.15vw]" onScroll={(e) => {
+        <div className="border-1 rounded-sm overflow-y-auto overflow-x-hidden mt-8.5 h-102 w-[22.15vw]" ref={listRef} onScroll={(e) => {
           const target = e.target as HTMLDivElement;
           if (target.scrollHeight - target.scrollTop <= target.clientHeight + 50) {
             setVisibleCount((prev) => Math.min(prev + 1, chapters.length));
@@ -78,6 +94,7 @@ export default function ChapterSelector({
               {chapters.slice(0, visibleCount).map((chapter) => (
                 <tr
                   key={chapter.href}
+                  ref={slug === chapter.slug ? chapterRef : null}
                   className={`bg-black border-b transition-colors duration-1000 cursor-pointer z-50 ${slug === chapter.slug ? "font-bold" : ""}`}
                   onMouseEnter={() => {
                     rowHoverDelayRef.current = setTimeout(
