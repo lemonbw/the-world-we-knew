@@ -1,14 +1,14 @@
 "use client";
 
-interface ChapterSearchProps {
+interface SearchInputProps {
   query: string;
   setQuery: (value: string) => void;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   placeholder?: string;
 }
 
-export default function ChapterSearch({ query, setQuery, onClick, className, placeholder }: ChapterSearchProps) {
+export default function SearchInput({ query, setQuery, onClick, className, placeholder }: SearchInputProps) {
   return (
     <div className="flex flex-col items-center gap-2">
       <input

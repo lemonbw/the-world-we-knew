@@ -2,8 +2,8 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useDeferredValue } from "react";
 import Link from "next/link";
-import { chapters } from "@/src/content/meta/chapters";
-import ChapterSearch from "@/src/app/components/ChapterList/ChapterSearch"
+import { chapters } from "@/src/shared/content/meta/chapters";
+import SearchInput from "@/src/shared/ui/SearchInput"
 
 export default function ChapterSelector() {
 
@@ -74,7 +74,7 @@ export default function ChapterSelector() {
 
   return (
     <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
-      <ChapterSearch query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(!isChaptersHidden)} className={className} placeholder={placeholder}></ChapterSearch>
+      <SearchInput query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(!isChaptersHidden)} className={className} placeholder={placeholder}></SearchInput>
       <button
         type="button"
         onClick={() => setIsChaptersHidden(!isChaptersHidden)}

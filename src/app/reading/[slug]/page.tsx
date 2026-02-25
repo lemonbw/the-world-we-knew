@@ -1,5 +1,5 @@
-import { getAllChapters, getChapter } from "@/src/lib/chapters";
-import ReadingPage from "@/src/app/components/Reading/Sample/ReadingPage";
+import { getAllChapters, getChapter } from "@/src/shared/lib/chapters";
+import ReadingPage from "@/src/features/reading/sample/ReadingPage";
 import { notFound } from "next/navigation";
 
 export const dynamicParams = false;

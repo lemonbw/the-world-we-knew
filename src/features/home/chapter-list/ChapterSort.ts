@@ -1,4 +1,4 @@
-import { chapters } from "@/src/content/meta/chapters";
+import { chapters } from "@/src/shared/content/meta/chapters";
 
 export default function ChapterSort(order: "asc" | "desc") {
   return [...chapters].sort((a, b) =>

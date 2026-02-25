@@ -1,4 +1,4 @@
-import Main from "@/src/app/components/Main";
+import Main from "@/src/shared/ui/Main";
 
 export default function MapPage() {
   return (

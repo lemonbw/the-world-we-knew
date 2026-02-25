@@ -1,6 +1,6 @@
-import Main from "./components/Main";
-import BookCard from "./components/home/BookCard/BookCard";
-import ChapterList from "./components/ChapterList/ChapterList";
+import Main from "@/src/shared/ui/Main";
+import BookCard from "@/src/features/home/book-card/BookCard";
+import ChapterList from "@/src/features/home/chapter-list/ChapterList";
 
 export default function Home() {
   return (

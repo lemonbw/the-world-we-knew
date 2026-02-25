@@ -1,10 +1,10 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import Main from "@/src/app/components/Main";
-import ChapterSelector from "@/src/app/components/Reading/ChapterSelector/ChapterSelector"
-import FontSelector from "@/src/app/components/Reading/Fonts/FontSelector"
-import FontSizeSelector from "@/src/app/components/Reading/Fonts/FontSizeSelector"
-import AlignSelector from "@/src/app/components/Reading/Align/AlignSelector"
+import Main from "@/src/shared/ui/Main";
+import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
+import FontSelector from "@/src/features/reading/fonts/FontSelector"
+import FontSizeSelector from "@/src/features/reading/fonts/FontSizeSelector"
+import AlignSelector from "@/src/features/reading/align/AlignSelector"
 
 export default function ReadingPage({ content }: { content: string }) {
 

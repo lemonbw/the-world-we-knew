@@ -1,4 +1,4 @@
-import Header from "@/src/app/components/Header"
+import Header from "@/src/shared/ui/Header"
 
 export default function Main({ children }: { children: React.ReactNode }) {
   return (
