@@ -1,10 +1,11 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Main from "@/src/shared/ui/Main";
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
 import FontSelector from "@/src/features/reading/fonts/FontSelector"
 import FontSizeSelector from "@/src/features/reading/fonts/FontSizeSelector"
 import AlignSelector from "@/src/features/reading/align/AlignSelector"
+import useFullscreen from "@/src/shared/hooks/useFullscreen"
 
 export default function ReadingPage({ content }: { content: string }) {
 
@@ -18,47 +19,11 @@ export default function ReadingPage({ content }: { content: string }) {
 
   const [currentAlign, setCurrentAlign] = useState<"left" | "center" | "right" | "justify">("left")
 
-  const [fullscreen, setFullscreen] = useState(false);
+  const { fullscreen, toggleFullscreen } = useFullscreen({
+    readingSection,
+  });
 
   const icon = fullscreen ? "fullscreen_exit" : "fullscreen";
-
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      readingSection.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  };
-
-
-  useEffect(() => {
-    const handler = () =>
-      setFullscreen(Boolean(document.fullscreenElement));
-
-    document.addEventListener("fullscreenchange", handler);
-    return () =>
-      document.removeEventListener("fullscreenchange", handler);
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement).tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement).isContentEditable) {
-        return;
-      }
-
-      if (e.key.toLowerCase() === "f") {
-        e.preventDefault();
-        toggleFullScreen();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
 
   return (
     <Main>
@@ -71,7 +36,7 @@ export default function ReadingPage({ content }: { content: string }) {
           <ChapterSelector></ChapterSelector>
           <button
             className="material-icons inline-block text-[2.2rem]! hover:text-[2.4rem]! ease-in-out duration-300 w-12"
-            onClick={toggleFullScreen}
+            onClick={toggleFullscreen}
           >{icon}</button>
           <FontSelector currentFont={currentFont} setCurrentFont={setCurrentFont} query={fontQuery} setQuery={setFontQuery}></FontSelector>
           <FontSizeSelector currentSize={currentSize} setCurrentSize={setCurrentSize}></FontSizeSelector>
