@@ -1,76 +1,11 @@
 import { useState, useEffect, useDeferredValue } from "react";
-
+import { systemFonts, isFontRendered } from "@/src/shared/lib/fonts"
 type FontSelectorProps = {
   currentFont: string;
   setCurrentFont: (font: string) => void;
   query: string;
   setQuery: (query: string) => void;
 };
-
-const systemFonts = [
-  // Generic families
-  "system-ui",
-  "ui-serif",
-  "ui-sans-serif",
-  "ui-monospace",
-  "serif",
-  "sans-serif",
-  "monospace",
-
-  // Windows common
-  "Arial",
-  "Verdana",
-  "Tahoma",
-  "Trebuchet MS",
-  "Times New Roman",
-  "Georgia",
-  "Courier New",
-  "Segoe UI",
-  "Calibri",
-  "Cambria",
-
-  // macOS common
-  "Helvetica",
-  "Helvetica Neue",
-  "San Francisco",
-  "Menlo",
-  "Geneva",
-  "Avenir",
-  "American Typewriter",
-
-  // Linux common
-  "Ubuntu",
-  "Liberation Serif",
-  "Liberation Sans",
-  "Liberation Mono",
-  "DejaVu Serif",
-  "DejaVu Sans",
-  "DejaVu Sans Mono",
-  "Noto Serif",
-  "Noto Sans",
-  "Noto Mono"
-];
-
-function isFontRendered(font: string) {
-  const text = "mmmmmmmmmmlli";
-  const fontSize = "72px";
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  if (!context) return false;
-
-  const baseFonts = ["monospace", "serif", "sans-serif"];
-
-  const defaultWidths = baseFonts.map(base => {
-    context.font = `${fontSize} ${base}`;
-    return context.measureText(text).width;
-  });
-
-  return baseFonts.some((base, i) => {
-    context.font = `${fontSize} '${font}', ${base}`;
-    const width = context.measureText(text).width;
-    return width !== defaultWidths[i];
-  });
-}
 
 export default function FontSelector({
   currentFont,
