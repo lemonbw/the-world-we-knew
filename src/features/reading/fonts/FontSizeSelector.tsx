@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { fontSizes } from "@/src/shared/lib/fonts/fontSizes"
+import { useFontSizeSelectorState } from "@/src/shared/hooks/useFontSizeSelectorState"
+import { parseFontSize } from "@/src/shared/lib/fonts";
 
 type FontSizeSelectorProps = {
   currentSize: number;
@@ -6,28 +8,14 @@ type FontSizeSelectorProps = {
 };
 
 export default function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelectorProps) {
-
-  const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 34, 36, 38, 40, 45, 50, 55, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120];
-
-  const [isHidden, setIsHidden] = useState(true);
-
-  const [hoveredSize, setHoveredSize] = useState(0);
-
-  const [tempSize, setTempSize] = useState(currentSize.toString());
-
-  const filteredSize = tempSize.replace(/[^0-9+\-*/().]/g, "");
+  const { isHidden, setIsHidden, hoveredSize, setHoveredSize, tempSize, setTempSize } = useFontSizeSelectorState(currentSize)
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      try {
-        const result = Function(`"use strict"; return (${filteredSize})`)();
-
-        if (typeof result === "number" && isFinite(result)) {
-          setCurrentSize(result > 120 ? 120 : result < 8 ? 8 : result);
-          setTempSize(String(result > 120 ? 120 : result < 8 ? 8 : result));
-        }
-      } catch {
-        console.log("Something wrong")
+      const parsed = parseFontSize(tempSize);
+      if (parsed !== null) {
+        setCurrentSize(parsed);
+        setTempSize(String(parsed));
       }
     }
   };
