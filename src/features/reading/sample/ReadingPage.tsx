@@ -2,9 +2,7 @@
 import { useRef, useState } from "react";
 import Main from "@/src/shared/ui/Main";
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
-import FontSelector from "@/src/components/font/FontSelector"
-import FontSizeSelector from "@/src/components/font/FontSizeSelector"
-import AlignSelector from "@/src/features/reading/align/AlignSelector"
+import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
 
 export default function ReadingPage({ content }: { content: string }) {

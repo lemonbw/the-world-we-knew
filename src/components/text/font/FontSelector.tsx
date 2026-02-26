@@ -9,7 +9,7 @@ type FontSelectorProps = {
   setQuery: (query: string) => void;
 };
 
-export default function FontSelector({
+export function FontSelector({
   currentFont,
   setCurrentFont,
   query,

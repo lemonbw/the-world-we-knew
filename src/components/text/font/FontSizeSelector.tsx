@@ -7,7 +7,7 @@ type FontSizeSelectorProps = {
   setCurrentSize: (size: number) => void;
 };
 
-export default function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelectorProps) {
+export function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelectorProps) {
   const { isHidden, setIsHidden, hoveredSize, setHoveredSize, tempSize, setTempSize } = useFontSizeSelectorState(currentSize)
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
