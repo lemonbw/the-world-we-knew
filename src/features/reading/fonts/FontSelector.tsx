@@ -1,5 +1,7 @@
-import { useState, useEffect, useDeferredValue } from "react";
-import { systemFonts, isFontRendered } from "@/src/shared/lib/fonts"
+import { useDeferredValue } from "react";
+import { useAvailableFonts } from "@/src/shared/hooks/useAvailableFonts";
+import { useFontSelectorState } from "@/src/shared/hooks/useFontSelectorState";
+
 type FontSelectorProps = {
   currentFont: string;
   setCurrentFont: (font: string) => void;
@@ -13,27 +15,19 @@ export default function FontSelector({
   query,
   setQuery
 }: FontSelectorProps) {
-  const [availableFonts, setAvailableFonts] = useState<string[]>([]);
-  const [tempFont, setTempFont] = useState(currentFont);
-  const [isHidden, setIsHidden] = useState(true);
-  const [isHiddenFonts, setIsHiddenFonts] = useState(true);
-  const [hoveredFont, setHoveredFont] = useState<string | null>(null);
+  const {
+    tempFont,
+    setTempFont,
+    isHidden,
+    setIsHidden,
+    isHiddenFonts,
+    setIsHiddenFonts,
+    hoveredFont,
+    setHoveredFont
+  } = useFontSelectorState(currentFont);
 
   const deferredQuery = useDeferredValue(query);
-
-  useEffect(() => {
-    const filtered = systemFonts.filter(font => isFontRendered(font));
-
-    const frame = requestAnimationFrame(() => {
-      setAvailableFonts(isHiddenFonts ? filtered : systemFonts);
-    });
-
-    return () => cancelAnimationFrame(frame);
-  }, [isHiddenFonts]);
-
-  const filteredList = availableFonts.filter(f =>
-    f.toLowerCase().includes(deferredQuery.toLowerCase())
-  );
+  const filteredList = useAvailableFonts(deferredQuery, isHiddenFonts);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -79,7 +73,8 @@ export default function FontSelector({
         >
           {isHiddenFonts ? "Недоступные шрифты скрыты" : "Недоступные шрифты отображены"}
           <span
-            className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === "toggle-hidden" ? "w-full" : "w-0"}`}
+            className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === "toggle-hidden" ? "w-full" : "w-0"
+              }`}
           ></span>
         </button>
 
@@ -101,7 +96,6 @@ export default function FontSelector({
               className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === font ? "w-full" : "w-0"
                 }`}
             ></span>
-
             {font}
           </button>
         ))}
@@ -109,4 +103,3 @@ export default function FontSelector({
     </div>
   );
 }
-
