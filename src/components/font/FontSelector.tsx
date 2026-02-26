@@ -1,6 +1,6 @@
 import { useDeferredValue } from "react";
-import { useAvailableFonts } from "@/src/shared/hooks/useAvailableFonts";
-import { useFontSelectorState } from "@/src/shared/hooks/useFontSelectorState";
+import { useAvailableFonts } from "@/src/shared/hooks/fonts";
+import { useFontSelectorState } from "@/src/shared/hooks/fonts";
 
 type FontSelectorProps = {
   currentFont: string;

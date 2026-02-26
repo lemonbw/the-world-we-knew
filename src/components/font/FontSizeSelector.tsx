@@ -1,5 +1,5 @@
 import { fontSizes } from "@/src/shared/lib/fonts/fontSizes"
-import { useFontSizeSelectorState } from "@/src/shared/hooks/useFontSizeSelectorState"
+import { useFontSizeSelectorState } from "@/src/shared/hooks/fonts"
 import { parseFontSize } from "@/src/shared/lib/fonts";
 
 type FontSizeSelectorProps = {

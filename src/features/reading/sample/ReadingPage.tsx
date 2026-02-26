@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Main from "@/src/shared/ui/Main";
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
 import FontSelector from "@/src/components/font/FontSelector"
-import FontSizeSelector from "@/src/features/reading/fonts/FontSizeSelector"
+import FontSizeSelector from "@/src/components/font/FontSizeSelector"
 import AlignSelector from "@/src/features/reading/align/AlignSelector"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
 
