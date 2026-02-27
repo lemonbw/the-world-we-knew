@@ -67,7 +67,7 @@ export default function ChapterSelector() {
 
   return (
     <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
-      <SearchInput query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(!isChaptersHidden)} className={className} placeholder={placeholder}></SearchInput>
+      <SearchInput query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(false)} className={className} placeholder={placeholder}></SearchInput>
       <button
         type="button"
         onClick={() => setIsChaptersHidden(!isChaptersHidden)}
