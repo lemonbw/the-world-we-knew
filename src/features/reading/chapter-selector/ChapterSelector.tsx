@@ -62,12 +62,15 @@ export default function ChapterSelector() {
 
   const className = "absolute left-0 w-68 p-1 h-7.5 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
 
-  const placeholder = "Chapter, title, date"
+  const currentChapter = chapters.find(ch => ch.slug === slug);
 
+  const placeholder = currentChapter
+    ? `${currentChapter.title}`
+    : "Chapter, title, date";
 
   return (
     <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
-      <SearchInput query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(false)} className={className} placeholder={placeholder}></SearchInput>
+      <SearchInput query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(false)} className={className} placeholder={placeholder} />
       <button
         type="button"
         onClick={() => setIsChaptersHidden(!isChaptersHidden)}
