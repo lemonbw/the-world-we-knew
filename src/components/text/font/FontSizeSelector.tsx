@@ -1,5 +1,6 @@
 import { fontSizes } from "@/src/shared/lib/fonts/fontSizes"
 import { useFontSizeSelectorState } from "@/src/shared/hooks/fonts"
+import { useClickOutside } from "@/src/shared/hooks/useClickOutside"
 import { parseFontSize } from "@/src/shared/lib/fonts";
 
 type FontSizeSelectorProps = {
@@ -9,6 +10,8 @@ type FontSizeSelectorProps = {
 
 export function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelectorProps) {
   const { isHidden, setIsHidden, hoveredSize, setHoveredSize, tempSize, setTempSize } = useFontSizeSelectorState(currentSize)
+
+  const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true))
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -22,7 +25,7 @@ export function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelect
 
   return (
 
-    <div className="relative w-21 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
+    <div ref={divRef} className="relative w-21 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
       <div className="flex border-1 rounded-sm">
         <input type="text" value={tempSize}
           onChange={(e) => setTempSize(e.target.value)}
