@@ -4,6 +4,7 @@ import { useDeferredValue } from "react";
 import Link from "next/link";
 import { chapters } from "@/src/shared/content/meta/chapters";
 import SearchInput from "@/src/shared/ui/SearchInput"
+import { useClickOutside } from "@/src/shared/hooks/useClickOutside";
 
 export default function ChapterSelector() {
 
@@ -23,6 +24,8 @@ export default function ChapterSelector() {
 
   const rowHoverDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const divRef = useClickOutside<HTMLDivElement>(() => setIsChaptersHidden(true))
+
   const filteredChapters = useMemo(() => {
     if (!deferredQuery) return chapters;
     const q = deferredQuery.toLowerCase();
@@ -40,17 +43,6 @@ export default function ChapterSelector() {
     return `${base} ${color}`;
   };
 
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (divRef.current && !divRef.current.contains(event.target as Node)) {
-        setIsChaptersHidden(true);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const listRef = useRef<HTMLDivElement>(null);
   const chapterRef = useRef<HTMLTableRowElement>(null);
@@ -71,6 +63,7 @@ export default function ChapterSelector() {
   const className = "absolute left-0 w-68 p-1 h-7.5 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
 
   const placeholder = "Chapter, title, date"
+
 
   return (
     <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
