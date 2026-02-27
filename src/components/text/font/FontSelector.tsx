@@ -1,6 +1,7 @@
 import { useDeferredValue } from "react";
 import { useAvailableFonts } from "@/src/shared/hooks/fonts";
 import { useFontSelectorState } from "@/src/shared/hooks/fonts";
+import { useClickOutside } from "@/src/shared/hooks/useClickOutside";
 
 type FontSelectorProps = {
   currentFont: string;
@@ -29,6 +30,8 @@ export function FontSelector({
   const deferredQuery = useDeferredValue(query);
   const filteredList = useAvailableFonts(deferredQuery, isHiddenFonts);
 
+  const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true))
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setCurrentFont(tempFont);
@@ -37,7 +40,7 @@ export function FontSelector({
   };
 
   return (
-    <div className="relative w-60 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
+    <div ref={divRef} className="relative w-60 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
       <div className="flex border-1 rounded-sm">
         <input
           type="search"
