@@ -60,7 +60,7 @@ export default function ChapterSelector() {
     }
   }, [isChaptersHidden, slug]);
 
-  const className = "absolute left-0 w-68 p-1 h-7.5 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
+  const className = "absolute left-0 w-68 p-1 h-[34px] outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
 
   const currentChapter = chapters.find(ch => ch.slug === slug);
 
@@ -69,12 +69,12 @@ export default function ChapterSelector() {
     : "Chapter, title, date";
 
   return (
-    <div className="relative border-1 rounded-sm w-78 mr-2 h-8 mt-1" ref={divRef}>
+    <div className="relative border-1 rounded-sm w-78 mr-2 h-[34px] mt-[5px]" ref={divRef}>
       <SearchInput query={query} setQuery={setQuery} onClick={() => setIsChaptersHidden(false)} className={className} placeholder={placeholder} />
       <button
         type="button"
         onClick={() => setIsChaptersHidden(!isChaptersHidden)}
-        className="absolute material-icons text-lg w-10 border-l h-7.5 right-0"
+        className="absolute material-icons text-lg w-10 border-l h-8 right-0"
       >
         keyboard_arrow_down
       </button>
