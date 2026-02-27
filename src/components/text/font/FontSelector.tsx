@@ -2,6 +2,7 @@ import { useDeferredValue } from "react";
 import { useAvailableFonts } from "@/src/shared/hooks/fonts";
 import { useFontSelectorState } from "@/src/shared/hooks/fonts";
 import { useClickOutside } from "@/src/shared/hooks/useClickOutside";
+import SearchInput from "@/src/shared/ui/SearchInput"
 
 type FontSelectorProps = {
   currentFont: string;
@@ -17,8 +18,6 @@ export function FontSelector({
   setQuery
 }: FontSelectorProps) {
   const {
-    tempFont,
-    setTempFont,
     isHidden,
     setIsHidden,
     isHiddenFonts,
@@ -32,28 +31,12 @@ export function FontSelector({
 
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true))
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      setCurrentFont(tempFont);
-      setIsHidden(true);
-    }
-  };
+  const className = "w-49 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
 
   return (
     <div ref={divRef} className="relative w-60 inline-block px-2 py-1 mr-1 h-9 mt-[1px]">
       <div className="flex border-1 rounded-sm">
-        <input
-          type="search"
-          value={tempFont}
-          onClick={() => setIsHidden(false)}
-          onChange={(e) => {
-            setTempFont(e.target.value);
-            setQuery(e.target.value);
-          }}
-          onKeyDown={handleKeyDown}
-          className="w-49 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
-        />
-
+        <SearchInput query={query} setQuery={setQuery} onClick={() => setIsHidden(false)} className={className} placeholder={currentFont} />
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
@@ -87,7 +70,6 @@ export function FontSelector({
             type="button"
             onClick={() => {
               setCurrentFont(font);
-              setTempFont(font);
               setIsHidden(true);
             }}
             onMouseEnter={() => setHoveredFont(font)}
