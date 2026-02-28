@@ -7,7 +7,7 @@ export default function Header() {
   const [hoveredIndex, setHovered] = useState(0);
 
   return (
-    <header className="w-full bg-[#010407] border-white mt-3">
+    <header className="w-full bg-[#010407] border-white mt-5">
       <div className="h-[5vh] mt-4 flex items-center justify-center">
         <Link href="/" className="relative" onMouseEnter={() => setHovered(5)}
           onMouseLeave={() => setHovered(0)}>
