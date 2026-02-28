@@ -28,7 +28,7 @@ export default function ReadingPage({ content }: { content: string }) {
       <section
         ref={readingSection}
         id="reading-section"
-        className="flex flex-col h-[100vh] w-[80vw] overflow-y-auto mx-auto mt-4 p-3"
+        className="flex flex-col w-[80vw] mx-auto mt-4 p-3"
       >
         <div className="w-[70vw] h-10 flex flex-none justify-start gap-1 mb-2">
           <ChapterSelector></ChapterSelector>
@@ -40,7 +40,19 @@ export default function ReadingPage({ content }: { content: string }) {
             onClick={toggleFullscreen}
           >{icon}</button>
         </div>
-        <p style={{ fontSize: `${currentSize}px`, fontFamily: `${currentFont}`, userSelect: "text", textAlign: `${currentAlign}` }} >{content}</p>
+        <div className="border-1 rounded-2xl overflow-hidden h-[100vh]">
+          <p
+            className="p-2 h-full overflow-y-auto"
+            style={{
+              fontSize: `${currentSize}px`,
+              fontFamily: `${currentFont}`,
+              userSelect: "text",
+              textAlign: `${currentAlign}`,
+            }}
+          >
+            {content}
+          </p>
+        </div>
       </section>
     </Main >
   )
