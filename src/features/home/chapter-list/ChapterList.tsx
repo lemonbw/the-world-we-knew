@@ -2,9 +2,9 @@
 import { useState, useMemo, useRef } from "react";
 import { useDeferredValue } from "react";
 import Link from "next/link";
-import ChapterSort from "./ChapterSort";
-import chunkChapters from "./chunkChapters";
-import { ChapterSearch } from "./ChapterSearch";
+import ChapterSort from "@/src/features/home/chapter-list/ChapterSort";
+import chunkChapters from "@/src/features/home/chapter-list/chunkChapters";
+import SearchInput from "@/src/shared/ui/SearchInput";
 
 export default function ChapterList() {
   const NO_HOVER = -2;
@@ -13,6 +13,9 @@ export default function ChapterList() {
 
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
+
+  const className = "mt-3 mb-2 text-center w-80 border rounded h-8"
+  const placeholder = "Chapter, title, date"
 
   const [isAsc, setIsAsc] = useState<"asc" | "desc">("asc");
   const [direction, setDirection] = useState<"toRight" | "toLeft" | "toDown" | "toUp">("toRight");
@@ -113,7 +116,7 @@ export default function ChapterList() {
         <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-500 ${hoveredButton === 5 ? "w-[125%]" : "w-0"} ${isSortButtonPressed ? "bg-black" : "bg-white"}`}></span>
       </button>
       <div className="border-1 rounded-xl overflow-hidden mt-6 mb-40">
-        <ChapterSearch query={query} setQuery={setQuery} />
+        <SearchInput query={query} setQuery={setQuery} className={className} placeholder={placeholder} />
         <table className="w-full border-collapse text-[1.1rem] table-fixed">
           <thead>
             <tr className="bg-gray-200 dark:bg-black text-gray-800 dark:text-gray-200 text-[1.2rem] border-b">

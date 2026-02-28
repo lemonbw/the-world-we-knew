@@ -1,4 +1,4 @@
-import Main from "../components/Main";
+import Main from "@/src/shared/ui/Main";
 
 export default function NewsPage() {
   return (
