@@ -29,9 +29,9 @@ export default function ReadingPage({ content }: { content: string }) {
       <section
         ref={readingSection}
         id="reading-section"
-        className="flex flex-col w-[80vw] mx-auto mt-4"
+        className="flex flex-col w-[80vw] mx-auto mt-4 h-[100vh]"
       >
-        <div className="w-[70vw] h-10 flex flex-none justify-start gap-1 mb-2">
+        <div className="w-[70vw] h-10 flex flex-none justify-start gap-1 mb-2 mt-4 ml-0.5">
           <ChapterSelector></ChapterSelector>
           <FontSelector currentFont={currentFont} setCurrentFont={setCurrentFont} query={fontQuery} setQuery={setFontQuery}></FontSelector>
           <FontSizeSelector currentSize={currentSize} setCurrentSize={setCurrentSize}></FontSizeSelector>
