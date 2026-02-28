@@ -26,7 +26,13 @@ export default function useFullscreen({ readingSection }: UseFullscreenProps) {
       const tag = (e.target as HTMLElement).tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement).isContentEditable) return;
 
-      if (e.key.toLowerCase() === "f") {
+      if (
+        e.key.toLowerCase() === "f" &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey &&
+        !e.shiftKey
+      ) {
         e.preventDefault();
         toggleFullscreen();
       }
