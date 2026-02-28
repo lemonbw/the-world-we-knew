@@ -115,7 +115,7 @@ export default function ChapterList() {
         </span>
         <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-500 ${hoveredButton === 5 ? "w-[125%]" : "w-0"} ${isSortButtonPressed ? "bg-black" : "bg-white"}`}></span>
       </button>
-      <div className="border-1 rounded-xl overflow-hidden mt-6 mb-40">
+      <div className="border-1 rounded-xl overflow-hidden mt-6">
         <SearchInput query={query} setQuery={setQuery} className={className} placeholder={placeholder} />
         <table className="w-full border-collapse text-[1.1rem] table-fixed">
           <thead>

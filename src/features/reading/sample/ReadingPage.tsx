@@ -29,7 +29,7 @@ export default function ReadingPage({ content }: { content: string }) {
       <section
         ref={readingSection}
         id="reading-section"
-        className="flex flex-col w-[80vw] mx-auto mt-4 p-3"
+        className="flex flex-col w-[80vw] mx-auto mt-4"
       >
         <div className="w-[70vw] h-10 flex flex-none justify-start gap-1 mb-2">
           <ChapterSelector></ChapterSelector>

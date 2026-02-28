@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full border-t-1 flex items-start justify-center h-21 *:mt-2">
+    <footer className="w-full flex items-start justify-center h-21 *:mt-2">
       <p className="mr-4">© {new Date().getFullYear()} The World We Knew </p>
       <p className="font-bold mr-2">Social:</p>
       <ul className="flex flex-col flex-end text-left">
