@@ -4,12 +4,13 @@ import Main from "@/src/shared/ui/Main";
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
+import { decodeMarkdown } from "@/src/shared/lib/decodeMarkdown"
 
 export default function ReadingPage({ content }: { content: string }) {
 
   const readingSection = useRef<HTMLElement | null>(null);
 
-  const [currentSize, setCurrentSize] = useState(24);
+  const [currentSize, setCurrentSize] = useState(20);
 
   const [currentFont, setCurrentFont] = useState("system-ui");
 
@@ -41,7 +42,7 @@ export default function ReadingPage({ content }: { content: string }) {
           >{icon}</button>
         </div>
         <div className="border-1 rounded-2xl overflow-hidden h-[100vh]">
-          <p
+          <div
             className="p-2 h-full overflow-y-auto"
             style={{
               fontSize: `${currentSize}px`,
@@ -50,8 +51,9 @@ export default function ReadingPage({ content }: { content: string }) {
               textAlign: `${currentAlign}`,
             }}
           >
-            {content}
-          </p>
+            <div dangerouslySetInnerHTML={{ __html: decodeMarkdown(content) }}>
+            </div>
+          </div>
         </div>
       </section>
     </Main >
