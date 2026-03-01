@@ -8,21 +8,19 @@ export default function Panel() {
   const section = pathname === "/chapters" ? "Chapters" : "Overview";
 
   return (
-    <div className="flex relative border rounded-xl w-60 h-10 mt-7 overflow-hidden *:duration-500">
+    <div className="flex border rounded-xl w-55 h-10 my-7 overflow-hidden *:w-1/2 *:pt-0.5 *:pl-4 *:text-center">
       <Link
         href="/"
-        className={`flex-1 text-2xl ${section === "Overview" ? "bg-white text-black" : "bg-black text-white"}`}
+        className={`flex text-2xl ${section === "Overview" ? "bg-white text-black" : "bg-black text-white"}`}
       >
-        Описание
+        Обзор
       </Link>
       <Link
         href="/chapters"
-        className={`flex-1 text-2xl ${section === "Chapters" ? "bg-white text-black" : "bg-black text-white"}`}
+        className={`flex text-2xl ${section === "Chapters" ? "bg-white text-black" : "bg-black text-white"}`}
       >
         Главы
       </Link>
-
-      <div className="absolute left-1/2 h-full w-[1.5px] bg-white"></div>
     </div >
   )
 }
