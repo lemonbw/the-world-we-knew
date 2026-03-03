@@ -4,7 +4,7 @@ import Main from "@/src/shared/ui/Main";
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
-import { decodeMarkdown } from "@/src/shared/lib/decodeMarkdown"
+import ReadingContent from "@/src/components/ReadingContent"
 
 export default function ReadingPage({ content }: { content: string }) {
 
@@ -51,8 +51,7 @@ export default function ReadingPage({ content }: { content: string }) {
               textAlign: `${currentAlign}`,
             }}
           >
-            <div dangerouslySetInnerHTML={{ __html: decodeMarkdown(content) }}>
-            </div>
+            <ReadingContent content={content}></ReadingContent>
           </div>
         </div>
       </section>
