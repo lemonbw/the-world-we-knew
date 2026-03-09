@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 
-export function useReadingSampleState() {
+export function useReadingState() {
   const readingSection = useRef<HTMLElement | null>(null);
 
   const [currentSize, setCurrentSize] = useState(20);

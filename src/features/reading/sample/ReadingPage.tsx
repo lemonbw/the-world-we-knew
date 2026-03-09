@@ -4,7 +4,7 @@ import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSele
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
 import ReadingContent from "@/src/components/ReadingContent"
-import { useReadingSampleState } from "@/src/shared/hooks/reading/useReadingSampleState"
+import { useReadingState } from "@/src/shared/hooks/reading/useReadingState"
 
 export default function ReadingPage({ content }: { content: string }) {
 
@@ -18,7 +18,7 @@ export default function ReadingPage({ content }: { content: string }) {
     setFontQuery,
     currentAlign,
     setCurrentAlign,
-  } = useReadingSampleState()
+  } = useReadingState()
 
   const { fullscreen, toggleFullscreen } = useFullscreen({
     readingSection,
@@ -65,16 +65,15 @@ export default function ReadingPage({ content }: { content: string }) {
         </div>
 
         <div className="flex-1 border rounded-2xl overflow-hidden">
-
           <div
-            className="p-4 h-full overflow-y-auto select-text"
+            className="p-1 h-full overflow-y-auto select-text"
             style={{
               fontSize: `${currentSize}px`,
               fontFamily: currentFont,
               textAlign: currentAlign,
             }}
           >
-            <ReadingContent content={content} />
+            <ReadingContent className="p-1 h-full overflow-y-auto" content={content} />
           </div>
 
         </div>

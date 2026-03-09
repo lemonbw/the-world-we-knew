@@ -13,11 +13,12 @@ const schema = {
 
 type ReadingContentProps = {
   content: string;
+  className?: string;
 };
 
-export default function ReadingContent({ content }: ReadingContentProps) {
+export default function ReadingContent({ content, className }: ReadingContentProps) {
   return (
-    <div className="p-2 h-full overflow-y-auto">
+    <div className={className}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[[rehypeSanitize, schema]]}>
