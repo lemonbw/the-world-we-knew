@@ -1,15 +1,85 @@
+"use client"
+import { useState, useEffect } from "react"
+import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
+import useFullscreen from "@/src/shared/hooks/useFullscreen"
+import ReadingContent from "@/src/components/ReadingContent"
+import { useReadingState } from "@/src/shared/hooks/reading/useReadingState"
+
 export default function Description() {
+
+  const {
+    readingSection,
+    currentSize,
+    setCurrentSize,
+    currentFont,
+    setCurrentFont,
+    fontQuery,
+    setFontQuery,
+    currentAlign,
+    setCurrentAlign,
+  } = useReadingState()
+
+  const [content, setContent] = useState("")
+
+  useEffect(() => {
+    fetch("/overview.md")
+      .then((res) => res.text())
+      .then(setContent)
+  }, [])
+
+  const { fullscreen, toggleFullscreen } = useFullscreen({
+    readingSection,
+  })
+
+  const icon = fullscreen ? "fullscreen_exit" : "fullscreen"
 
   const genres = ["хоррор", "военная проза", "тёмное фэнтези", "научная фантастика", "романтика"]
 
   return (
-    <div className="border-1 rounded-xl *:text-xl">
-      <p className="max-w-[80ch] p-2 select-text" >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt officia nam illo corrupti dicta eum quasi itaque voluptate animi fuga voluptas iste consequatur ducimus nostrum qui delectus, odit vel odio sapiente id iusto consequuntur enim porro ut. Corporis quas vel, alias eligendi similique asperiores quam eaque totam possimus officia magni provident quidem eos consequatur illum iste tempore laboriosam hic distinctio minus perferendis delectus, doloremque ut porro? Accusamus expedita corporis quia? Ipsa sequi repellat voluptatum, qui inventore, non tenetur numquam nam consequuntur dolorem, sunt est ad quidem ullam reprehenderit omnis doloremque. Minus ab vitae inventore, praesentium corporis qui nostrum tempore. Laborum numquam fuga asperiores delectus in molestias omnis laboriosam cumque minus expedita, aut, provident est. Ipsum numquam nostrum beatae voluptate ullam deserunt, harum fuga expedita impedit tempora! Facilis animi dolorem consequatur eveniet obcaecati. Tempora voluptatibus maxime mollitia quos totam voluptates quo autem a tenetur non unde officiis omnis repudiandae cumque, similique minima quisquam consectetur. Nam a earum harum nostrum quae commodi neque hic vel quo consequuntur! Temporibus, tenetur quam! Dolores distinctio, voluptates voluptate, veniam nostrum sed quas nisi ut rerum similique impedit fugit fuga aut porro aliquid eligendi consequuntur placeat architecto omnis enim velit cum maxime perferendis dolorum? Recusandae, qui quis.</p >
-      <div className="flex flex-row gap-2 p-1 *:px-1 *:border-1 *:rounded-sm *:hover:text-black *:hover:bg-white *:duration-300">
-        {genres.map((genre) => (
-          <span key={genre}>{genre}</span>
-        ))}
+    <div>
+      <div className="flex flex-none items-center gap-1 h-10 mb-2 mt-4 ml-0.5">
+        <FontSelector
+          currentFont={currentFont}
+          setCurrentFont={setCurrentFont}
+          query={fontQuery}
+          setQuery={setFontQuery}
+        />
+        <FontSizeSelector
+          currentSize={currentSize}
+          setCurrentSize={setCurrentSize}
+        />
+        <AlignSelector
+          currentAlign={currentAlign}
+          setCurrentAlign={setCurrentAlign}
+        />
+        <button
+          className="material-icons text-[2.2rem]! hover:text-[2.4rem]! transition-all duration-300 w-10 ml-1"
+          onClick={toggleFullscreen}
+        >
+          {icon}
+        </button>
+
       </div>
-    </div >
+      <section ref={readingSection} className="border rounded-2xl overflow-hidden">
+        <div
+          className="p-4 overflow-y-auto"
+          style={{
+            fontSize: `${currentSize}px`,
+            fontFamily: currentFont,
+            textAlign: currentAlign,
+          }}
+        >
+          <div className="max-w-[70ch] mx-auto">
+            <ReadingContent content={content} />
+          </div>
+
+          <div className="flex flex-row gap-2 mt-3 *:px-1 *:border *:rounded-sm">
+            {genres.map((genre) => (
+              <span key={genre}>{genre}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
