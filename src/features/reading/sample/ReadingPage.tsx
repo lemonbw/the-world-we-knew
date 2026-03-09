@@ -56,7 +56,7 @@ export default function ReadingPage({ content }: { content: string }) {
           />
 
           <button
-            className="material-icons text-[2.2rem]! hover:text-[2.4rem]! transition-all duration-300 w-10 ml-1"
+            className="material-icons text-[2.5rem]! hover:text-[2.6rem]! transition-all duration-300 w-10 ml-7 mt-2"
             onClick={toggleFullscreen}
           >
             {icon}

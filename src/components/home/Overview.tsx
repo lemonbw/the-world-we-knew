@@ -36,8 +36,13 @@ export default function Description() {
   const genres = ["хоррор", "военная проза", "тёмное фэнтези", "научная фантастика", "романтика"]
 
   return (
-    <div>
-      <div className="flex flex-none items-center gap-1 h-10 mb-2 mt-4 ml-0.5">
+    <section
+      ref={readingSection}
+      id="reading-section"
+      className="flex flex-col w-[80vw] mx-auto mt-4 h-[80vh]"
+    >
+
+      <div className="flex flex-none items-center gap-1 w-[70vw] h-10 mb-2 mt-4 ml-0.5">
         <FontSelector
           currentFont={currentFont}
           setCurrentFont={setCurrentFont}
@@ -53,33 +58,30 @@ export default function Description() {
           setCurrentAlign={setCurrentAlign}
         />
         <button
-          className="material-icons text-[2.2rem]! hover:text-[2.4rem]! transition-all duration-300 w-10 ml-1"
+          className="material-icons text-[2.5rem]! hover:text-[2.6rem]! transition-all duration-300 w-10 ml-7 mt-2"
           onClick={toggleFullscreen}
         >
           {icon}
         </button>
 
       </div>
-      <section ref={readingSection} className="border rounded-2xl overflow-hidden">
+      <div className="flex-1 border rounded-2xl overflow-hidden">
         <div
-          className="p-4 overflow-y-auto"
+          className="p-1 h-full overflow-y-auto"
           style={{
             fontSize: `${currentSize}px`,
             fontFamily: currentFont,
             textAlign: currentAlign,
           }}
         >
-          <div className="max-w-[70ch] mx-auto">
-            <ReadingContent content={content} />
-          </div>
-
-          <div className="flex flex-row gap-2 mt-3 *:px-1 *:border *:rounded-sm">
+          <ReadingContent className="p-1 select-text" content={content} />
+          <div className="flex flex-row gap-2 mt-3 p-1 *:hover:text-black *:hover:bg-white *:duration-300 *:px-1 *:border *:rounded-sm">
             {genres.map((genre) => (
               <span key={genre}>{genre}</span>
             ))}
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   )
 }
