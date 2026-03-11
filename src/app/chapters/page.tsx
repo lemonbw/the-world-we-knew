@@ -1,15 +1,15 @@
 import Main from "@/src/shared/ui/Main";
 import BookCard from "@/src/features/home/book-card/BookCard";
 import Panel from "@/src/components/home/Panel"
-import Overview from "@/src/components/home/Overview"
+import ChapterList from "@/src/features/home/chapter-list/ChapterList";
 
-export default function Home() {
+export default function Chapters() {
 
   return (
     <Main>
       <BookCard></BookCard>
       <Panel />
-      <Overview></Overview>
+      <ChapterList></ChapterList>
     </Main>
   );
 }

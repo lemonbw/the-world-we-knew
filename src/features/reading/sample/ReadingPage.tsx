@@ -1,61 +1,84 @@
-"use client";
-import { useRef, useState } from "react";
-import Main from "@/src/shared/ui/Main";
+"use client"
+import Main from "@/src/shared/ui/Main"
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
-import { decodeMarkdown } from "@/src/shared/lib/decodeMarkdown"
+import ReadingContent from "@/src/components/ReadingContent"
+import { useReadingState } from "@/src/shared/hooks/reading/useReadingState"
 
 export default function ReadingPage({ content }: { content: string }) {
 
-  const readingSection = useRef<HTMLElement | null>(null);
-
-  const [currentSize, setCurrentSize] = useState(20);
-
-  const [currentFont, setCurrentFont] = useState("system-ui");
-
-  const [fontQuery, setFontQuery] = useState("")
-
-  const [currentAlign, setCurrentAlign] = useState<"left" | "center" | "right" | "justify">("left")
+  const {
+    readingSection,
+    currentSize,
+    setCurrentSize,
+    currentFont,
+    setCurrentFont,
+    fontQuery,
+    setFontQuery,
+    currentAlign,
+    setCurrentAlign,
+  } = useReadingState()
 
   const { fullscreen, toggleFullscreen } = useFullscreen({
     readingSection,
-  });
+  })
 
-  const icon = fullscreen ? "fullscreen_exit" : "fullscreen";
+  const icon = fullscreen ? "fullscreen_exit" : "fullscreen"
 
   return (
     <Main>
       <section
         ref={readingSection}
         id="reading-section"
-        className="flex flex-col w-[80vw] mx-auto mt-4 h-[100vh]"
+        className="flex flex-col w-[80vw] mx-auto mt-4 h-screen"
       >
-        <div className="w-[70vw] h-10 flex flex-none justify-start gap-1 mb-2 mt-4 ml-0.5">
-          <ChapterSelector></ChapterSelector>
-          <FontSelector currentFont={currentFont} setCurrentFont={setCurrentFont} query={fontQuery} setQuery={setFontQuery}></FontSelector>
-          <FontSizeSelector currentSize={currentSize} setCurrentSize={setCurrentSize}></FontSizeSelector>
-          <AlignSelector currentAlign={currentAlign} setCurrentAlign={setCurrentAlign}></AlignSelector>
+
+        <div className="flex flex-none items-center gap-1 w-[70vw] h-10 mb-2 mt-4 ml-0.5">
+
+          <ChapterSelector />
+
+          <FontSelector
+            currentFont={currentFont}
+            setCurrentFont={setCurrentFont}
+            query={fontQuery}
+            setQuery={setFontQuery}
+          />
+
+          <FontSizeSelector
+            currentSize={currentSize}
+            setCurrentSize={setCurrentSize}
+          />
+
+          <AlignSelector
+            currentAlign={currentAlign}
+            setCurrentAlign={setCurrentAlign}
+          />
+
           <button
-            className="material-icons inline-block text-[2.2rem]! hover:text-[2.4rem]! ease-in-out duration-300 w-10 ml-1 mt-1"
+            className="material-icons text-[2.5rem]! hover:text-[2.6rem]! transition-all duration-300 w-10 ml-7 mt-2"
             onClick={toggleFullscreen}
-          >{icon}</button>
+          >
+            {icon}
+          </button>
+
         </div>
-        <div className="border-1 rounded-2xl overflow-hidden h-[100vh]">
+
+        <div className="flex-1 border rounded-2xl overflow-hidden">
           <div
-            className="p-2 h-full overflow-y-auto"
+            className="p-1 h-full overflow-y-auto select-text"
             style={{
               fontSize: `${currentSize}px`,
-              fontFamily: `${currentFont}`,
-              userSelect: "text",
-              textAlign: `${currentAlign}`,
+              fontFamily: currentFont,
+              textAlign: currentAlign,
             }}
           >
-            <div dangerouslySetInnerHTML={{ __html: decodeMarkdown(content) }}>
-            </div>
+            <ReadingContent className="p-1 h-full overflow-y-auto" content={content} />
           </div>
+
         </div>
+
       </section>
-    </Main >
+    </Main>
   )
 }

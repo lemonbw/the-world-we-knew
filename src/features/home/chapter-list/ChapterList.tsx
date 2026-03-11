@@ -109,11 +109,11 @@ export default function ChapterList() {
         onMouseLeave={() => { if (buttonHoverDelayRef.current) { clearTimeout(buttonHoverDelayRef.current); buttonHoverDelayRef.current = null; } setHoveredButton(-1); }}
         onClick={activateSortButton}
       >
-        <span className="text-[1.5rem] -ml-2">
+        <span className="text-[1.7rem] -ml-5">
           Сортировка
-          <span className={`absolute inline-block transition-transform duration-800 ml-0.5 bottom-[-0.5rem] text-[2rem] ${isAsc === "asc" ? "rotate-0" : "-rotate-180"}`}>▼</span>
+          <span className={`absolute inline-block transition-transform duration-800 ml-0.5 bottom-[-0.5rem] text-[2.1rem] ${isAsc === "asc" ? "rotate-0" : "-rotate-180"}`}>▼</span>
         </span>
-        <span className={`absolute inline-block -left-2.5 bottom-0 h-[2px] origin-left transition-all duration-500 ${hoveredButton === 5 ? "w-[125%]" : "w-0"} ${isSortButtonPressed ? "bg-black" : "bg-white"}`}></span>
+        <span className={`absolute inline-block -left-5 bottom-0 h-[2px] origin-left transition-all duration-500 ${hoveredButton === 5 ? "w-[130%]" : "w-0"} ${isSortButtonPressed ? "bg-black" : "bg-white"}`}></span>
       </button>
       <div className="border-1 rounded-xl overflow-hidden mt-6">
         <SearchInput query={query} setQuery={setQuery} className={className} placeholder={placeholder} />

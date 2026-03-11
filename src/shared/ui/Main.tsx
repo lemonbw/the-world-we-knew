@@ -5,7 +5,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full h-dvh bg-zinc-50 font-sans dark:bg-[#010407]">
       <Header />
-      <main className="flex flex-col item-center justify-center bg-white dark:bg-[#010407]">
+      <main className="flex flex-col items-center justify-center bg-white dark:bg-[#010407] overflow-x-hidden">
         {children}
       </main>
       <Footer />
