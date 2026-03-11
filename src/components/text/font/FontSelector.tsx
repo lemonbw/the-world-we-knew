@@ -24,7 +24,7 @@ export function FontSelector({
     setIsHiddenFonts,
     hoveredFont,
     setHoveredFont
-  } = useFontSelectorState(currentFont);
+  } = useFontSelectorState();
 
   const deferredQuery = useDeferredValue(query);
   const filteredList = useAvailableFonts(deferredQuery, isHiddenFonts);

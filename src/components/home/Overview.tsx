@@ -41,29 +41,30 @@ export default function Description() {
       id="reading-section"
       className="flex flex-col w-[80vw] mx-auto mt-4 h-[80vh]"
     >
+      <div className="overflow-x-auto h-60 -mb-48">
+        <div className={`flex flex-none items-center gap-1 ${fullscreen ? "w-[100vw] lg:w-[70vw]" : "w-[80vw] lg:w-[70vw]"} h-10 mb-2 -ml-[0.225rem] lg:-ml-1`}>
+          <FontSelector
+            currentFont={currentFont}
+            setCurrentFont={setCurrentFont}
+            query={fontQuery}
+            setQuery={setFontQuery}
+          />
+          <FontSizeSelector
+            currentSize={currentSize}
+            setCurrentSize={setCurrentSize}
+          />
+          <AlignSelector
+            currentAlign={currentAlign}
+            setCurrentAlign={setCurrentAlign}
+          />
+          <button
+            className="material-icons text-[2.5rem]! hover:text-[2.6rem]! transition-all duration-300 w-10 ml-7 mt-2"
+            onClick={toggleFullscreen}
+          >
+            {icon}
+          </button>
 
-      <div className="flex flex-none items-center gap-1 w-[70vw] h-10 mb-2 -ml-1">
-        <FontSelector
-          currentFont={currentFont}
-          setCurrentFont={setCurrentFont}
-          query={fontQuery}
-          setQuery={setFontQuery}
-        />
-        <FontSizeSelector
-          currentSize={currentSize}
-          setCurrentSize={setCurrentSize}
-        />
-        <AlignSelector
-          currentAlign={currentAlign}
-          setCurrentAlign={setCurrentAlign}
-        />
-        <button
-          className="material-icons text-[2.5rem]! hover:text-[2.6rem]! transition-all duration-300 w-10 ml-7 mt-2"
-          onClick={toggleFullscreen}
-        >
-          {icon}
-        </button>
-
+        </div>
       </div>
       <div className="flex-1 border rounded-2xl overflow-hidden">
         <div
