@@ -1,3 +1,6 @@
+"use client"
+import { useEffect } from "react"
+import { useMedia } from "use-media"
 import { fontSizes } from "@/src/shared/lib/fonts/fontSizes"
 import { useFontSizeSelectorState } from "@/src/shared/hooks/fonts"
 import { useClickOutside } from "@/src/shared/hooks/useClickOutside"
@@ -5,19 +8,28 @@ import { parseFontSize } from "@/src/shared/lib/fonts";
 
 type FontSizeSelectorProps = {
   currentSize: number;
-  setCurrentSize: (size: number) => void;
+  setCurrentSizeAction: (size: number) => void;
 };
 
-export function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelectorProps) {
+export function FontSizeSelector({ currentSize, setCurrentSizeAction }: FontSizeSelectorProps) {
   const { isHidden, setIsHidden, hoveredSize, setHoveredSize, tempSize, setTempSize } = useFontSizeSelectorState(currentSize)
 
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true))
+
+  const isLarge = useMedia({ minWidth: 1024 });
+
+  useEffect(() => {
+    if (!isLarge) setTempSize("16")
+    else setTempSize("20");
+  }, [isLarge, setTempSize]);
+
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const parsed = parseFontSize(tempSize);
       if (parsed !== null) {
-        setCurrentSize(parsed);
+        setCurrentSizeAction(parsed);
         setTempSize(String(parsed));
       }
     }
@@ -47,7 +59,7 @@ export function FontSizeSelector({ currentSize, setCurrentSize }: FontSizeSelect
             key={size}
             type="button"
             onClick={() => {
-              setCurrentSize(size);
+              setCurrentSizeAction(size);
               setTempSize(String(size));
               setIsHidden(true);
             }}

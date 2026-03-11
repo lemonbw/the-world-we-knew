@@ -1,4 +1,6 @@
 "use client"
+import { useEffect } from "react"
+import { useMedia } from "use-media"
 import Main from "@/src/shared/ui/Main"
 import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
@@ -19,6 +21,13 @@ export default function ReadingPage({ content }: { content: string }) {
     currentAlign,
     setCurrentAlign,
   } = useReadingState()
+
+  const isLarge = useMedia({ minWidth: 1024 });
+
+  useEffect(() => {
+    if (!isLarge) setCurrentSize(16)
+    else setCurrentSize(20);
+  }, [isLarge, setCurrentSize]);
 
   const { fullscreen, toggleFullscreen } = useFullscreen({
     readingSection,
@@ -47,7 +56,7 @@ export default function ReadingPage({ content }: { content: string }) {
 
           <FontSizeSelector
             currentSize={currentSize}
-            setCurrentSize={setCurrentSize}
+            setCurrentSizeAction={setCurrentSize}
           />
 
           <AlignSelector
