@@ -42,7 +42,7 @@ export default function Description() {
       className="flex flex-col w-[80vw] mx-auto mt-4 h-[80vh]"
     >
 
-      <div className="flex flex-none items-center gap-1 w-[70vw] h-10 mb-2 mt-4 ml-0.5">
+      <div className="flex flex-none items-center gap-1 w-[70vw] h-10 mb-2 -ml-1">
         <FontSelector
           currentFont={currentFont}
           setCurrentFont={setCurrentFont}
