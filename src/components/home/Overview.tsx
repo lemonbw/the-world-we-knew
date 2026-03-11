@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
+import { useMedia } from "use-media"
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
 import ReadingContent from "@/src/components/ReadingContent"
@@ -25,7 +26,14 @@ export default function Description() {
     fetch("/overview.md")
       .then((res) => res.text())
       .then(setContent)
-  }, [])
+  }, []);
+
+  const isLarge = useMedia({ minWidth: 1024 });
+
+  useEffect(() => {
+    if (!isLarge) setCurrentSize(16)
+    else setCurrentSize(20);
+  }, [isLarge, setCurrentSize]);
 
   const { fullscreen, toggleFullscreen } = useFullscreen({
     readingSection,
@@ -39,9 +47,9 @@ export default function Description() {
     <section
       ref={readingSection}
       id="reading-section"
-      className="flex flex-col w-[80vw] mx-auto mt-4 h-[80vh]"
+      className={`flex flex-col w-[80vw] mx-auto mt-4 h-[100vh] lg:h-[105vh]`}
     >
-      <div className="overflow-x-auto h-60 -mb-48">
+      <div className={`overflow-x-auto h-60 -mb-48 ${fullscreen ? "lg:mt-4" : ""}`}>
         <div className={`flex flex-none items-center gap-1 ${fullscreen ? "w-[100vw] lg:w-[70vw]" : "w-[80vw] lg:w-[70vw]"} h-10 mb-2 -ml-[0.225rem] lg:-ml-1`}>
           <FontSelector
             currentFont={currentFont}
@@ -51,7 +59,7 @@ export default function Description() {
           />
           <FontSizeSelector
             currentSize={currentSize}
-            setCurrentSize={setCurrentSize}
+            setCurrentSizeAction={setCurrentSize}
           />
           <AlignSelector
             currentAlign={currentAlign}
@@ -65,8 +73,8 @@ export default function Description() {
           </button>
 
         </div>
-      </div>
-      <div className="flex-1 border rounded-2xl overflow-hidden">
+      </div >
+      <div className={`flex-1 border rounded-2xl overflow-hidden ${fullscreen ? "mb-4 lg:mb-0" : ""}`}>
         <div
           className="p-1 h-full overflow-y-auto"
           style={{
@@ -83,6 +91,6 @@ export default function Description() {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   )
 }
