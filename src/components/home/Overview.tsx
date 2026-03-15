@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useMedia } from "use-media"
 import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
 import useFullscreen from "@/src/shared/hooks/useFullscreen"
@@ -43,14 +43,51 @@ export default function Description() {
 
   const genres = ["хоррор", "военная проза", "тёмное фэнтези", "научная фантастика", "романтика"]
 
+  const topScrollRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const topScroll = topScrollRef.current;
+    const content = contentRef.current;
+
+    if (!topScroll || !content) return;
+
+    let syncing = false;
+
+    const syncTop = () => {
+      if (syncing) return;
+      syncing = true;
+      content.scrollLeft = topScroll.scrollLeft;
+      syncing = false;
+    };
+
+    const syncContent = () => {
+      if (syncing) return;
+      syncing = true;
+      topScroll.scrollLeft = content.scrollLeft;
+      syncing = false;
+    };
+
+    topScroll.addEventListener("scroll", syncTop);
+    content.addEventListener("scroll", syncContent);
+
+    return () => {
+      topScroll.removeEventListener("scroll", syncTop);
+      content?.removeEventListener("scroll", syncContent);
+    };
+  }, [])
+
   return (
     <section
       ref={readingSection}
       id="reading-section"
       className={`flex flex-col w-[80vw] mx-auto mt-4 h-[100vh] lg:h-[105vh]`}
     >
-      <div className={`overflow-x-auto h-60 -mb-48 ${fullscreen ? "lg:mt-4" : ""}`}>
-        <div className={`flex flex-none items-center gap-1 ${fullscreen ? "w-[100vw] lg:w-[70vw]" : "w-[80vw] lg:w-[70vw]"} h-10 mb-2 -ml-[0.225rem] lg:-ml-1`}>
+      <div className="overflow-x-auto w-[100vw] h-5 lg:hidden" ref={topScrollRef}>
+        <div className="w-[195vw]"></div>
+      </div>
+      <div className={`overflow-x-auto w-[100vw] h-60 -mb-48 ${fullscreen ? "lg:mt-4" : ""} scrollbar-hide`} ref={contentRef}>
+        <div className={`flex flex-none w-[195vw] items-center gap-1 h-10 mb-2 -ml-[0.225rem] lg:-ml-1`}>
           <FontSelector
             currentFont={currentFont}
             setCurrentFont={setCurrentFont}
