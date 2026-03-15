@@ -59,7 +59,7 @@ export function FontSelector({
         >
           {isHiddenFonts ? "Недоступные шрифты скрыты" : "Недоступные отображены"}
           <span
-            className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === "toggle-hidden" ? "w-full" : "w-0"
+            className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === "toggle-hidden" ? "lg:w-full w-0" : "w-0"
               }`}
           ></span>
         </button>
@@ -78,7 +78,7 @@ export function FontSelector({
               }`}
           >
             <span
-              className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === font ? "w-full" : "w-0"
+              className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === font ? "w-0 lg:w-full" : "w-0"
                 }`}
             ></span>
             {font}
