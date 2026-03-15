@@ -27,7 +27,7 @@ export function FontSelector({
   } = useFontSelectorState();
 
   const deferredQuery = useDeferredValue(query);
-  const filteredList = useAvailableFonts(deferredQuery, isHiddenFonts);
+  const filteredList = useAvailableFonts(deferredQuery, !isHiddenFonts);
 
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true))
 
@@ -57,7 +57,7 @@ export function FontSelector({
           onMouseEnter={() => setHoveredFont("toggle-hidden")}
           onMouseLeave={() => setHoveredFont(null)}
         >
-          {isHiddenFonts ? "Недоступные шрифты скрыты" : "Недоступные шрифты отображены"}
+          {isHiddenFonts ? "Недоступные шрифты скрыты" : "Недоступные отображены"}
           <span
             className={`absolute left-0 bottom-0 h-full bg-white origin-left transition-all duration-500 -z-10 ${hoveredFont === "toggle-hidden" ? "w-full" : "w-0"
               }`}
