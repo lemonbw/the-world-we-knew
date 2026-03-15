@@ -121,7 +121,7 @@ export default function Description() {
           }}
         >
           <ReadingContent className="p-1 select-text" content={content} />
-          <div className="flex flex-row gap-2 mt-3 p-1 *:hover:text-black *:hover:bg-white *:duration-300 *:px-1 *:border *:rounded-sm">
+          <div className="flex flex-row flex-wrap gap-2 mt-3 p-1 *:hover:text-black *:hover:bg-white *:duration-300 *:px-1 *:border *:rounded-sm">
             {genres.map((genre) => (
               <span key={genre}>{genre}</span>
             ))}
