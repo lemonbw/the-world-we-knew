@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function Header() {
@@ -7,6 +7,25 @@ export default function Header() {
   const [hoveredIndex, setHovered] = useState(0);
 
   const [scrolled, setScrolled] = useState(false);
+
+  const [hidden, setHidden] = useState(false);
+
+  const prevScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScrollPos = () => {
+      const currentScroll = window.scrollY;
+      const previousScroll = prevScrollY.current;
+
+      setHidden(currentScroll > previousScroll);
+
+      prevScrollY.current = currentScroll;
+    };
+
+    window.addEventListener("scroll", handleScrollPos);
+
+    return () => window.removeEventListener("scroll", handleScrollPos);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +40,8 @@ export default function Header() {
   const stickClassName = `relative block h-1 ${scrolled ? "bg-black" : "bg-white"}`
 
   return (
-    <header className={`fixed lg:static bg-black lg:bg-black lg:text-white z-10 w-full h-[10vh] lg:h-[15vh] border-white lg:mt-5 duration-500 ${scrolled ? "bg-white text-black" : "bg-black text-white"}`}>
+    <header className={`fixed lg:static bg-black lg:bg-black lg:text-white z-10 w-full h-[10vh] lg:h-[15vh] border-white lg:mt-5 duration-500 ${scrolled ? "bg-white text-black" : "bg-black text-white"} ${hidden ? "-translate-y-full" : "translate-y-0"}
+    lg:translate-y-0`}>
       <button className="fixed z-10 right-2 top-5 lg:hidden flex flex-col justify-between w-6 h-5">
         <span className={stickClassName}></span>
         <span className={stickClassName}></span>
