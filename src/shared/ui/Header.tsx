@@ -26,7 +26,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScrollPos);
   }, []);
 
-  const stickClassName = `relative block w-8 h-1.5 bg-white`;
+  const stickClassName: string = `relative block w-8 h-1.5 bg-white duration-300`;
 
   return (
     <header
@@ -49,9 +49,9 @@ export default function Header() {
         </Link>
       </div>
       <button className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden" onClick={() => setHiddenNavigation(!hiddenNavigation)}>
-        <span className={stickClassName}></span>
-        <span className={stickClassName}></span>
-        <span className={stickClassName}></span>
+        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 translate-y-[11px]" : ""}`}></span>
+        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-135" : ""}`}></span>
+        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 -translate-y-[11px]" : ""}`}></span>
       </button>
       <nav className={`z-5 absolute lg:static flex-col lg:flex lg:flex-row lg:translate-x-0 justify-between ${hiddenNavigation ? "translate-x-full" : "translate-x-0"} duration-300 w-full mt-3 mb-4 -ml-2 pl-2 lg:ml-0 lg:pl-0 text-[1.3rem] font-medium ${hiddenHeader ? "translate-x-full" : "translate-x-0"} bg-black`}>
         <div className="lg:ml-45 block lg:flex gap-24 lg:text-[1.7rem]">
