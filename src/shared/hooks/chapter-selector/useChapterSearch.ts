@@ -1,13 +1,13 @@
-import { useState, useMemo } from "react";
-import { useDeferredValue } from "react";
-import { useParams } from "next/navigation";
-import { chapters } from "@/src/shared/content/meta/chapters";
+import { useState, useMemo } from 'react';
+import { useDeferredValue } from 'react';
+import { useParams } from 'next/navigation';
+import { chapters } from '@/src/shared/content/meta/chapters';
 
 export function useChapterSearch() {
   const params = useParams();
   const slug = params?.slug;
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   const deferredQuery = useDeferredValue(query);
 

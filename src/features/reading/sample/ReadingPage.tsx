@@ -1,15 +1,18 @@
-"use client"
-import { useEffect } from "react"
-import { useMedia } from "use-media"
-import Main from "@/src/shared/ui/Main"
-import ChapterSelector from "@/src/features/reading/chapter-selector/ChapterSelector"
-import { FontSelector, FontSizeSelector, AlignSelector } from "@/src/components/text"
-import useFullscreen from "@/src/shared/hooks/useFullscreen"
-import ReadingContent from "@/src/components/ReadingContent"
-import { useReadingState } from "@/src/shared/hooks/reading/useReadingState"
+'use client';
+import { useEffect } from 'react';
+import { useMedia } from 'use-media';
+import Main from '@/src/shared/ui/Main';
+import ChapterSelector from '@/src/features/reading/chapter-selector/ChapterSelector';
+import {
+  FontSelector,
+  FontSizeSelector,
+  AlignSelector,
+} from '@/src/components/text';
+import useFullscreen from '@/src/shared/hooks/useFullscreen';
+import ReadingContent from '@/src/components/ReadingContent';
+import { useReadingState } from '@/src/shared/hooks/reading/useReadingState';
 
 export default function ReadingPage({ content }: { content: string }) {
-
   const {
     readingSection,
     currentSize,
@@ -20,31 +23,29 @@ export default function ReadingPage({ content }: { content: string }) {
     setFontQuery,
     currentAlign,
     setCurrentAlign,
-  } = useReadingState()
+  } = useReadingState();
 
   const isLarge = useMedia({ minWidth: 1024 });
 
   useEffect(() => {
-    if (!isLarge) setCurrentSize(16)
+    if (!isLarge) setCurrentSize(16);
     else setCurrentSize(20);
   }, [isLarge, setCurrentSize]);
 
   const { fullscreen, toggleFullscreen } = useFullscreen({
     readingSection,
-  })
+  });
 
-  const icon = fullscreen ? "fullscreen_exit" : "fullscreen"
+  const icon = fullscreen ? 'fullscreen_exit' : 'fullscreen';
 
   return (
     <Main>
       <section
         ref={readingSection}
         id="reading-section"
-        className="flex flex-col w-[80vw] mx-auto mt-4 h-screen"
+        className="mx-auto mt-4 flex h-screen w-[80vw] flex-col"
       >
-
-        <div className="flex flex-none items-center gap-1 w-[70vw] h-10 mb-2 mt-4 ml-0.5">
-
+        <div className="mt-4 mb-2 ml-0.5 flex h-10 w-[70vw] flex-none items-center gap-1">
           <ChapterSelector />
 
           <FontSelector
@@ -65,29 +66,29 @@ export default function ReadingPage({ content }: { content: string }) {
           />
 
           <button
-            className="material-icons text-[2.5rem]! hover:text-[2.6rem]! transition-all duration-300 w-10 ml-7 mt-2"
+            className="material-icons mt-2 ml-7 w-10 text-[2.5rem]! transition-all duration-300 hover:text-[2.6rem]!"
             onClick={toggleFullscreen}
           >
             {icon}
           </button>
-
         </div>
 
-        <div className="flex-1 border rounded-2xl overflow-hidden">
+        <div className="flex-1 overflow-hidden rounded-2xl border">
           <div
-            className="p-1 h-full overflow-y-auto select-text"
+            className="h-full overflow-y-auto p-1 select-text"
             style={{
               fontSize: `${currentSize}px`,
               fontFamily: currentFont,
               textAlign: currentAlign,
             }}
           >
-            <ReadingContent className="p-1 h-full overflow-y-auto" content={content} />
+            <ReadingContent
+              className="h-full overflow-y-auto p-1"
+              content={content}
+            />
           </div>
-
         </div>
-
       </section>
     </Main>
-  )
+  );
 }

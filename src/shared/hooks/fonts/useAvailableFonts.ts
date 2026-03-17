@@ -1,5 +1,5 @@
-import { useEffect, useState, useDeferredValue } from "react";
-import { systemFonts, isFontRendered } from "@/src/shared/lib/fonts";
+import { useEffect, useState, useDeferredValue } from 'react';
+import { systemFonts, isFontRendered } from '@/src/shared/lib/fonts';
 
 export function useAvailableFonts(query: string, showHidden: boolean) {
   const [availableFonts, setAvailableFonts] = useState<string[]>([]);

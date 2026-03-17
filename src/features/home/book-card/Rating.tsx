@@ -1,35 +1,39 @@
-"use client"
+'use client';
 
-import { useState } from "react"
+import { useState } from 'react';
 
 export default function Rating() {
-  const [hoveredIndex, SetHoveredIndex] = useState<number | null>(null)
+  const [hoveredIndex, SetHoveredIndex] = useState<number | null>(null);
 
   const rating: number = 5;
 
   const getStarType = (i: number) => {
     if (hoveredIndex !== null) {
-      return i <= hoveredIndex ? "★" : "☆";
+      return i <= hoveredIndex ? '★' : '☆';
     } else if (i < rating) {
-      return "★";
+      return '★';
     } else {
-      return "☆"
+      return '☆';
     }
-  }
+  };
 
-  const stars = Array.from({ length: 5 }, (_, i) =>
+  const stars = Array.from({ length: 5 }, (_, i) => (
     <span
-      className="text-5xl select-none cursor-pointer"
+      className="cursor-pointer text-5xl select-none"
       key={i}
       onMouseEnter={() => SetHoveredIndex(i)}
-      onMouseLeave={() => SetHoveredIndex(null)}>
-      {
-        getStarType(i)
-      }</ span >
-  )
+      onMouseLeave={() => SetHoveredIndex(null)}
+    >
+      {getStarType(i)}
+    </span>
+  ));
   return (
-    <div className="flex justify-center" role="img" aria-label={`Рейтинг книги: ${rating} из 5`}>
+    <div
+      className="flex justify-center"
+      role="img"
+      aria-label={`Рейтинг книги: ${rating} из 5`}
+    >
       {stars}
     </div>
-  )
+  );
 }

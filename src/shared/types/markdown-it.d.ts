@@ -1,4 +1,4 @@
-declare module "markdown-it" {
+declare module 'markdown-it' {
   interface MarkdownItOptions {
     html?: boolean;
     xhtmlOut?: boolean;

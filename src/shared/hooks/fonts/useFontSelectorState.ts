@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useFontSelectorState() {
   const [isHidden, setIsHidden] = useState(true);

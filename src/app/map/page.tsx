@@ -1,8 +1,5 @@
-import Main from "@/src/shared/ui/Main";
+import Main from '@/src/shared/ui/Main';
 
 export default function MapPage() {
-  return (
-    <Main>Map</Main>
-  )
+  return <Main>Map</Main>;
 }
-

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useFontSizeSelectorState(currentSize: number) {
   const [isHidden, setIsHidden] = useState(true);
