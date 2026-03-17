@@ -40,14 +40,9 @@ export default function Header() {
   const stickClassName = `relative block h-1 ${scrolled ? "bg-black" : "bg-white"}`
 
   return (
-    <header className={`fixed lg:static bg-black lg:bg-black lg:text-white z-10 w-full h-[10vh] lg:h-[15vh] border-white lg:mt-5 duration-500 ${scrolled ? "bg-white text-black" : "bg-black text-white"} ${hidden ? "-translate-y-full" : "translate-y-0"}
+    <header className={`fixed flex items-center justify-between px-4 lg:block lg:static bg-black lg:bg-black lg:text-white z-10 w-full h-[3.5rem] lg:h-[15vh] border-white lg:mt-5 duration-500 ${scrolled ? "bg-white text-black" : "bg-black text-white"} ${hidden ? "-translate-y-full" : "translate-y-0"}
     lg:translate-y-0`}>
-      <button className="fixed z-10 right-2 top-5 lg:hidden flex flex-col justify-between w-6 h-5">
-        <span className={stickClassName}></span>
-        <span className={stickClassName}></span>
-        <span className={stickClassName}></span>
-      </button>
-      <div className="fixed lg:static z-10 top-0 left-2 h-[5vh] mt-4 flex items-center justify-center">
+      <div className="lg:mt-4 z-10 top-0 left-2 h-[2.5rem] flex items-center justify-center">
         <Link href="/" className="relative" onMouseEnter={() => setHovered(5)}
           onMouseLeave={() => setHovered(0)}>
           <h1 className="text-[1.2rem] lg:text-[2rem] font-bold">The World We Knew</h1>
@@ -57,7 +52,11 @@ export default function Header() {
           ></span>
         </Link>
       </div>
-
+      <button className="z-10 lg:hidden flex flex-col justify-between w-6 h-5">
+        <span className={stickClassName}></span>
+        <span className={stickClassName}></span>
+        <span className={stickClassName}></span>
+      </button>
       <nav className="hidden lg:flex justify-between mt-3 w-full mb-4">
         <div className="flex gap-24 ml-45 lg:text-[1.7rem]">
           <Link
