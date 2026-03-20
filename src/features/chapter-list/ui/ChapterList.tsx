@@ -48,6 +48,7 @@ export default function ChapterList() {
   } = actions;
 
   const {
+    arrows,
     className,
     placeholder,
     hoveredIndex,
@@ -163,59 +164,60 @@ export default function ChapterList() {
         <nav className="flex max-w-6xl justify-center gap-4 text-[1.3rem] -my-1">
           <button
             onClick={activateStartButton}
-            className={`w-3 text-[1.42rem] tracking-[-8px] transition-all duration-300 hover:text-[1.6rem] ${page - 5 < 0 ? 'pointer-events-none opacity-0' : ''
+            className={`material-icons -ml-2 -mr-2.5 lg:ml-0 lg:mr-0 lg:mb-1.5 w-3 text-[1.42rem]! tracking-[-8px]! transition-all duration-300 hover:text-[1.6rem]! ${page - 5 < 0 ? 'pointer-events-none opacity-0' : ''
               } ${triggerAnimationIndex === 1 ? 'text-white/80' : 'text-white'}`}
           >
-            ⮜⮜
+            {arrows.start}
           </button>
 
           <button
             onClick={activatePrevButton}
-            className={`ml-2 w-3 text-[1.42rem] transition-all duration-300 hover:text-[1.6rem] ${page - 1 < 0 ? 'pointer-events-none opacity-0' : ''
+            className={`material-icons mr-2 lg:-mr-2 lg:mb-1.5 w-3 text-[1.42rem]! transition-all duration-300 hover:text-[1.6rem]! ${page - 1 < 0 ? 'pointer-events-none opacity-0' : ''
               } ${triggerAnimationIndex === 2 ? 'text-white/80' : 'text-white'}`}
           >
-            ⮜
+            {arrows.prev}
           </button>
-
-          {Array.from(
-            { length: Math.min(panelSize, pages.length) },
-            (_, i) => startPage + i
-          ).map((pageIndex) => (
-            <button
-              key={pageIndex}
-              onClick={() => goToPage(pageIndex)}
-              onMouseEnter={handleButtonEnter(pageIndex)}
-              onMouseLeave={handleButtonLeave}
-              className={`my-2 w-4 -mx-1.5 lg:w-9 rounded-md border-1 px-[2px] lg:px-[4px] py-0 text-[1rem] lg:text-[1.3rem] text-center hover:transition-colors hover:duration-200 lg:hover:duration-500 ${hoveredButton === pageIndex
-                ? 'bg-white/80 text-black'
-                : 'bg-black'
-                } ${pageIndex === page
-                  ? 'bg-white/90 text-black'
+          <span className='-ml-4 lg:ml-0'>
+            {Array.from(
+              { length: Math.min(panelSize, pages.length) },
+              (_, i) => startPage + i
+            ).map((pageIndex) => (
+              <button
+                key={pageIndex}
+                onClick={() => goToPage(pageIndex)}
+                onMouseEnter={handleButtonEnter(pageIndex)}
+                onMouseLeave={handleButtonLeave}
+                className={`my-2 w-6 mx-0.5 lg:mx-1 lg:w-9 rounded-md border-1 px-[2px] lg:px-[4px] py-0 text-[1rem] lg:text-[1.3rem] text-center hover:transition-colors hover:duration-200 lg:hover:duration-500 ${hoveredButton === pageIndex
+                  ? 'bg-white/80 text-black'
                   : 'bg-black'
-                }`}
-            >
-              {pageIndex + 1}
-            </button>
-          ))}
+                  } ${pageIndex === page
+                    ? 'bg-white/90 text-black'
+                    : 'bg-black'
+                  }`}
+              >
+                {pageIndex + 1}
+              </button>
+            ))}
+          </span>
 
           <button
             onClick={activateNextButton}
-            className={`w-3 text-[1.3rem] lg:text-[1.42rem] lg:hover:text-[1.6rem] transition-all duration-300 ${page + 2 > pages.length
+            className={`material-icons -ml-4.5 lg:-ml-3 lg:mb-1.5 w-3 text-[1.3rem]! lg:text-[1.42rem]! lg:hover:text-[1.6rem]! transition-all duration-300 -mr-2 ${page + 2 > pages.length
               ? 'pointer-events-none opacity-0'
               : ''
               } ${triggerAnimationIndex === 3 ? 'text-white/80' : 'text-white'}`}
           >
-            ⮞
+            {arrows.next}
           </button>
 
           <button
             onClick={activateEndButton}
-            className={`w-3 text-[1.42rem] tracking-[-8px] transition-all duration-300 hover:text-[1.6rem] ${page + 6 > pages.length
+            className={`material-icons -ml-1 lg:ml-0 lg:mb-1.5 w-3 text-[1.42rem]! tracking-[-8px]! transition-all duration-300 hover:text-[1.6rem]! ${page + 6 > pages.length
               ? 'pointer-events-none opacity-0'
               : ''
               } ${triggerAnimationIndex === 4 ? 'text-white/80' : 'text-white'}`}
           >
-            ⮞⮞
+            {arrows.end}
           </button>
         </nav>
       </div>

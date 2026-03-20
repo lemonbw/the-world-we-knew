@@ -4,16 +4,22 @@ import chunkChapters from '@/src/features/chapter-list/lib/chunkChapters';
 import ChapterSort from '@/src/features/chapter-list/lib/ChapterSort';
 
 export function useChapterListState() {
-  const pageSize = 20;
+  const [pageSize, setPageSize] = useState(20)
 
   const [panelSize, setPanelSize] = useState(8);
 
   const isLarge = useMedia({ minWidth: 1024 });
 
   useEffect(() => {
-    if (!isLarge) setPanelSize(5);
-    else setPanelSize(8);
-  }, [isLarge, setPanelSize]);
+    if (!isLarge) {
+      setPanelSize(4);
+      setPageSize(10);
+    }
+    else {
+      setPanelSize(8);
+      setPageSize(20);
+    }
+  }, [isLarge, setPanelSize, setPageSize]);
 
   const [query, setQuery] = useState('');
   const deferredQuery = useDeferredValue(query);

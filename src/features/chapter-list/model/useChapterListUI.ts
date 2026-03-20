@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, } from "react";
+import useMedia from "use-media";
 
 type UseChapterListUIProps = {
   direction: 'toRight' | 'toLeft' | 'toDown' | 'toUp';
@@ -6,6 +7,7 @@ type UseChapterListUIProps = {
 };
 
 export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps) {
+
   const NO_HOVER = -2;
 
   const [hoveredIndex, setHovered] = useState(NO_HOVER);
@@ -13,6 +15,12 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
 
   const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
   const buttonHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
+
+  const isLarge = useMedia({ minWidth: 1024 });
+
+  const arrows = isLarge
+    ? { start: '⮜⮜', prev: '⮜', next: '⮞', end: '⮞⮞' }
+    : { start: 'keyboard_double_arrow_left', prev: 'keyboard_arrow_left', next: 'keyboard_arrow_right', end: 'keyboard_double_arrow_right' };
 
   const className = 'mt-3 mb-2 text-[0.7rem] lg:text-[1.1rem] text-center w-30 lg:w-80 border rounded h-5 lg:h-8';
   const placeholder = 'Chapter, title, date';
@@ -96,6 +104,7 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
   };
 
   return {
+    arrows,
     className,
     placeholder,
 
