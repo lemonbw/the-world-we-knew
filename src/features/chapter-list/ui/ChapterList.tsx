@@ -70,10 +70,10 @@ export default function ChapterList() {
         onMouseLeave={handleButtonLeave}
         onClick={activateSortButton}
       >
-        <span className="-ml-5 text-[1.7rem]">
+        <span className="-ml-5 text-[1rem] lg:text-[1.7rem]">
           Сортировка
           <span
-            className={`absolute bottom-[-0.5rem] ml-0.5 inline-block text-[2.1rem] transition-transform duration-800 ${isAsc === 'asc' ? 'rotate-0' : '-rotate-180'
+            className={`absolute bottom-[-0.05rem] lg:bottom-[-0.5rem] ml-0.5 inline-block text-[1.05rem] lg:text-[2.1rem] transition-transform duration-800 ${isAsc === 'asc' ? 'rotate-0' : '-rotate-180'
               }`}
           >
             ▼
@@ -81,12 +81,12 @@ export default function ChapterList() {
         </span>
 
         <span
-          className={`absolute bottom-0 -left-5 inline-block h-[2px] origin-left transition-all duration-500 ${hoveredButton === SORT_BUTTON_ID ? 'w-[130%]' : 'w-0'
+          className={`hidden lg:inline-block absolute bottom-0 -left-5h-[2px] origin-left transition-all duration-500 ${hoveredButton === SORT_BUTTON_ID ? 'w-[130%]' : 'w-0'
             } ${isSortButtonPressed ? 'bg-black' : 'bg-white'}`}
         />
       </button>
 
-      <div className="mt-6 overflow-hidden rounded-xl border-1">
+      <div className="mt-4 lg:mt-6 overflow-hidden rounded-xl border-1">
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -154,7 +154,7 @@ export default function ChapterList() {
               { length: pageSize - currentPage.length },
               (_, i) => (
                 <tr key={`empty-${i}`} className="border-b bg-black">
-                  <td colSpan={5} className="h-[38.6px] lg:h-[43.4px]" />
+                  <td colSpan={5} className="h-[33.6px] lg:h-[43.4px]" />
                 </tr>
               )
             )}

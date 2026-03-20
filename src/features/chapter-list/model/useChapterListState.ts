@@ -39,7 +39,7 @@ export function useChapterListState() {
 
   const pages = useMemo(
     () => chunkChapters(listSource, pageSize),
-    [listSource]
+    [listSource, pageSize]
   );
 
   const currentPage = pages[page] ?? [];
