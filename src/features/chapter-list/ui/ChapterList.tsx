@@ -94,13 +94,13 @@ export default function ChapterList() {
         />
 
         <table className="w-full table-fixed border-collapse text-[1.1rem]">
-          <thead>
+          <thead className='hidden lg:table-header-group'>
             <tr className="border-b bg-gray-200 text-[1.2rem] text-gray-800 dark:bg-black dark:text-gray-200">
-              <th className="w-[6rem] px-4 py-2 text-left">Том</th>
-              <th className="w-[7rem] px-4 py-2 text-left">Глава</th>
-              <th className="w-[16rem] px-4 py-2 text-left">Название</th>
-              <th className="w-[8rem] px-4 py-2 text-left">Символы</th>
-              <th className="w-[8rem] px-4 py-2 text-left">Дата</th>
+              <th className="lg:w-[6rem] lg:px-4 py-2 text-left">Том</th>
+              <th className="lg:w-[7rem] lg:px-4 py-2 text-left">Глава</th>
+              <th className="lg:w-[16rem] lg:px-4 py-2 text-left">Название</th>
+              <th className="lg:w-[8rem] lg:px-4 py-2 text-left">Символы</th>
+              <th className="lg:w-[8rem] lg:px-4 py-2 text-left">Дата</th>
             </tr>
           </thead>
 
@@ -108,40 +108,40 @@ export default function ChapterList() {
             {currentPage.map((c) => (
               <tr
                 key={c.href}
-                className="cursor-pointer border-b bg-black transition-colors duration-1000"
+                className="cursor-pointer border-b bg-black transition-colors duration-1000 *:text-[0.7rem]! *:lg:text-[1.1rem]!"
                 onMouseEnter={handleRowEnter(c.index)}
                 onMouseLeave={handleRowLeave}
               >
-                <td className="relative z-10 px-4 pb-0">
+                <td className="relative w-6 lg:w-[6rem] pl-1.5 z-10 lg:px-4 pb-0">
                   <Link href={c.href} className={getLinkClasses(c.index)}>
                     {c.volume}
                   </Link>
 
                   <span
-                    className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-1000 ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
+                    className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 lg:duration-1000 ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
                       }`}
                   />
                 </td>
 
-                <td className="relative z-10 px-4 py-2">
+                <td className="relative w-6 lg:w-[7rem] z-10 lg:px-4 py-2">
                   <Link href={c.href} className={getLinkClasses(c.index)}>
                     {c.chapter}
                   </Link>
                 </td>
 
-                <td className="relative z-10 px-4 py-2">
+                <td className="relative w-23 lg:w-[16rem] z-10 lg:px-4 py-2">
                   <Link href={c.href} className={getLinkClasses(c.index)}>
                     {c.title}
                   </Link>
                 </td>
 
-                <td className="relative z-10 px-4 py-2">
+                <td className="relative w-6 lg:w-[8rem] z-10 lg:px-4 py-2">
                   <Link href={c.href} className={getLinkClasses(c.index)}>
                     {c.symbols}
                   </Link>
                 </td>
 
-                <td className="relative z-10 px-4 py-2">
+                <td className="relative w-30 lg:w-[8rem] z-10 lg:px-4 py-2">
                   <Link href={c.href} className={getLinkClasses(c.index)}>
                     {c.date.toLocaleDateString('ru-RU')}
                   </Link>
@@ -153,14 +153,14 @@ export default function ChapterList() {
               { length: pageSize - currentPage.length },
               (_, i) => (
                 <tr key={`empty-${i}`} className="border-b bg-black">
-                  <td colSpan={5} className="h-[43.4px]" />
+                  <td colSpan={5} className="h-[38.6px] lg:h-[43.4px]" />
                 </tr>
               )
             )}
           </tbody>
         </table>
 
-        <nav className="flex max-w-6xl justify-center gap-4 text-[1.3rem]">
+        <nav className="flex max-w-6xl justify-center gap-4 text-[1.3rem] -my-1">
           <button
             onClick={activateStartButton}
             className={`w-3 text-[1.42rem] tracking-[-8px] transition-all duration-300 hover:text-[1.6rem] ${page - 5 < 0 ? 'pointer-events-none opacity-0' : ''
@@ -186,7 +186,7 @@ export default function ChapterList() {
               onClick={() => goToPage(pageIndex)}
               onMouseEnter={handleButtonEnter(pageIndex)}
               onMouseLeave={handleButtonLeave}
-              className={`my-2 w-9 rounded-md border-1 px-[4px] py-0 text-center hover:transition-colors hover:duration-500 ${hoveredButton === pageIndex
+              className={`my-2 w-4 -mx-1.5 lg:w-9 rounded-md border-1 px-[2px] lg:px-[4px] py-0 text-[1rem] lg:text-[1.3rem] text-center hover:transition-colors hover:duration-200 lg:hover:duration-500 ${hoveredButton === pageIndex
                 ? 'bg-white/80 text-black'
                 : 'bg-black'
                 } ${pageIndex === page
@@ -200,7 +200,7 @@ export default function ChapterList() {
 
           <button
             onClick={activateNextButton}
-            className={`w-3 text-[1.42rem] transition-all duration-300 hover:text-[1.6rem] ${page + 2 > pages.length
+            className={`w-3 text-[1.3rem] lg:text-[1.42rem] lg:hover:text-[1.6rem] transition-all duration-300 ${page + 2 > pages.length
               ? 'pointer-events-none opacity-0'
               : ''
               } ${triggerAnimationIndex === 3 ? 'text-white/80' : 'text-white'}`}

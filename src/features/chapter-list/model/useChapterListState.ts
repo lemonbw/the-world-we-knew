@@ -1,10 +1,19 @@
-import { useState, useMemo, useDeferredValue } from "react";
+import { useState, useMemo, useEffect, useDeferredValue } from "react";
+import { useMedia } from "use-media";
 import chunkChapters from '@/src/features/chapter-list/lib/chunkChapters';
 import ChapterSort from '@/src/features/chapter-list/lib/ChapterSort';
 
 export function useChapterListState() {
   const pageSize = 20;
-  const panelSize = 9;
+
+  const [panelSize, setPanelSize] = useState(8);
+
+  const isLarge = useMedia({ minWidth: 1024 });
+
+  useEffect(() => {
+    if (!isLarge) setPanelSize(5);
+    else setPanelSize(8);
+  }, [isLarge, setPanelSize]);
 
   const [query, setQuery] = useState('');
   const deferredQuery = useDeferredValue(query);

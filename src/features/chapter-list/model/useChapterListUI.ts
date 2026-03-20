@@ -14,10 +14,9 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
   const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
   const buttonHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
 
-  const className = 'mt-3 mb-2 text-center w-80 border rounded h-8';
+  const className = 'mt-3 mb-2 text-[0.7rem] lg:text-[1.1rem] text-center w-30 lg:w-80 border rounded h-5 lg:h-8';
   const placeholder = 'Chapter, title, date';
 
-  // --- ROW HOVER ---
   const handleRowEnter = (index: number) => () => {
     rowHoverDelayRef.current = setTimeout(() => {
       setHovered(index);
@@ -32,7 +31,6 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
     setHovered(NO_HOVER);
   };
 
-  // --- BUTTON HOVER ---
   const handleButtonEnter = (index: number) => () => {
     buttonHoverDelayRef.current = setTimeout(() => {
       setHoveredButton(index);
