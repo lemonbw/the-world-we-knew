@@ -1,0 +1,224 @@
+'use client';
+
+import Link from 'next/link';
+import SearchInput from '@/src/shared/ui/SearchInput';
+import {
+  useChapterListState,
+  useChapterListActions,
+  useChapterListUI,
+} from '@/src/features/chapter-list/model';
+
+export default function ChapterList() {
+  const state = useChapterListState();
+
+  const actions = useChapterListActions({
+    page: state.page,
+    setPage: state.setPage,
+    pages: state.pages,
+    isAsc: state.isAsc,
+    setIsAsc: state.setIsAsc,
+  });
+
+  const ui = useChapterListUI({
+    direction: actions.direction,
+    listPhase: actions.listPhase,
+  });
+
+  const {
+    query,
+    setQuery,
+    isAsc,
+    page,
+    pages,
+    currentPage,
+    startPage,
+    panelSize,
+    pageSize,
+  } = state;
+
+  const {
+    activateSortButton,
+    activateStartButton,
+    activatePrevButton,
+    activateNextButton,
+    activateEndButton,
+    goToPage,
+    isSortButtonPressed,
+    triggerAnimationIndex,
+  } = actions;
+
+  const {
+    className,
+    placeholder,
+    hoveredIndex,
+    hoveredButton,
+    getLinkClasses,
+    handleRowEnter,
+    handleRowLeave,
+    handleButtonEnter,
+    handleButtonLeave,
+  } = ui;
+
+  const SORT_BUTTON_ID = 5;
+
+  return (
+    <section className="mx-auto mt-4 w-[80vw] bg-black">
+      <button
+        className="relative mx-auto block cursor-pointer font-bold"
+        onMouseEnter={handleButtonEnter(SORT_BUTTON_ID)}
+        onMouseLeave={handleButtonLeave}
+        onClick={activateSortButton}
+      >
+        <span className="-ml-5 text-[1.7rem]">
+          Сортировка
+          <span
+            className={`absolute bottom-[-0.5rem] ml-0.5 inline-block text-[2.1rem] transition-transform duration-800 ${isAsc === 'asc' ? 'rotate-0' : '-rotate-180'
+              }`}
+          >
+            ▼
+          </span>
+        </span>
+
+        <span
+          className={`absolute bottom-0 -left-5 inline-block h-[2px] origin-left transition-all duration-500 ${hoveredButton === SORT_BUTTON_ID ? 'w-[130%]' : 'w-0'
+            } ${isSortButtonPressed ? 'bg-black' : 'bg-white'}`}
+        />
+      </button>
+
+      <div className="mt-6 overflow-hidden rounded-xl border-1">
+        <SearchInput
+          query={query}
+          setQuery={setQuery}
+          className={className}
+          placeholder={placeholder}
+        />
+
+        <table className="w-full table-fixed border-collapse text-[1.1rem]">
+          <thead>
+            <tr className="border-b bg-gray-200 text-[1.2rem] text-gray-800 dark:bg-black dark:text-gray-200">
+              <th className="w-[6rem] px-4 py-2 text-left">Том</th>
+              <th className="w-[7rem] px-4 py-2 text-left">Глава</th>
+              <th className="w-[16rem] px-4 py-2 text-left">Название</th>
+              <th className="w-[8rem] px-4 py-2 text-left">Символы</th>
+              <th className="w-[8rem] px-4 py-2 text-left">Дата</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentPage.map((c) => (
+              <tr
+                key={c.href}
+                className="cursor-pointer border-b bg-black transition-colors duration-1000"
+                onMouseEnter={handleRowEnter(c.index)}
+                onMouseLeave={handleRowLeave}
+              >
+                <td className="relative z-10 px-4 pb-0">
+                  <Link href={c.href} className={getLinkClasses(c.index)}>
+                    {c.volume}
+                  </Link>
+
+                  <span
+                    className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-1000 ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
+                      }`}
+                  />
+                </td>
+
+                <td className="relative z-10 px-4 py-2">
+                  <Link href={c.href} className={getLinkClasses(c.index)}>
+                    {c.chapter}
+                  </Link>
+                </td>
+
+                <td className="relative z-10 px-4 py-2">
+                  <Link href={c.href} className={getLinkClasses(c.index)}>
+                    {c.title}
+                  </Link>
+                </td>
+
+                <td className="relative z-10 px-4 py-2">
+                  <Link href={c.href} className={getLinkClasses(c.index)}>
+                    {c.symbols}
+                  </Link>
+                </td>
+
+                <td className="relative z-10 px-4 py-2">
+                  <Link href={c.href} className={getLinkClasses(c.index)}>
+                    {c.date.toLocaleDateString('ru-RU')}
+                  </Link>
+                </td>
+              </tr>
+            ))}
+
+            {Array.from(
+              { length: pageSize - currentPage.length },
+              (_, i) => (
+                <tr key={`empty-${i}`} className="border-b bg-black">
+                  <td colSpan={5} className="h-[43.4px]" />
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
+
+        <nav className="flex max-w-6xl justify-center gap-4 text-[1.3rem]">
+          <button
+            onClick={activateStartButton}
+            className={`w-3 text-[1.42rem] tracking-[-8px] transition-all duration-300 hover:text-[1.6rem] ${page - 5 < 0 ? 'pointer-events-none opacity-0' : ''
+              } ${triggerAnimationIndex === 1 ? 'text-white/80' : 'text-white'}`}
+          >
+            ⮜⮜
+          </button>
+
+          <button
+            onClick={activatePrevButton}
+            className={`ml-2 w-3 text-[1.42rem] transition-all duration-300 hover:text-[1.6rem] ${page - 1 < 0 ? 'pointer-events-none opacity-0' : ''
+              } ${triggerAnimationIndex === 2 ? 'text-white/80' : 'text-white'}`}
+          >
+            ⮜
+          </button>
+
+          {Array.from(
+            { length: Math.min(panelSize, pages.length) },
+            (_, i) => startPage + i
+          ).map((pageIndex) => (
+            <button
+              key={pageIndex}
+              onClick={() => goToPage(pageIndex)}
+              onMouseEnter={handleButtonEnter(pageIndex)}
+              onMouseLeave={handleButtonLeave}
+              className={`my-2 w-9 rounded-md border-1 px-[4px] py-0 text-center hover:transition-colors hover:duration-500 ${hoveredButton === pageIndex
+                ? 'bg-white/80 text-black'
+                : 'bg-black'
+                } ${pageIndex === page
+                  ? 'bg-white/90 text-black'
+                  : 'bg-black'
+                }`}
+            >
+              {pageIndex + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={activateNextButton}
+            className={`w-3 text-[1.42rem] transition-all duration-300 hover:text-[1.6rem] ${page + 2 > pages.length
+              ? 'pointer-events-none opacity-0'
+              : ''
+              } ${triggerAnimationIndex === 3 ? 'text-white/80' : 'text-white'}`}
+          >
+            ⮞
+          </button>
+
+          <button
+            onClick={activateEndButton}
+            className={`w-3 text-[1.42rem] tracking-[-8px] transition-all duration-300 hover:text-[1.6rem] ${page + 6 > pages.length
+              ? 'pointer-events-none opacity-0'
+              : ''
+              } ${triggerAnimationIndex === 4 ? 'text-white/80' : 'text-white'}`}
+          >
+            ⮞⮞
+          </button>
+        </nav>
+      </div>
+    </section>
+  );
+}
