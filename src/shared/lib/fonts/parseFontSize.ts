@@ -3,10 +3,10 @@ export function parseFontSize(
   min = 8,
   max = 120,
 ): number | null {
-  const filtered = input.replace(/[^0-9+\-*/().]/g, "");
+  const filtered = input.replace(/[^0-9+\-*/().]/g, '');
   try {
     const result = Function(`"use strict"; return (${filtered})`)();
-    if (typeof result === "number" && isFinite(result)) {
+    if (typeof result === 'number' && isFinite(result)) {
       return Math.min(Math.max(result, min), max);
     }
     return null;

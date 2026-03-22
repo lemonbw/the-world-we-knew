@@ -1,26 +1,26 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Panel() {
   const pathname = usePathname();
-  const section = pathname === "/chapters" ? "Chapters" : "Overview";
+  const section = pathname === '/chapters' ? 'Chapters' : 'Overview';
 
   return (
-    <div className="flex border rounded-xl w-55 h-10 my-7 overflow-hidden *:w-1/2 *:pt-0.5 *:pl-4 *:text-center">
+    <div className={`mt-7 ${section === 'Overview' ? "-mb-10 lg:-mb-6" : ""} flex h-9 w-35 *:text-[1.2rem] overflow-hidden rounded-[0.55rem] border *:w-1/2 *:pt-[0.2rem] *:pl-[0.3rem] *:text-center lg:h-10 lg:w-55 lg:rounded-xl lg:*:pl-4`}>
       <Link
         href="/"
-        className={`flex text-2xl ${section === "Overview" ? "bg-white text-black" : "bg-black text-white"}`}
+        className={`flex lg:text-2xl ${section === 'Overview' ? 'bg-white text-black' : 'bg-black text-white'}`}
       >
         Обзор
       </Link>
       <Link
         href="/chapters"
-        className={`flex text-2xl ${section === "Chapters" ? "bg-white text-black" : "bg-black text-white"}`}
+        className={`flex lg:text-2xl ${section === 'Chapters' ? 'bg-white text-black' : 'bg-black text-white'}`}
       >
         Главы
       </Link>
-    </div >
-  )
+    </div>
+  );
 }

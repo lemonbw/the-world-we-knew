@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface SearchInputProps {
   query: string;
@@ -8,9 +8,15 @@ interface SearchInputProps {
   placeholder?: string;
 }
 
-export default function SearchInput({ query, setQuery, onClick, className, placeholder }: SearchInputProps) {
+export default function SearchInput({
+  query,
+  setQuery,
+  onClick,
+  className,
+  placeholder,
+}: SearchInputProps) {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col w-50 lg:w-68 items-center gap-2">
       <input
         type="search"
         placeholder={placeholder}
@@ -22,4 +28,3 @@ export default function SearchInput({ query, setQuery, onClick, className, place
     </div>
   );
 }
-

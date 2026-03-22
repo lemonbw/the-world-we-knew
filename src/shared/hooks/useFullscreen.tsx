@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, RefObject } from "react";
+import { useEffect, useState, useCallback, RefObject } from 'react';
 
 type UseFullscreenProps = {
   readingSection: RefObject<HTMLElement | null>;
@@ -17,17 +17,22 @@ export default function useFullscreen({ readingSection }: UseFullscreenProps) {
 
   useEffect(() => {
     const handler = () => setFullscreen(Boolean(document.fullscreenElement));
-    document.addEventListener("fullscreenchange", handler);
-    return () => document.removeEventListener("fullscreenchange", handler);
+    document.addEventListener('fullscreenchange', handler);
+    return () => document.removeEventListener('fullscreenchange', handler);
   }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement).tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement).isContentEditable) return;
+      if (
+        tag === 'INPUT' ||
+        tag === 'TEXTAREA' ||
+        (e.target as HTMLElement).isContentEditable
+      )
+        return;
 
       if (
-        e.key.toLowerCase() === "f" &&
+        e.key.toLowerCase() === 'f' &&
         !e.ctrlKey &&
         !e.metaKey &&
         !e.altKey &&
@@ -37,8 +42,8 @@ export default function useFullscreen({ readingSection }: UseFullscreenProps) {
         toggleFullscreen();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleFullscreen]);
 
   return { fullscreen, toggleFullscreen };

@@ -1,73 +1,88 @@
-"use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+'use client';
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 export default function Header() {
-
   const [hoveredIndex, setHovered] = useState(0);
 
-  const [scrolled, setScrolled] = useState(false);
+  const [hiddenHeader, setHiddenHeader] = useState(false);
+
+  const [hiddenNavigation, setHiddenNavigation] = useState(true);
+
+  const prevScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
+    const handleScrollPos = () => {
+      const currentScroll = window.scrollY;
+      const previousScroll = prevScrollY.current;
+
+      setHiddenHeader(currentScroll > previousScroll);
+
+      prevScrollY.current = currentScroll;
     };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener('scroll', handleScrollPos);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScrollPos);
   }, []);
 
-  const stickClassName = `relative block h-1 ${scrolled ? "bg-black" : "bg-white"}`
+  const stickClassName: string = `relative block w-8 h-1.5 bg-white duration-300`;
 
   return (
-    <header className={`fixed lg:static bg-black lg:bg-black lg:text-white z-10 w-full h-[10vh] lg:h-[15vh] border-white lg:mt-5 duration-500 ${scrolled ? "bg-white text-black" : "bg-black text-white"}`}>
-      <button className="fixed z-10 right-2 top-5 lg:hidden flex flex-col justify-between w-6 h-5">
-        <span className={stickClassName}></span>
-        <span className={stickClassName}></span>
-        <span className={stickClassName}></span>
-      </button>
-      <div className="fixed lg:static z-10 top-0 left-2 h-[5vh] mt-4 flex items-center justify-center">
-        <Link href="/" className="relative" onMouseEnter={() => setHovered(5)}
-          onMouseLeave={() => setHovered(0)}>
-          <h1 className="text-[1.2rem] lg:text-[2rem] font-bold">The World We Knew</h1>
+    <header
+      className={`fixed z-10 flex h-[3.5rem] w-full items-center justify-between border-white bg-black px-2 duration-300 lg:duration-500 lg:static lg:mt-5 lg:block lg:h-[15vh] lg:bg-black lg:text-white ${hiddenHeader ? '-translate-y-full' : 'translate-y-0'} lg:translate-y-0`}
+    >
+      <div className="top-0 left-2 z-10 flex h-[2.5rem] items-center justify-center lg:mt-4">
+        <Link
+          href="/"
+          className="relative"
+          onMouseEnter={() => setHovered(5)}
+          onMouseLeave={() => setHovered(0)}
+        >
+          <h1 className="text-[1.2rem] font-bold lg:text-[2rem]">
+            The World We Knew
+          </h1>
           <span
-            className="absolute left-0 bottom-0 h-[2px] bg-white origin-left transition-all duration-300"
-            style={{ width: hoveredIndex === 5 ? "102%" : "0%" }}
+            className="absolute bottom-0 left-0 h-[2px] origin-left bg-white transition-all duration-300 hidden lg:inline"
+            style={{ width: hoveredIndex === 5 ? '102%' : '0%' }}
           ></span>
         </Link>
       </div>
-
-      <nav className="hidden lg:flex justify-between mt-3 w-full mb-4">
-        <div className="flex gap-24 ml-45 lg:text-[1.7rem]">
+      <button className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden" onClick={() => setHiddenNavigation(!hiddenNavigation)}>
+        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 translate-y-[11px]" : ""}`}></span>
+        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-135" : ""}`}></span>
+        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 -translate-y-[11px]" : ""}`}></span>
+      </button>
+      <nav className={`z-5 absolute lg:static flex-col lg:flex lg:flex-row lg:translate-x-0 justify-between ${hiddenNavigation ? "translate-x-full" : "translate-x-0"} duration-300 w-full mt-3 mb-4 -ml-2 pl-2 lg:ml-0 lg:pl-0 text-[1.3rem] font-medium ${hiddenHeader ? "translate-x-full" : "translate-x-0"} bg-black`}>
+        <div className="lg:ml-45 block lg:flex gap-24 lg:text-[1.7rem]">
           <Link
             href="/"
-            className="relative"
+            className="relative block mt-40 lg:mt-0"
             onMouseEnter={() => setHovered(1)}
             onMouseLeave={() => setHovered(0)}
           >
             <span>Главная</span>
             <span
-              className="absolute left-0 bottom-0 h-[2px] bg-white origin-left transition-all duration-300"
-              style={{ width: hoveredIndex === 1 ? "102%" : "0%" }}
+              className="absolute bottom-0 left-0 h-[2px] origin-left bg-white transition-all duration-300 hidden lg:inline"
+              style={{ width: hoveredIndex === 1 ? '102%' : '0%' }}
             ></span>
           </Link>
 
           <Link
             href="/archive"
-            className="relative"
+            className="relative block"
             onMouseEnter={() => setHovered(2)}
             onMouseLeave={() => setHovered(0)}
           >
             <span>Архив</span>
             <span
-              className="absolute -left-0.5 bottom-0 h-[2px] bg-white origin-left transition-all duration-300"
-              style={{ width: hoveredIndex === 2 ? "102%" : "0%" }}
+              className="absolute bottom-0 -left-0.5 h-[2px] origin-left bg-white transition-all duration-300 hidden lg:inline"
+              style={{ width: hoveredIndex === 2 ? '102%' : '0%' }}
             ></span>
           </Link>
         </div>
 
-        <div className="flex gap-24 mr-45 lg:text-[1.7rem]">
+        <div className="mr-45 block lg:flex gap-24 lg:text-[1.7rem]">
           <Link
             href="/map"
             className="relative"
@@ -76,21 +91,21 @@ export default function Header() {
           >
             <span>Карта</span>
             <span
-              className="absolute left-[1px] bottom-0 h-[2px] bg-white origin-left transition-all duration-300"
-              style={{ width: hoveredIndex === 3 ? "103%" : "0%" }}
+              className="absolute bottom-0 left-[1px] h-[2px] origin-left bg-white transition-all duration-300 hidden lg:inline"
+              style={{ width: hoveredIndex === 3 ? '103%' : '0%' }}
             ></span>
           </Link>
 
           <Link
             href="/news"
-            className="relative"
+            className="relative block"
             onMouseEnter={() => setHovered(4)}
             onMouseLeave={() => setHovered(0)}
           >
             <span>Новости</span>
             <span
-              className="absolute left-[1px] bottom-0 h-[2px] bg-white origin-left transition-all duration-300"
-              style={{ width: hoveredIndex === 4 ? "102%" : "0%" }}
+              className="absolute bottom-0 left-[1px] h-[2px] origin-left bg-white transition-all duration-300 hidden lg:inline"
+              style={{ width: hoveredIndex === 4 ? '102%' : '0%' }}
             ></span>
           </Link>
         </div>
@@ -98,4 +113,3 @@ export default function Header() {
     </header>
   );
 }
-

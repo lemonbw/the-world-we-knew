@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useParams } from "next/navigation";
-import { useClickOutside } from "@/src/shared/hooks/useClickOutside";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { useParams } from 'next/navigation';
+import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
 
 export function useChapterDropdown(totalCount: number) {
   const params = useParams();
@@ -63,7 +63,7 @@ export function useChapterDropdown(totalCount: number) {
 
     listRef.current.scrollTo({
       top: chapterRef.current.offsetTop,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   }, [isOpen, slug]);
 

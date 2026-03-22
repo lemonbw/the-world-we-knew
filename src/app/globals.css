@@ -1,5 +1,6 @@
-@import "tailwindcss";
-@import "material-icons/iconfont/material-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&display=swap');
+@import 'tailwindcss';
+@import 'material-icons/iconfont/material-icons.css';
 
 :root {
   --background: #ffffff;
@@ -23,7 +24,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans Symbols', sans-serif;
   user-select: none;
 }
 
@@ -39,4 +40,23 @@ button {
 *::selection {
   background: #ffffff;
   color: #000000;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  *:focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 1px;
+  }
+
 }

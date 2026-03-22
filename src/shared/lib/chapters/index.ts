@@ -1,1 +1,1 @@
-export { getAllChapters, getChapter } from "./storage";
+export { getAllChapters, getChapter } from './storage';

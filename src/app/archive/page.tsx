@@ -1,8 +1,5 @@
-import Main from "@/src/shared/ui/Main";
+import Main from '@/src/shared/ui/Main';
 
 export default function ArchivePage() {
-  return (
-    <Main>Archive</Main>
-  )
+  return <Main>Archive</Main>;
 }
-
