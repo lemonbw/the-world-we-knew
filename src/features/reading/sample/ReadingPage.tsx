@@ -43,7 +43,7 @@ export default function ReadingPage({ content }: { content: string }) {
       <section
         ref={readingSection}
         id="reading-section"
-        className="mx-auto mt-4 flex h-screen w-[80vw] flex-col"
+        className="mx-auto mt-10 lg:mt-4 flex h-screen w-[80vw] flex-col"
       >
         <div className="mt-4 mb-2 ml-0.5 flex h-10 w-[70vw] flex-none items-center gap-1">
           <ChapterSelector />
