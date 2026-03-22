@@ -16,7 +16,7 @@ export default function SearchInput({
   placeholder,
 }: SearchInputProps) {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col w-50 lg:w-68 items-center gap-2">
       <input
         type="search"
         placeholder={placeholder}

@@ -32,12 +32,12 @@ export function FontSelector({
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true));
 
   const className =
-    'w-49 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]';
+    'w-28 lg:w-49 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]';
 
   return (
     <div
       ref={divRef}
-      className="relative mt-[1px] mr-1 inline-block h-9 w-60 px-2 py-1"
+      className="relative mt-[1px] mr-1 inline-block h-9 w-40 lg:w-60 px-2 py-1"
     >
       <div className="flex rounded-sm border-1">
         <SearchInput
@@ -57,9 +57,8 @@ export function FontSelector({
       </div>
 
       <div
-        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-56 flex-col overflow-y-auto rounded border-1 bg-black text-white shadow ${
-          isHidden ? 'hidden' : ''
-        }`}
+        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-36 lg:w-56 flex-col overflow-y-auto rounded border-1 bg-black text-white shadow ${isHidden ? 'hidden' : ''
+          }`}
       >
         <button
           key="toggle-hidden"
@@ -72,9 +71,8 @@ export function FontSelector({
             ? 'Недоступные шрифты скрыты'
             : 'Недоступные отображены'}
           <span
-            className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 ${
-              hoveredFont === 'toggle-hidden' ? 'w-0 lg:w-full' : 'w-0'
-            }`}
+            className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 ${hoveredFont === 'toggle-hidden' ? 'w-0 lg:w-full' : 'w-0'
+              }`}
           ></span>
         </button>
 
@@ -88,14 +86,12 @@ export function FontSelector({
             }}
             onMouseEnter={() => setHoveredFont(font)}
             onMouseLeave={() => setHoveredFont(null)}
-            className={`relative px-2 py-1 text-left duration-500 ease-in-out hover:text-black ${
-              currentFont === font ? 'font-bold' : ''
-            }`}
+            className={`relative px-2 py-1 text-left duration-500 ease-in-out hover:text-black ${currentFont === font ? 'font-bold' : ''
+              }`}
           >
             <span
-              className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 ${
-                hoveredFont === font ? 'w-0 lg:w-full' : 'w-0'
-              }`}
+              className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 ${hoveredFont === font ? 'w-0 lg:w-full' : 'w-0'
+                }`}
             ></span>
             {font}
           </button>
