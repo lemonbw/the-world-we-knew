@@ -4,9 +4,9 @@ import {
   FontSelector,
   FontSizeSelector,
   AlignSelector,
-} from '@/src/components/text';
+} from '@/src/features/text-settings/ui';
 import useFullscreen from '@/src/shared/hooks/useFullscreen';
-import { useReadingState } from '@/src/shared/hooks/reading/useReadingState';
+import { useReadingState } from '@/src/features/reading/model/useReadingState';
 
 type ToolbarProps = {
   ChapterSelector?: React.ReactNode;

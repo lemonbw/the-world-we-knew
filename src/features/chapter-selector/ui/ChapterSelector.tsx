@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { chapters } from '@/src/shared/content/meta/chapters';
+import { chapters } from '@/src/entities/chapter/model/chapters';
 import SearchInput from '@/src/shared/ui/SearchInput';
 import {
   useChapterSearch,
   useChapterDropdown,
-} from '@/src/shared/hooks/chapter-selector';
+} from '@/src/features/chapter-selector/model';
 
 export default function ChapterSelector() {
   const { query, setQuery, listSource, currentChapter } = useChapterSearch();

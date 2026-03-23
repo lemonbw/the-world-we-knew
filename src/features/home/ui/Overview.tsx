@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import ReadingContent from '@/src/components/ReadingContent';
-import { Toolbar } from '@/src/shared/ui/Toolbar'
+import ReadingContent from '@/src/features/reading/ui/ReadingContent';
+import { Toolbar } from '@/src/widgets/Toolbar'
 
 export default function Description() {
   const [content, setContent] = useState('');

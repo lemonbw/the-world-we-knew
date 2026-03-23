@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useDeferredValue } from 'react';
 import { useParams } from 'next/navigation';
-import { chapters } from '@/src/shared/content/meta/chapters';
+import { chapters } from '@/src/entities/chapter/model/chapters';
 
 export function useChapterSearch() {
   const params = useParams();
