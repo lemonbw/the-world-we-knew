@@ -1,30 +1,10 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useHeaderState } from '@/src/shared/hooks/useHeaderState';
 import { NavLink } from '@/src/shared/ui/NavLink';
 import { Hamburger } from '@/src/shared/ui/Hamburger';
 
 export default function Header() {
-
-  const [hiddenHeader, setHiddenHeader] = useState(false);
-
-  const [hiddenNavigation, setHiddenNavigation] = useState(true);
-
-  const prevScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleScrollPos = () => {
-      const currentScroll = window.scrollY;
-      const previousScroll = prevScrollY.current;
-
-      setHiddenHeader(currentScroll > previousScroll);
-
-      prevScrollY.current = currentScroll;
-    };
-
-    window.addEventListener('scroll', handleScrollPos);
-
-    return () => window.removeEventListener('scroll', handleScrollPos);
-  }, []);
+  const { hiddenHeader, hiddenNavigation, setHiddenNavigation } = useHeaderState();
 
   return (
     <header
