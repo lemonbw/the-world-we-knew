@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { NavLink } from '@/src/shared/ui/NavLink'
+import { NavLink } from '@/src/shared/ui/NavLink';
+import { Hamburger } from '@/src/shared/ui/Hamburger';
 
 export default function Header() {
 
@@ -25,8 +26,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScrollPos);
   }, []);
 
-  const stickClassName: string = `relative block w-8 h-1.5 bg-white duration-300`;
-
   return (
     <header
       className={`fixed z-10 flex h-[3.5rem] w-full items-center justify-between border-white bg-black px-2 duration-300 lg:duration-500 lg:static lg:mt-5 lg:block lg:h-[15vh] lg:bg-black lg:text-white ${hiddenHeader ? '-translate-y-full' : 'translate-y-0'} lg:translate-y-0`}
@@ -34,11 +33,7 @@ export default function Header() {
       <div className="top-0 left-2 z-10 flex h-[2.5rem] items-center justify-center lg:mt-4">
         <NavLink href="/" title="The World We Knew" as="h1" className='text-[1.2rem] font-bold lg:text-[2rem]' />
       </div>
-      <button className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden" onClick={() => setHiddenNavigation(!hiddenNavigation)}>
-        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 translate-y-[11px]" : ""}`}></span>
-        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-135" : ""}`}></span>
-        <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 -translate-y-[11px]" : ""}`}></span>
-      </button>
+      <Hamburger hiddenHeader={hiddenHeader} hiddenNavigation={hiddenNavigation} setHiddenNavigation={setHiddenNavigation} />
       <nav className={`z-5 absolute lg:static flex-col lg:flex lg:flex-row lg:translate-x-0 justify-between ${hiddenNavigation ? "translate-x-full" : "translate-x-0"} duration-300 w-full mt-3 mb-4 -ml-2 pl-2 lg:ml-0 lg:pl-0 text-[1.3rem] font-medium ${hiddenHeader ? "translate-x-full" : "translate-x-0"} bg-black`}>
         <div className="lg:ml-45 block lg:flex gap-24 lg:text-[1.7rem]">
           <NavLink href="/" title="Главная" className='mt-40 lg:mt-0' />
