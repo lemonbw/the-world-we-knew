@@ -17,13 +17,11 @@ export default async function Page({
 }) {
   const { slug } = await params;
 
-  const chapters = getAllChapters();
+  const content = getChapter(slug);
 
-  if (!chapters.includes(slug)) {
+  if (!content) {
     notFound();
   }
-
-  const content = getChapter(slug);
 
   return <ReadingPage content={content} />;
 }
