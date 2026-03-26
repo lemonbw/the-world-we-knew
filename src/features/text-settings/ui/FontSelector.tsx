@@ -1,6 +1,6 @@
 import { useDeferredValue } from 'react';
-import { useAvailableFonts } from '@/src/shared/hooks/fonts';
-import { useFontSelectorState } from '@/src/shared/hooks/fonts';
+import { useAvailableFonts } from '@/src/shared/hooks/fonts/useAvailableFonts';
+import { useFontSelectorState } from '@/src/features/text-settings/model/';
 import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
 import SearchInput from '@/src/shared/ui/SearchInput';
 

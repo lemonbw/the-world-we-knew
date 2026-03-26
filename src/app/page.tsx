@@ -1,7 +1,7 @@
 import Main from '@/src/shared/ui/Main';
-import BookCard from '@/src/features/home/book-card/BookCard';
-import Panel from '@/src/components/home/Panel';
-import Overview from '@/src/components/home/Overview';
+import BookCard from '@/src/features/home/ui/BookCard';
+import Panel from '@/src/features/home/ui/Panel';
+import Overview from '@/src/features/home/ui/Overview';
 
 export default function Home() {
   return (

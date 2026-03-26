@@ -1,8 +1,8 @@
 'use client';
 import Main from '@/src/shared/ui/Main';
-import { Toolbar } from '@/src/shared/ui/Toolbar'
-import ReadingContent from '@/src/components/ReadingContent';
-import ChapterSelector from '@/src/features/reading/chapter-selector/ChapterSelector';
+import { Toolbar } from '@/src/widgets/Toolbar'
+import ReadingContent from '@/src/features/reading/ui/ReadingContent';
+import ChapterSelector from '@/src/features/chapter-selector/ui/ChapterSelector';
 
 export default function ReadingPage({ content }: { content: string }) {
   return (

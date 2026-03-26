@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useMedia } from 'use-media';
 import { fontSizes } from '@/src/shared/lib/fonts/fontSizes';
-import { useFontSizeSelectorState } from '@/src/shared/hooks/fonts';
+import { useFontSizeSelectorState } from '@/src/features/text-settings/model';
 import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
 import { parseFontSize } from '@/src/shared/lib/fonts';
 
@@ -65,9 +65,8 @@ export function FontSizeSelector({
         </button>
       </div>
       <div
-        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-17 flex-col overflow-y-auto rounded border-1 bg-black text-white shadow ${
-          isHidden ? 'hidden' : ''
-        }`}
+        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-17 flex-col overflow-y-auto rounded border-1 bg-black text-white shadow ${isHidden ? 'hidden' : ''
+          }`}
       >
         {fontSizes.map((size) => (
           <button
