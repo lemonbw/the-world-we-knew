@@ -39,39 +39,6 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
   });
 
   const icon = fullscreen ? 'fullscreen_exit' : 'fullscreen';
-  const topScrollRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const topScroll = topScrollRef.current;
-    const content = contentRef.current;
-
-    if (!topScroll || !content) return;
-
-    let syncing = false;
-
-    const syncTop = () => {
-      if (syncing) return;
-      syncing = true;
-      content.scrollLeft = topScroll.scrollLeft;
-      syncing = false;
-    };
-
-    const syncContent = () => {
-      if (syncing) return;
-      syncing = true;
-      topScroll.scrollLeft = content.scrollLeft;
-      syncing = false;
-    };
-
-    topScroll.addEventListener('scroll', syncTop);
-    content.addEventListener('scroll', syncContent);
-
-    return () => {
-      topScroll.removeEventListener('scroll', syncTop);
-      content?.removeEventListener('scroll', syncContent);
-    };
-  }, []);
 
   return (
     <section
@@ -80,15 +47,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
       className={`mx-auto mt-10 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
     >
       <div
-        className={`h-5 ${ChapterSelector ? "w-120vw" : "w-[100vw]"} overflow-x-auto lg:hidden`}
-        ref={topScrollRef}
-      >
-        <div className="w-[195vw]"></div>
-      </div>
-      <div
-        className={`-mb-48 h-60 ${ChapterSelector ? "w-120vw" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''} scrollbar-hide`}
-        ref={contentRef}
-      >
+        className={`-mb-48 h-60 ${ChapterSelector ? "w-120vw" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''} scrollbar-hide`}>
         <div
           className={`mb-2 -ml-[0.225rem] flex h-10 w-[195vw] flex-none items-center gap-1 lg:-ml-1`}
         >
