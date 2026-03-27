@@ -63,7 +63,7 @@ export default function ChapterList() {
   const SORT_BUTTON_ID = 5;
 
   return (
-    <section className="mx-auto mt-4 w-[80vw] bg-black">
+    <section className="mx-auto mt-4 w-[80vw]">
       <button
         className="relative mx-auto block cursor-pointer font-bold"
         onMouseEnter={handleButtonEnter(SORT_BUTTON_ID)}
@@ -81,8 +81,8 @@ export default function ChapterList() {
         </span>
 
         <span
-          className={`hidden lg:inline-block absolute bottom-0 -left-5h-[2px] origin-left transition-all duration-500 ${hoveredButton === SORT_BUTTON_ID ? 'w-[130%]' : 'w-0'
-            } ${isSortButtonPressed ? 'bg-black' : 'bg-white'}`}
+          className={`hidden lg:inline-block absolute bottom-0 -left-5 h-[2px] origin-left transition-all duration-500 ${hoveredButton === SORT_BUTTON_ID ? 'w-[130%]' : 'w-0'
+            } ${isSortButtonPressed ? 'bg-white dark:bg-black' : 'bg-black dark:bg-white'}`}
         />
       </button>
 
@@ -96,7 +96,7 @@ export default function ChapterList() {
 
         <table className="w-full table-fixed border-collapse text-[1.1rem]">
           <thead className='hidden lg:table-header-group'>
-            <tr className="border-b bg-gray-200 text-[1.2rem] text-gray-800 dark:bg-black dark:text-gray-200">
+            <tr className="border-b bg-white text-[1.2rem] text-gray-800 dark:bg-black dark:text-gray-200">
               <th className="lg:w-[6rem] lg:px-4 py-2 text-left">Том</th>
               <th className="lg:w-[7rem] lg:px-4 py-2 text-left">Глава</th>
               <th className="lg:w-[16rem] lg:px-4 py-2 text-left">Название</th>
@@ -109,7 +109,7 @@ export default function ChapterList() {
             {currentPage.map((c) => (
               <tr
                 key={c.href}
-                className="cursor-pointer border-b bg-black transition-colors duration-1000 *:text-[0.7rem]! *:lg:text-[1.1rem]!"
+                className="cursor-pointer border-b bg-white dark:bg-black transition-colors duration-1000 *:text-[0.7rem]! *:lg:text-[1.1rem]!"
                 onMouseEnter={handleRowEnter(c.index)}
                 onMouseLeave={handleRowLeave}
               >
@@ -119,7 +119,7 @@ export default function ChapterList() {
                   </Link>
 
                   <span
-                    className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 lg:duration-1000 ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
+                    className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black dark:bg-white transition-all duration-500 lg:duration-1000 ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
                       }`}
                   />
                 </td>
@@ -153,7 +153,7 @@ export default function ChapterList() {
             {Array.from(
               { length: pageSize - currentPage.length },
               (_, i) => (
-                <tr key={`empty-${i}`} className="border-b bg-black">
+                <tr key={`empty-${i}`} className="border-b bg-white dark:bg-black">
                   <td colSpan={5} className="h-[33.6px] lg:h-[43.4px]" />
                 </tr>
               )
@@ -165,7 +165,7 @@ export default function ChapterList() {
           <button
             onClick={activateStartButton}
             className={`material-icons -ml-2 -mr-2.5 lg:ml-0 lg:mr-0 lg:mb-1.5 w-3 text-[1.42rem]! tracking-[-8px]! transition-all duration-300 hover:text-[1.6rem]! ${page - 5 < 0 ? 'pointer-events-none opacity-0' : ''
-              } ${triggerAnimationIndex === 1 ? 'text-white/80' : 'text-white'}`}
+              } ${triggerAnimationIndex === 1 ? 'text-black/80 dark:text-white/80' : 'text-black dark:text-white'}`}
           >
             {arrows.start}
           </button>
@@ -173,7 +173,7 @@ export default function ChapterList() {
           <button
             onClick={activatePrevButton}
             className={`material-icons mr-2 lg:-mr-2 lg:mb-1.5 w-3 text-[1.42rem]! transition-all duration-300 hover:text-[1.6rem]! ${page - 1 < 0 ? 'pointer-events-none opacity-0' : ''
-              } ${triggerAnimationIndex === 2 ? 'text-white/80' : 'text-white'}`}
+              } ${triggerAnimationIndex === 2 ? 'text-black/80 dark:text-white/80' : 'text-black dark:text-white'}`}
           >
             {arrows.prev}
           </button>
@@ -188,11 +188,11 @@ export default function ChapterList() {
                 onMouseEnter={handleButtonEnter(pageIndex)}
                 onMouseLeave={handleButtonLeave}
                 className={`my-2 w-6 mx-0.5 lg:mx-1 lg:w-9 rounded-md border-1 px-[2px] lg:px-[4px] py-0 text-[1rem] lg:text-[1.3rem] text-center hover:transition-colors hover:duration-200 lg:hover:duration-500 ${hoveredButton === pageIndex
-                  ? 'bg-white/80 text-black'
-                  : 'bg-black'
+                  ? 'bg-black/90 text-white dark:bg-white/80 dark:text-black'
+                  : 'text-black dark:bg-black dark:text-white'
                   } ${pageIndex === page
-                    ? 'bg-white/90 text-black'
-                    : 'bg-black'
+                    ? 'bg-black text-white dark:bg-white/90 dark:text-black'
+                    : 'text-black dark:bg-black dark:text-white'
                   }`}
               >
                 {pageIndex + 1}
@@ -205,7 +205,7 @@ export default function ChapterList() {
             className={`material-icons -ml-4.5 lg:-ml-3 lg:mb-1.5 w-3 text-[1.3rem]! lg:text-[1.42rem]! lg:hover:text-[1.6rem]! transition-all duration-300 -mr-2 ${page + 2 > pages.length
               ? 'pointer-events-none opacity-0'
               : ''
-              } ${triggerAnimationIndex === 3 ? 'text-white/80' : 'text-white'}`}
+              } ${triggerAnimationIndex === 3 ? 'text-black/80 dark:text-white/80' : 'text-black dark:text-white'}`}
           >
             {arrows.next}
           </button>
@@ -215,7 +215,7 @@ export default function ChapterList() {
             className={`material-icons -ml-1 lg:ml-0 lg:mb-1.5 w-3 text-[1.42rem]! tracking-[-8px]! transition-all duration-300 hover:text-[1.6rem]! ${page + 6 > pages.length
               ? 'pointer-events-none opacity-0'
               : ''
-              } ${triggerAnimationIndex === 4 ? 'text-white/80' : 'text-white'}`}
+              } ${triggerAnimationIndex === 4 ? 'text-black/80 dark:text-white/80' : 'text-black dark:text-white'}`}
           >
             {arrows.end}
           </button>

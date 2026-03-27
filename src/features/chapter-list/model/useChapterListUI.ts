@@ -58,8 +58,8 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
 
     const color =
       hoveredIndex === index
-        ? 'text-black duration-1000 outline-black'
-        : 'text-white outline-white';
+        ? 'text-white dark:text-black duration-1000 outline-black'
+        : 'text-black dark:text-white outline-white';
 
     const opacity = listPhase === 0 ? 'opacity-100' : 'opacity-0';
 
