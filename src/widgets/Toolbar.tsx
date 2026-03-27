@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useMedia } from "use-media";
 import {
   FontSelector,
@@ -39,58 +39,17 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
   });
 
   const icon = fullscreen ? 'fullscreen_exit' : 'fullscreen';
-  const topScrollRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const topScroll = topScrollRef.current;
-    const content = contentRef.current;
-
-    if (!topScroll || !content) return;
-
-    let syncing = false;
-
-    const syncTop = () => {
-      if (syncing) return;
-      syncing = true;
-      content.scrollLeft = topScroll.scrollLeft;
-      syncing = false;
-    };
-
-    const syncContent = () => {
-      if (syncing) return;
-      syncing = true;
-      topScroll.scrollLeft = content.scrollLeft;
-      syncing = false;
-    };
-
-    topScroll.addEventListener('scroll', syncTop);
-    content.addEventListener('scroll', syncContent);
-
-    return () => {
-      topScroll.removeEventListener('scroll', syncTop);
-      content?.removeEventListener('scroll', syncContent);
-    };
-  }, []);
 
   return (
     <section
       ref={readingSection}
       id="reading-section"
-      className={`mx-auto mt-10 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
+      className={`relative mx-auto mt-12 lg:mt-8 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
     >
       <div
-        className={`h-5 ${ChapterSelector ? "w-120vw" : "w-[100vw]"} overflow-x-auto lg:hidden`}
-        ref={topScrollRef}
-      >
-        <div className="w-[195vw]"></div>
-      </div>
-      <div
-        className={`-mb-48 h-60 ${ChapterSelector ? "w-120vw" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''} scrollbar-hide`}
-        ref={contentRef}
-      >
+        className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${ChapterSelector ? "w-[120vw]" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
         <div
-          className={`mb-2 -ml-[0.225rem] flex h-10 w-[195vw] flex-none items-center gap-1 lg:-ml-1`}
+          className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[168vw] lg:w-full flex-none items-center gap-1 lg:-ml-1`}
         >
           {ChapterSelector}
           <FontSelector
@@ -116,7 +75,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
         </div>
       </div>
       <div
-        className={`flex-1 overflow-hidden rounded-2xl border ${fullscreen ? 'mb-4 lg:mb-0' : ''}`}
+        className={`flex-1 overflow-hidden border rounded-2xl -mt-4 ${fullscreen ? 'mb-4 lg:mb-0' : ''}`}
       >
         <div
           className="h-full overflow-y-auto p-1"
