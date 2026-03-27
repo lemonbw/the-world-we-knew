@@ -65,7 +65,7 @@ export function FontSizeSelector({
         </button>
       </div>
       <div
-        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-17 flex-col overflow-y-auto rounded border-1 bg-black text-white shadow ${isHidden ? 'hidden' : ''
+        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-17 flex-col overflow-y-auto rounded border-1 bg-white dark:bg-black shadow ${isHidden ? 'hidden' : ''
           }`}
       >
         {fontSizes.map((size) => (
@@ -79,10 +79,10 @@ export function FontSizeSelector({
             }}
             onMouseEnter={() => setHoveredSize(size)}
             onMouseLeave={() => setHoveredSize(0)}
-            className={`relative px-2 py-1 text-left duration-500 ease-in-out hover:text-white lg:hover:text-black ${currentSize === size ? 'font-bold' : ''}`}
+            className={`relative px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${currentSize === size ? 'font-bold' : ''}`}
           >
             <span
-              className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 ${hoveredSize === size ? 'lg:w-full' : 'w-0'}`}
+              className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black dark:bg-white transition-all duration-500 ${hoveredSize === size ? 'lg:w-full' : 'w-0'}`}
             ></span>
 
             {size}
