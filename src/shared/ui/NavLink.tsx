@@ -5,10 +5,11 @@ type NavLinkProps = {
   href: string,
   title: string,
   className?: string,
+  spanClassName?: string,
   as?: ElementType;
 };
 
-export function NavLink({ href, title, className, as: Component = "span" }: NavLinkProps) {
+export function NavLink({ href, title, className, spanClassName, as: Component = "span" }: NavLinkProps) {
   return (
     <Link
       href={href}
@@ -16,7 +17,7 @@ export function NavLink({ href, title, className, as: Component = "span" }: NavL
     >
       <Component>{title}</Component>
       <span
-        className={`hidden lg:inline absolute left-0 bottom-0 origin-left h-[2px] w-0 group-hover:w-[102%] bg-white duration-300 `}
+        className={`hidden lg:inline absolute left-0 bottom-0 origin-left h-[2px] w-0 group-hover:w-[102%] bg-black dark:bg-white duration-300 ${spanClassName}`}
       ></span>
     </Link>
   )
