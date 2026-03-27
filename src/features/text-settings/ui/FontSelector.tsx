@@ -62,7 +62,7 @@ export function FontSelector({
       >
         <button
           key="toggle-hidden"
-          className="relative px-2 py-1 text-left duration-500 ease-in-out hover:text-black"
+          className="relative px-2 py-1 text-left duration-500 ease-in-out hover:text-white lg:hover:text-black"
           onClick={() => setIsHiddenFonts(!isHiddenFonts)}
           onMouseEnter={() => setHoveredFont('toggle-hidden')}
           onMouseLeave={() => setHoveredFont(null)}
@@ -86,7 +86,7 @@ export function FontSelector({
             }}
             onMouseEnter={() => setHoveredFont(font)}
             onMouseLeave={() => setHoveredFont(null)}
-            className={`relative px-2 py-1 text-left duration-500 ease-in-out hover:text-black ${currentFont === font ? 'font-bold' : ''
+            className={`relative px-2 py-1 text-left duration-500 ease-in-out hover:text-white lg:hover:text-black ${currentFont === font ? 'font-bold' : ''
               }`}
           >
             <span
