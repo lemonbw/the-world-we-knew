@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useMedia } from "use-media";
 import {
   FontSelector,
@@ -44,12 +44,12 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`mx-auto mt-10 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
+      className={`relative mx-auto mt-12 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
     >
       <div
-        className={`-mb-48 h-60 ${ChapterSelector ? "w-120vw" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''} scrollbar-hide`}>
+        className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${ChapterSelector ? "w-[120vw]" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
         <div
-          className={`mb-2 -ml-[0.225rem] flex h-10 w-[195vw] flex-none items-center gap-1 lg:-ml-1`}
+          className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[195vw] lg:w-full flex-none items-center gap-1 lg:-ml-1`}
         >
           {ChapterSelector}
           <FontSelector
