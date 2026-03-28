@@ -39,7 +39,7 @@ export function FontSelector({
       ref={divRef}
       className="relative mt-[1px] mr-1 inline-block h-9 w-40 lg:w-60 px-2 py-1"
     >
-      <div className="flex rounded-sm border-1">
+      <div className="flex rounded-sm border-2">
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -50,7 +50,7 @@ export function FontSelector({
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons w-6 border-l text-lg"
+          className="material-icons w-6 border-l-2 text-lg"
         >
           keyboard_arrow_down
         </button>
@@ -62,7 +62,7 @@ export function FontSelector({
       >
         <button
           key="toggle-hidden"
-          className="relative px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black"
+          className="relative px-2 py-1 text-left border-b-2 duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black"
           onClick={() => setIsHiddenFonts(!isHiddenFonts)}
           onMouseEnter={() => setHoveredFont('toggle-hidden')}
           onMouseLeave={() => setHoveredFont(null)}
@@ -86,7 +86,7 @@ export function FontSelector({
             }}
             onMouseEnter={() => setHoveredFont(font)}
             onMouseLeave={() => setHoveredFont(null)}
-            className={`relative px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${currentFont === font ? 'font-bold' : ''
+            className={`relative px-2 py-1 text-left border-b-2 duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${currentFont === font ? 'font-bold' : ''
               }`}
           >
             <span

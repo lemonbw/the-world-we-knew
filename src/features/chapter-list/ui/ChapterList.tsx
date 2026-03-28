@@ -86,7 +86,7 @@ export default function ChapterList() {
         />
       </button>
 
-      <div className="mt-4 lg:mt-6 overflow-hidden rounded-xl border-2 dark:border-1">
+      <div className="mt-4 lg:mt-6 overflow-hidden rounded-xl border-2">
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -95,7 +95,7 @@ export default function ChapterList() {
         />
 
         <table className="w-full table-fixed border-collapse text-[1.1rem]">
-          <thead className='border-b-2 dark:border-b hidden lg:table-header-group'>
+          <thead className='border-b-2 hidden lg:table-header-group'>
             <tr className="bg-white text-[1.2rem] text-gray-800 dark:bg-black dark:text-gray-200">
               <th className="lg:w-[6rem] lg:px-4 py-2 text-left">Том</th>
               <th className="lg:w-[7rem] lg:px-4 py-2 text-left">Глава</th>
@@ -109,7 +109,7 @@ export default function ChapterList() {
             {currentPage.map((c) => (
               <tr
                 key={c.href}
-                className="cursor-pointer border-b-2 dark:border-b bg-white dark:bg-black transition-colors duration-1000 *:text-[0.7rem]! *:lg:text-[1.1rem]!"
+                className="cursor-pointer border-b-2 bg-white dark:bg-black transition-colors duration-1000 *:text-[0.7rem]! *:lg:text-[1.1rem]!"
                 onMouseEnter={handleRowEnter(c.index)}
                 onMouseLeave={handleRowLeave}
               >
@@ -153,7 +153,7 @@ export default function ChapterList() {
             {Array.from(
               { length: pageSize - currentPage.length },
               (_, i) => (
-                <tr key={`empty-${i}`} className="border-b-2 dark:border-b bg-white dark:bg-black">
+                <tr key={`empty-${i}`} className="border-b-2 bg-white dark:bg-black">
                   <td colSpan={5} className="h-[33.6px] lg:h-[43.4px]" />
                 </tr>
               )
@@ -187,12 +187,12 @@ export default function ChapterList() {
                 onClick={() => goToPage(pageIndex)}
                 onMouseEnter={handleButtonEnter(pageIndex)}
                 onMouseLeave={handleButtonLeave}
-                className={`my-2 w-6 mx-0.5 lg:mx-1 lg:w-9 rounded-md border-black border-2 dark:border-white dark:border-1 px-[2px] lg:px-[4px] py-0 text-[1rem] lg:text-[1.3rem] text-center hover:transition-colors hover:duration-200 lg:hover:duration-500 ${hoveredButton === pageIndex
+                className={`my-2 w-6 mx-0.5 lg:mx-1 lg:w-9 rounded-md border-black border-2 dark:border-white px-[2px] lg:px-[4px] py-0 text-[1rem] lg:text-[1.3rem] text-center hover:transition-colors hover:duration-200 lg:hover:duration-500 ${hoveredButton === pageIndex && hoveredButton !== page
                   ? 'bg-black/80 text-white dark:bg-white/80 dark:text-black'
                   : 'text-black dark:bg-black dark:text-white'
                   } ${pageIndex === page
-                    ? 'bg-black text-white dark:bg-white/90 dark:text-black'
-                    : 'text-black dark:bg-black dark:text-white'
+                    ? 'bg-black text-white dark:bg-white/80 dark:text-black!'
+                    : 'text-black dark:bg-black'
                   }`}
               >
                 {pageIndex + 1}

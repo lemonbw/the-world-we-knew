@@ -48,7 +48,7 @@ export function FontSizeSelector({
       ref={divRef}
       className="relative mt-[1px] mr-1 inline-block h-9 w-21 px-2 py-1"
     >
-      <div className="flex rounded-sm border-1">
+      <div className="flex rounded-sm border-2">
         <input
           type="text"
           value={tempSize}
@@ -59,7 +59,7 @@ export function FontSizeSelector({
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons w-6 border-l text-lg"
+          className="material-icons w-6 border-l-2 text-lg"
         >
           keyboard_arrow_down
         </button>
@@ -79,7 +79,7 @@ export function FontSizeSelector({
             }}
             onMouseEnter={() => setHoveredSize(size)}
             onMouseLeave={() => setHoveredSize(0)}
-            className={`relative px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${currentSize === size ? 'font-bold' : ''}`}
+            className={`relative px-2 py-1 text-left border-b-2 duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${currentSize === size ? 'font-bold' : ''}`}
           >
             <span
               className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black dark:bg-white transition-all duration-500 ${hoveredSize === size ? 'lg:w-full' : 'w-0'}`}

@@ -36,15 +36,15 @@ export default function ChapterSelector() {
 
     const color =
       hoveredChapter === chapterIndex
-        ? 'text-black duration-1000 outline-black'
-        : 'text-white outline-white';
+        ? 'text-white outline-white dark:text-black duration-1000 dark:outline-black'
+        : 'tex-black outline-black dark:text-white dark:outline-white';
 
     return `${base} ${color}`;
   };
 
   return (
     <div
-      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-60 lg:w-78 rounded-sm border-1"
+      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-60 lg:w-78 rounded-sm border-2"
       ref={divRef}
     >
       <SearchInput
@@ -58,7 +58,7 @@ export default function ChapterSelector() {
       <button
         type="button"
         onClick={toggle}
-        className="material-icons absolute right-0 h-8 w-10 border-l text-lg"
+        className="material-icons absolute right-0 h-8 w-10 border-l-2 text-lg"
       >
         keyboard_arrow_down
       </button>
@@ -75,7 +75,7 @@ export default function ChapterSelector() {
                 <tr
                   key={chapter.href}
                   ref={slug === chapter.slug ? chapterRef : null}
-                  className={`z-50 h-[41px] cursor-pointer border-b bg-black transition-colors duration-1000 ${slug === chapter.slug ? 'font-bold' : ''
+                  className={`z-50 h-[41px] cursor-pointer border-b-2 bg-white dark:bg-black transition-colors duration-1000 ${slug === chapter.slug ? 'font-bold' : ''
                     }`}
                   onMouseEnter={() => handleMouseEnter(chapter.index)}
                   onMouseLeave={handleMouseLeave}
@@ -89,7 +89,7 @@ export default function ChapterSelector() {
                     </Link>
 
                     <span
-                      className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-white transition-all duration-500 lg:duration-1000 ${hoveredChapter === chapter.index ? 'w-50 lg:w-[22.2vw]' : 'w-0'
+                      className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black dark:bg-white transition-all duration-500 lg:duration-1000 ${hoveredChapter === chapter.index ? 'w-50 lg:w-[22.2vw]' : 'w-0'
                         }`}
                     />
                   </td>
