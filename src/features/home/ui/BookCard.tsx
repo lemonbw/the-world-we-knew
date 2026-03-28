@@ -1,8 +1,10 @@
 "use client"
 import Image from 'next/image';
 import { useMedia } from 'use-media';
-import darkBookCover from '@/src/shared/assets/images/book-card/dark-book-cover.jpg';
-import whiteBookCover from '@/src/shared/assets/images/book-card/white-book-cover.png'
+import blackBookCover from '@/src/shared/assets/images/book-card/black-book-cover.jpg';
+import whiteBookCover from '@/src/shared/assets/images/book-card/white-book-cover.png';
+import blackChains from '@/src/shared/assets/images/book-card/black-chains.svg';
+import whiteChains from '@/src/shared/assets/images/book-card/white-chains.svg';
 
 export default function BookCard() {
 
@@ -13,12 +15,18 @@ export default function BookCard() {
       <div className="flex flex-col items-center justify-center text-center">
         <div className="relative h-46 w-40 border-4 lg:h-80 lg:w-64">
           <Image
-            src={isDark ? darkBookCover : whiteBookCover}
+            src={isDark ? blackBookCover : whiteBookCover}
             alt="book cover"
             fill
             className="object-cover"
           />
         </div>
+        <Image
+          src={isDark ? whiteChains : blackChains}
+          alt="chains"
+          fill
+          className="object-cover z-0"
+        />
       </div>
     </article>
   );
