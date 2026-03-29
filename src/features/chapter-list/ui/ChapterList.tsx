@@ -63,7 +63,7 @@ export default function ChapterList() {
   const SORT_BUTTON_ID = 5;
 
   return (
-    <section className="mx-auto mt-4 w-[80vw]">
+    <section className="z-10 mx-auto mt-4 w-[80vw] bg-white dark:bg-black">
       <button
         className="relative mx-auto block cursor-pointer font-bold"
         onMouseEnter={handleButtonEnter(SORT_BUTTON_ID)}

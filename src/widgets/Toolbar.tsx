@@ -44,7 +44,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-12 lg:mt-8 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
+      className={`relative mx-auto mt-12 lg:mt-8 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh] bg-white dark:bg-black`}
     >
       <div
         className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${ChapterSelector ? "w-[120vw]" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>

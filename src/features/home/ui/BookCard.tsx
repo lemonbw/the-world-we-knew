@@ -13,7 +13,7 @@ export default function BookCard() {
   return (
     <article className="mt-20 flex justify-center lg:mt-8">
       <div className="flex flex-col items-center justify-center text-center">
-        <div className="relative h-46 w-40 border-4 lg:h-80 lg:w-64">
+        <div className="z-10 relative h-46 w-40 border-4 lg:h-80 lg:w-64">
           <Image
             src={isDark ? blackBookCover : whiteBookCover}
             alt="book cover"
@@ -25,7 +25,13 @@ export default function BookCard() {
           src={isDark ? whiteChains : blackChains}
           alt="chains"
           fill
-          className="object-cover z-0"
+          className="z-0 mt-30"
+        />
+        <Image
+          src={isDark ? whiteChains : blackChains}
+          alt="chains"
+          fill
+          className="z-0 mt-30 rotate-x-180"
         />
       </div>
     </article>
