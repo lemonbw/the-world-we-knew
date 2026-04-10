@@ -44,7 +44,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-12 lg:mt-8 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh] bg-white dark:bg-black`}
+      className={`relative mx-auto mt-12 lg:mt-8 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
     >
       <div
         className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${ChapterSelector ? "w-[120vw]" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
@@ -75,7 +75,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
         </div>
       </div>
       <div
-        className={`flex-1 overflow-hidden border-2 rounded-2xl -mt-3 ${fullscreen ? 'mb-4 lg:mb-0' : ''}`}
+        className={`flex-1 overflow-hidden border-2 rounded-2xl -mt-3 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
       >
         <div
           className="h-full overflow-y-auto p-1"

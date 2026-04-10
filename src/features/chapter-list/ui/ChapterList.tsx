@@ -63,9 +63,9 @@ export default function ChapterList() {
   const SORT_BUTTON_ID = 5;
 
   return (
-    <section className="z-10 mx-auto mt-4 w-[80vw] bg-white dark:bg-black">
+    <section className="z-10 mx-auto mt-4 w-[80vw]">
       <button
-        className="relative mx-auto block cursor-pointer font-bold"
+        className="relative mx-auto block cursor-pointer font-bold bg-white dark:bg-black"
         onMouseEnter={handleButtonEnter(SORT_BUTTON_ID)}
         onMouseLeave={handleButtonLeave}
         onClick={activateSortButton}
@@ -86,7 +86,7 @@ export default function ChapterList() {
         />
       </button>
 
-      <div className="mt-4 lg:mt-6 overflow-hidden rounded-xl border-2">
+      <div className="mt-4 lg:mt-6 overflow-hidden rounded-xl border-2 bg-white dark:bg-black">
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -94,7 +94,7 @@ export default function ChapterList() {
           placeholder={placeholder}
         />
 
-        <table className="w-full table-fixed border-collapse text-[1.1rem]">
+        <table className="w-full table-fixed border-collapse text-[1.1rem] bg-white dark:bg-black">
           <thead className='border-b-2 hidden lg:table-header-group'>
             <tr className="bg-white text-[1.2rem] text-gray-800 dark:bg-black dark:text-gray-200">
               <th className="lg:w-[6rem] lg:px-4 py-2 text-left">Том</th>
