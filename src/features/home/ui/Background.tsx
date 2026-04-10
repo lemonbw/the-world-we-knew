@@ -1,8 +1,6 @@
 "use client"
 import Image from 'next/image';
 import { useMedia } from 'use-media';
-import blackEyelids from '@/src/shared/assets/images/book-card/black-eyelids.svg';
-import whiteEyelids from '@/src/shared/assets/images/book-card/white-eyelids.svg';
 import blackEyes from '@/src/shared/assets/images/book-card/black-eyes.svg';
 import whiteEyes from '@/src/shared/assets/images/book-card/white-eyes.svg';
 import blackChains from '@/src/shared/assets/images/book-card/black-broken-chains-part.svg';
@@ -16,16 +14,10 @@ export default function Background() {
     <article className="relative mt-20 -mb-25 w-2000 h-40 flex justify-center lg:mt-8">
       <div className="relative h-[37px] w-65 overflow-hidden">
         <Image
-          src={isDark ? whiteEyelids : blackEyelids}
-          alt="eyelids"
-          fill
-          className="object-cover mt-[2px] opacity-70 blur-[1px]"
-        />
-        <Image
           src={isDark ? whiteEyes : blackEyes}
           alt="eyes"
           fill
-          className="object-cover mt-[3px] opacity-70 blur-[1px]"
+          className="object-cover opacity-70 blur-[1px]"
         />
       </div>
       <Image
