@@ -22,7 +22,7 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
     ? { start: '⮜⮜', prev: '⮜', next: '⮞', end: '⮞⮞' }
     : { start: 'keyboard_double_arrow_left', prev: 'keyboard_arrow_left', next: 'keyboard_arrow_right', end: 'keyboard_double_arrow_right' };
 
-  const className = 'mt-3 mb-2 text-[0.7rem] lg:text-[1.1rem] text-center w-30 lg:w-80 border rounded h-5 lg:h-8';
+  const className = 'mt-3 mb-2 text-[0.7rem] lg:text-[1.1rem] text-center w-30 lg:w-80 border-2 rounded h-5 lg:h-8';
   const placeholder = 'Chapter, title, date';
 
   const handleRowEnter = (index: number) => () => {
@@ -58,8 +58,8 @@ export function useChapterListUI({ direction, listPhase }: UseChapterListUIProps
 
     const color =
       hoveredIndex === index
-        ? 'text-black duration-1000 outline-black'
-        : 'text-white outline-white';
+        ? 'text-white dark:text-black duration-1000 outline-black'
+        : 'text-black dark:text-white outline-white';
 
     const opacity = listPhase === 0 ? 'opacity-100' : 'opacity-0';
 

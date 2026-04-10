@@ -67,7 +67,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
             setCurrentAlign={setCurrentAlign}
           />
           <button
-            className="material-icons mt-2 ml-7 w-10 text-[2.5rem]! transition-all duration-300 hover:text-[2.6rem]!"
+            className="material-icons mt-2 ml-7 w-10 text-[2.5rem]! transition-all duration-300 hover:text-[2.7rem]!"
             onClick={toggleFullscreen}
           >
             {icon}
@@ -75,7 +75,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
         </div>
       </div>
       <div
-        className={`flex-1 overflow-hidden border rounded-2xl -mt-4 ${fullscreen ? 'mb-4 lg:mb-0' : ''}`}
+        className={`flex-1 overflow-hidden border-2 rounded-2xl -mt-3 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
       >
         <div
           className="h-full overflow-y-auto p-1"

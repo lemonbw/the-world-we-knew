@@ -24,7 +24,7 @@ export default function Description() {
   return (
     <Toolbar>
       <ReadingContent className="p-1 select-text" content={content} />
-      <div className="mt-3 flex flex-row flex-wrap gap-2 p-1 *:rounded-sm *:border *:px-1 *:duration-300 *:hover:bg-white *:hover:text-black">
+      <div className="mt-3 flex flex-row flex-wrap gap-2 p-1 *:rounded-sm *:border-2 *:px-1 *:duration-400 *:hover:bg-black *:hover:text-white *:dark:hover:bg-white *:dark:hover:text-black">
         {genres.map((genre) => (
           <span key={genre}>{genre}</span>
         ))}
