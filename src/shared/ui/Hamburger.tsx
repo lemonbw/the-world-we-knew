@@ -5,7 +5,7 @@ type HamburgerProps = {
 }
 
 export function Hamburger({ hiddenHeader, hiddenNavigation, setHiddenNavigation }: HamburgerProps) {
-  const stickClassName: string = `relative block w-8 h-1.5 bg-white duration-300`;
+  const stickClassName: string = `relative block w-8 h-1.5 bg-black dark:bg-white duration-300`;
 
   return (
     <button className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden" onClick={() => setHiddenNavigation(!hiddenNavigation)}>
