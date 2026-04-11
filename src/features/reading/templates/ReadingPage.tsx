@@ -9,7 +9,7 @@ export default function ReadingPage({ content }: { content: string }) {
     <Main>
       <Toolbar ChapterSelector={<ChapterSelector />}>
         <ReadingContent
-          className="h-100vh overflow-y-auto p-1"
+          className="h-[90vh] overflow-y-auto p-1"
           content={content}
         />
       </Toolbar>
