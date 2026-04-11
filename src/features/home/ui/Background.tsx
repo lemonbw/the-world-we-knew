@@ -11,29 +11,30 @@ export default function Background() {
   const isDark = useMedia({ 'prefers-color-scheme': 'dark' })
 
   return (
-    <article className="relative mt-20 -mb-25 w-2000 h-40 flex justify-center lg:mt-8">
-      <div className="relative h-[37px] w-65 overflow-hidden">
+    <article className="absolute flex flex-col items-center w-full overflow-hidden">
+      <div className="relative h-[37px] w-[260px]">
         <Image
           src={isDark ? whiteEyes : blackEyes}
           alt="eyes"
           fill
-          className="object-cover opacity-70 blur-[1px]"
+          className="mt-[15vh] lg:mt-[29vh] object-contain opacity-70 blur-[1px]"
         />
       </div>
-      <Image
-        src={isDark ? whiteChains : blackChains}
-        alt="chains"
-        width={1500}
-        height={750}
-        className="absolute z-0 -mt-10 opacity-90 blur-[0.5px]"
-      />
-      <Image
-        src={isDark ? whiteChains : blackChains}
-        alt="chains"
-        width={1500}
-        height={750}
-        className="absolute rotate-180 mt-20 opacity-90 blur-[0.5px]"
-      />
+      <div className="relative mt-40 h-[600px] w-[800px] lg:h-[1000px] lg:w-[1350px]">
+        <Image
+          src={isDark ? whiteChains : blackChains}
+          alt="chains"
+          fill
+          className="opacity-90 -mt-70 lg:mt-0 blur-[0.5px]"
+        />
+        <Image
+          src={isDark ? whiteChains : blackChains}
+          alt="chains"
+          fill
+          className="rotate-180 mt-[50vh] lg:mt-0 opacity-90 blur-[0.5px]"
+        />
+      </div>
+
     </article>
   );
 }
