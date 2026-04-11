@@ -14,27 +14,27 @@ export default function Background() {
   const isDark = useMedia({ 'prefers-color-scheme': 'dark' })
 
   return (
-    <article className="absolute flex flex-col items-center w-full overflow-hidden">
+    <article className="fixed flex flex-col items-center w-full pointer-events-none">
       <div className="relative h-[30px] w-[200px] lg:h-[37px] lg:w-[260px]">
         <Image
           src={isDark ? whiteEyes : blackEyes}
           alt="eyes"
           fill
-          className={`${section === "Overview" ? "mt-[15vh] lg:mt-[29vh]" : "mt-[26vh] lg:mt-[15vh]"} object-contain opacity-70 blur-[1px]`}
+          className={`${section === "Overview" ? "mt-[60px] lg:mt-[110px]" : "mt-[160px] lg:-mt-[330px] z-40"} ${isDark ? "opacity-70" : ""} blur-[1px] object-contain`}
         />
       </div>
-      <div className={`${section === "Overview" ? "mt-40" : "mt-50 lg:mb-40"} relative h-[600px] w-[800px] lg:h-[1000px] lg:w-[1350px]`}>
+      <div className={`${section === "Overview" ? "mt-[100px]" : "mt-50 lg:-mt-[350px]"} relative h-[600px] w-[800px] lg:h-[800px] lg:w-[1200px]`}>
         <Image
           src={isDark ? whiteChains : blackChains}
           alt="chains"
           fill
-          className="opacity-90 -mt-70 lg:mt-0 blur-[0.5px]"
+          className="-mt-[300px] lg:mt-0 blur-[0.5px]"
         />
         <Image
           src={isDark ? whiteChains : blackChains}
           alt="chains"
           fill
-          className={`${section === "Overview" ? "mt-[50vh] lg:mt-0" : "mt-[40vh] lg:mt-0"} rotate-180 opacity-90 blur-[0.5px]`}
+          className={`${isDark ? "lg:mt-0" : "lg:mt-20px"} mt-[80px]  rotate-180 blur-[0.5px]`}
         />
       </div>
 
