@@ -25,7 +25,7 @@ export default function ChapterSelector() {
   } = useChapterDropdown(chapters.length);
 
   const className =
-    'absolute left-0 w-40 lg:w-68 p-1 h-[33.5px] outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]';
+    'absolute left-0 w-[158px] -mt-[1px] p-1 h-[33px] outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]';
 
   const placeholder = currentChapter
     ? currentChapter.title
@@ -44,7 +44,7 @@ export default function ChapterSelector() {
 
   return (
     <div
-      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-60 lg:w-78 rounded-sm border-2"
+      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-[200px] rounded-sm border-2"
       ref={divRef}
     >
       <SearchInput
@@ -65,11 +65,11 @@ export default function ChapterSelector() {
 
       {isOpen && (
         <div
-          className="mt-8.5 h-[25.41rem] w-50 lg:w-[22.15vw] overflow-x-hidden overflow-y-auto rounded-sm border-1"
+          className="mt-8.5 -ml-[1.5px] h-[25.41rem] w-[200px] overflow-x-hidden overflow-y-auto rounded-sm border-1"
           ref={listRef}
           onScroll={handleScroll}
         >
-          <table className="z-50 w-50 lg:w-[22.15vw] rounded-sm bg-black">
+          <table className="z-50 w-[200px] rounded-sm bg-black">
             <tbody>
               {listSource.slice(0, visibleCount + 10).map((chapter) => (
                 <tr

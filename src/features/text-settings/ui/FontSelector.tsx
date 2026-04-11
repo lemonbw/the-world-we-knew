@@ -32,12 +32,12 @@ export function FontSelector({
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true));
 
   const className =
-    'w-28 lg:w-49 p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-white dark:bg-black';
+    'w-[115px] lg:w-[145px] p-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-white dark:bg-black';
 
   return (
     <div
       ref={divRef}
-      className="relative mt-[2px] mr-1 inline-block h-9 w-40 lg:w-60 px-2 py-1"
+      className="relative mt-[2px] mr-1 inline-block h-9 w-[160px] lg:w-[190px] px-2 py-1"
     >
       <div className="flex rounded-sm border-2">
         <SearchInput
@@ -50,14 +50,14 @@ export function FontSelector({
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons w-6 border-l-2 text-lg"
+          className="material-icons  w-[40px] border-l-2 text-lg"
         >
           keyboard_arrow_down
         </button>
       </div>
 
       <div
-        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-36 lg:w-56 flex-col overflow-y-auto rounded border-1 bg-white text-black dark:bg-black dark:text-white shadow ${isHidden ? 'hidden' : ''
+        className={`absolute top-10 left-0 z-50 ml-2 flex h-48 w-36 lg:w-[173px] flex-col overflow-y-auto rounded border-1 bg-white text-black dark:bg-black dark:text-white shadow ${isHidden ? 'hidden' : ''
           }`}
       >
         <button

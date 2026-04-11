@@ -44,12 +44,12 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-12 lg:mt-8 flex h-[100vh] w-[80vw] flex-col lg:h-[105vh]`}
+      className={`relative mx-auto mt-12 lg:mt-8 flex w-[80vw] flex-col h-[100vh] overflow-y-hidden`}
     >
       <div
-        className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${ChapterSelector ? "w-[120vw]" : "w-[100vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
+        className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${fullscreen ? "w-[100vw]" : "w-[80vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
         <div
-          className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[168vw] lg:w-full flex-none items-center gap-1 lg:-ml-1`}
+          className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[160vw] lg:w-full flex-none items-center gap-1 lg:-ml-1`}
         >
           {ChapterSelector}
           <FontSelector
@@ -78,7 +78,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
         className={`flex-1 overflow-hidden border-2 rounded-2xl -mt-3 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
       >
         <div
-          className="h-full overflow-y-auto p-1"
+          className="h-full p-1"
           style={{
             fontSize: `${currentSize}px`,
             fontFamily: currentFont,

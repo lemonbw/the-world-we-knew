@@ -1,8 +1,7 @@
 "use client"
 import Image from 'next/image';
 import { useMedia } from 'use-media';
-import blackEyelids from '@/src/shared/assets/images/book-card/black-eyelids.svg';
-import whiteEyelids from '@/src/shared/assets/images/book-card/white-eyelids.svg';
+import usePanelState from '@/src/features/home/model/usePanelState';
 import blackEyes from '@/src/shared/assets/images/book-card/black-eyes.svg';
 import whiteEyes from '@/src/shared/assets/images/book-card/white-eyes.svg';
 import blackChains from '@/src/shared/assets/images/book-card/black-broken-chains-part.svg';
@@ -10,38 +9,35 @@ import whiteChains from '@/src/shared/assets/images/book-card/white-broken-chain
 
 export default function Background() {
 
+  const section = usePanelState();
+
   const isDark = useMedia({ 'prefers-color-scheme': 'dark' })
 
   return (
-    <article className="relative mt-20 -mb-25 w-2000 h-40 flex justify-center lg:mt-8">
-      <div className="relative h-[37px] w-65 overflow-hidden">
-        <Image
-          src={isDark ? whiteEyelids : blackEyelids}
-          alt="eyelids"
-          fill
-          className="object-cover mt-[2px] opacity-70 blur-[1px]"
-        />
+    <article className="fixed flex flex-col items-center w-full pointer-events-none">
+      <div className="relative h-[30px] w-[200px] lg:h-[37px] lg:w-[260px]">
         <Image
           src={isDark ? whiteEyes : blackEyes}
           alt="eyes"
           fill
-          className="object-cover mt-[3px] opacity-70 blur-[1px]"
+          className={`${section === "Overview" ? "mt-[60px] lg:mt-[110px]" : "mt-[160px] lg:-mt-[330px] z-40"} ${isDark ? "opacity-70" : ""} blur-[1px] object-contain`}
         />
       </div>
-      <Image
-        src={isDark ? whiteChains : blackChains}
-        alt="chains"
-        width={1500}
-        height={750}
-        className="absolute z-0 -mt-10 opacity-90 blur-[0.5px]"
-      />
-      <Image
-        src={isDark ? whiteChains : blackChains}
-        alt="chains"
-        width={1500}
-        height={750}
-        className="absolute rotate-180 mt-20 opacity-90 blur-[0.5px]"
-      />
+      <div className={`${section === "Overview" ? "mt-[100px]" : "mt-50 lg:-mt-[350px]"} relative h-[600px] w-[800px] lg:h-[800px] lg:w-[1200px]`}>
+        <Image
+          src={isDark ? whiteChains : blackChains}
+          alt="chains"
+          fill
+          className="-mt-[300px] lg:mt-0 blur-[0.5px]"
+        />
+        <Image
+          src={isDark ? whiteChains : blackChains}
+          alt="chains"
+          fill
+          className={`${isDark ? "lg:mt-0" : "lg:mt-20px"} mt-[80px]  rotate-180 blur-[0.5px]`}
+        />
+      </div>
+
     </article>
   );
 }
