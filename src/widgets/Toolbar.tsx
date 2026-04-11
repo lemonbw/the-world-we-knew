@@ -47,7 +47,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
       className={`relative mx-auto mt-12 lg:mt-8 flex w-[80vw] flex-col h-[100vh] overflow-y-hidden`}
     >
       <div
-        className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 w-[80vw] overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
+        className={`rotate-x-180 *:rotate-x-180 relative -mb-45 h-62 ${fullscreen ? "w-[100vw]" : "w-[80vw]"} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}>
         <div
           className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[160vw] lg:w-full flex-none items-center gap-1 lg:-ml-1`}
         >
