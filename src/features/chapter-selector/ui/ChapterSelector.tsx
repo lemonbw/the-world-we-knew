@@ -44,7 +44,7 @@ export default function ChapterSelector() {
 
   return (
     <div
-      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-60 lg:w-78 rounded-sm border-2"
+      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-60 lg:w-63 rounded-sm border-2"
       ref={divRef}
     >
       <SearchInput
