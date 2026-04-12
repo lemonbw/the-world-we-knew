@@ -17,8 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Replaced standard navigation links with interactive variants in header
-
-# Changelog
+- Adjusted background layout scaling and positioning for decorative elements (eyes and chains)
+- Refined responsive spacing in background layers for better visual balance across breakpoints
+- Removed redundant background styling from sort button for cleaner UI consistency
+- Added background styling to FontSelector and FontSizeSelector controls for improved visual coherence
 
 ## [0.8.0] - 2026-04-12
 
