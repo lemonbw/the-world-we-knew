@@ -50,7 +50,7 @@ export function FontSelector({
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons  w-[40px] border-l-2 text-lg"
+          className="material-icons  w-[40px] border-l-2 text-lgbg-white dark:bg-black"
         >
           keyboard_arrow_down
         </button>
