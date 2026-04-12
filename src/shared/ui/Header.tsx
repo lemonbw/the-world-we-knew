@@ -4,7 +4,9 @@ import whiteTitle from '@/src/shared/assets/images/book-card/white-title.svg';
 import blackTitle from '@/src/shared/assets/images/book-card/black-title.svg';
 import { useHeaderState } from '@/src/shared/hooks/useHeaderState';
 import { NavLink } from '@/src/shared/ui/NavLink';
+import { FalseNavLink } from '@/src/shared/ui/FalseNavLink';
 import { Hamburger } from '@/src/shared/ui/Hamburger';
+import { whiteMain, blackMain, whiteArchive, blackArchive, whiteMap, blackMap, whiteNews, blackNews } from '@/src/shared/assets/images/header';
 
 export default function Header() {
   const { isDark, hiddenHeader, hiddenNavigation, setHiddenNavigation } = useHeaderState();
@@ -28,12 +30,12 @@ export default function Header() {
       <nav className={`z-5 absolute lg:static flex-col lg:flex lg:flex-row lg:translate-x-0 justify-between bg-white dark:bg-black ${hiddenNavigation ? "translate-x-full" : "translate-x-0"} duration-300 w-full mt-3 mb-4 -ml-2 pl-2 lg:ml-0 lg:pl-0 text-[1.3rem] font-medium ${hiddenHeader ? "translate-x-full" : "translate-x-0"} mt-10`}>
         <div className="lg:ml-45 block lg:flex gap-24 lg:text-[1.7rem]">
           <NavLink href="/" title="Главная" className='mt-35 lg:mt-0' />
-          <NavLink href="/archive" title="Архив" />
+          <FalseNavLink src={isDark ? whiteArchive : blackArchive} alt='Архив' title='Архив' message='Бах!' />
         </div>
 
         <div className="mr-45 block lg:flex gap-24 lg:text-[1.7rem]">
-          <NavLink href="/map" title="Карта" />
-          <NavLink href="/news" title="Новости" />
+          <FalseNavLink src={isDark ? whiteMap : blackMap} alt='Карта' title='Карта' message='Увы' />
+          <FalseNavLink src={isDark ? whiteNews : blackNews} alt='Новости' title='Новости' message='Когда-нибудь' />
         </div>
       </nav>
     </header>
