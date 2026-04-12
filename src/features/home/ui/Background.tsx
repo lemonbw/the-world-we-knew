@@ -20,10 +20,10 @@ export default function Background() {
           src={isDark ? whiteEyes : blackEyes}
           alt="eyes"
           fill
-          className={`${section === "Overview" ? "mt-[60px] lg:mt-[110px]" : "mt-[160px] lg:-mt-[330px] z-40"} ${isDark ? "opacity-70" : ""} blur-[1px] object-contain`}
+          className={`${section === "Overview" ? "mt-[60px] lg:mt-[150px]" : "mt-[160px] lg:-mt-[220px] z-40"} ${isDark ? "opacity-70" : ""} blur-[1px] object-contain`}
         />
       </div>
-      <div className={`${section === "Overview" ? "mt-[100px]" : "mt-50 lg:-mt-[350px]"} relative h-[600px] w-[800px] lg:h-[800px] lg:w-[1200px]`}>
+      <div className={`${section === "Overview" ? "mt-[100px]" : "mt-50 lg:-mt-[280px]"} relative h-[600px] w-[800px] lg:h-[1000px] lg:w-[1450px]`}>
         <Image
           src={isDark ? whiteChains : blackChains}
           alt="chains"
