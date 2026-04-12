@@ -54,12 +54,12 @@ export function FontSizeSelector({
           value={tempSize}
           onChange={(e) => setTempSize(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-10 rounded-l-sm p-1 outline-none! focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]"
+          className="w-10 rounded-l-sm p-1 outline-none! focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-white dark:bg-black"
         />
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons w-6 border-l-2 text-lg"
+          className="material-icons w-6 border-l-2 text-lg bg-white dark:bg-black"
         >
           keyboard_arrow_down
         </button>

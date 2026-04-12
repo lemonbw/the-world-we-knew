@@ -65,7 +65,7 @@ export default function ChapterList() {
   return (
     <section className="z-10 mx-auto mt-4 w-[80vw]">
       <button
-        className="relative mx-auto block cursor-pointer font-bold bg-white dark:bg-black"
+        className="relative mx-auto block cursor-pointer font-bold"
         onMouseEnter={handleButtonEnter(SORT_BUTTON_ID)}
         onMouseLeave={handleButtonLeave}
         onClick={activateSortButton}
