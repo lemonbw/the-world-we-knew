@@ -1,3 +1,3 @@
-export { AlignSelector } from './AlignSelector.tsx';
-export { FontSelector } from './FontSelector.tsx';
-export { FontSizeSelector } from './FontSizeSelector.tsx';
+export { AlignSelector } from './AlignSelector';
+export { FontSelector } from './FontSelector';
+export { FontSizeSelector } from './FontSizeSelector';
