@@ -6,7 +6,7 @@ import { useHeaderState } from '@/src/shared/hooks/useHeaderState';
 import { NavLink } from '@/src/shared/ui/NavLink';
 import { FalseNavLink } from '@/src/shared/ui/FalseNavLink';
 import { Hamburger } from '@/src/shared/ui/Hamburger';
-import { whiteMain, blackMain, whiteArchive, blackArchive, whiteMap, blackMap, whiteNews, blackNews } from '@/src/shared/assets/images/header';
+import { whiteArchive, blackArchive, whiteMap, blackMap, whiteNews, blackNews } from '@/src/shared/assets/images/header';
 
 export default function Header() {
   const { isDark, hiddenHeader, hiddenNavigation, setHiddenNavigation } = useHeaderState();
