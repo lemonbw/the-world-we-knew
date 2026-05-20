@@ -1,2 +1,2 @@
-export { useChapterSearch } from './useChapterSearch.ts';
-export { useChapterDropdown } from './useChapterDropdown.ts';
+export { useChapterSearch } from './useChapterSearch';
+export { useChapterDropdown } from './useChapterDropdown';
