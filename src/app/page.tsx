@@ -1,13 +1,9 @@
-import Background from '@/src/features/home/ui/Background';
-import Panel from '@/src/features/home/ui/Panel';
-import Overview from '@/src/features/home/ui/Overview';
+import { Home } from '@/src/widgets/home';
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
-      <Background></Background>
-      <Panel />
-      <Overview></Overview>
+      <Home />
     </main>
   );
 }
