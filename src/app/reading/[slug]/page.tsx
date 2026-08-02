@@ -1,5 +1,5 @@
-import { getAllChapters, getChapter } from '@/src/shared/lib/chapters';
-import ReadingPage from '@/src/features/reading/sample/ReadingPage';
+import { getAllChapters, getChapter } from '@/src/entities/chapter/api/storage';
+import ReadingPage from '@/src/widgets/reading/templates/ReadingPage';
 import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
@@ -17,13 +17,11 @@ export default async function Page({
 }) {
   const { slug } = await params;
 
-  const chapters = getAllChapters();
+  const content = getChapter(slug);
 
-  if (!chapters.includes(slug)) {
+  if (!content) {
     notFound();
   }
-
-  const content = getChapter(slug);
 
   return <ReadingPage content={content} />;
 }
