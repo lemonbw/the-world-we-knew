@@ -1,8 +1,7 @@
-import Main from "../components/Main";
-
 export default function ArchivePage() {
   return (
-    <Main>Archive</Main>
-  )
+    <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
+      Archive
+    </main>
+  );
 }
-

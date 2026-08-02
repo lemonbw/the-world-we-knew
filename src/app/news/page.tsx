@@ -1,8 +1,7 @@
-import Main from "../components/Main";
-
 export default function NewsPage() {
   return (
-    <Main>News</Main>
-  )
+    <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
+      News
+    </main>
+  );
 }
-
