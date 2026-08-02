@@ -1,10 +1,10 @@
-import { useState, useMemo, useEffect, useDeferredValue } from "react";
-import { useMedia } from "use-media";
-import chunkChapters from '@/src/features/chapter-list/lib/chunkChapters';
-import ChapterSort from '@/src/features/chapter-list/lib/ChapterSort';
+import { useState, useMemo, useEffect, useDeferredValue } from 'react';
+import { useMedia } from 'use-media';
+import chunkChapters from '../lib/chunkChapters';
+import ChapterSort from '../lib/ChapterSort';
 
 export function useChapterListState() {
-  const [pageSize, setPageSize] = useState(20)
+  const [pageSize, setPageSize] = useState(20);
 
   const [panelSize, setPanelSize] = useState(8);
 
@@ -14,8 +14,7 @@ export function useChapterListState() {
     if (!isLarge) {
       setPanelSize(4);
       setPageSize(10);
-    }
-    else {
+    } else {
       setPanelSize(8);
       setPageSize(20);
     }
@@ -39,7 +38,7 @@ export function useChapterListState() {
 
   const pages = useMemo(
     () => chunkChapters(listSource, pageSize),
-    [listSource, pageSize]
+    [listSource, pageSize],
   );
 
   const currentPage = pages[page] ?? [];
