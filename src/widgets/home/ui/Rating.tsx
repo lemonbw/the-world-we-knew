@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function Rating() {
+export const Rating = () => {
   const [hoveredIndex, SetHoveredIndex] = useState<number | null>(null);
 
   const rating: number = 5;
@@ -36,4 +36,4 @@ export default function Rating() {
       {stars}
     </div>
   );
-}
+};

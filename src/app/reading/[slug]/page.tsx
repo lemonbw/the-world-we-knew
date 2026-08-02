@@ -1,5 +1,5 @@
-import { getAllChapters, getChapter } from '@/src/entities/chapter/lib/storage';
-import ReadingPage from '@/src/features/reading/templates/ReadingPage';
+import { getAllChapters, getChapter } from '@/src/entities/chapter/api/storage';
+import ReadingPage from '@/src/widgets/reading/templates/ReadingPage';
 import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;

@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import ReadingContent from '@/src/features/reading/ui/ReadingContent';
-import { Toolbar } from '@/src/widgets/Toolbar'
+import ReadingContent from '../../reading/ui/ReadingContent';
+import { Toolbar } from '../../toolbar/ui/Toolbar';
 
-export default function Description() {
+export const Overview = () => {
   const [content, setContent] = useState('');
 
   useEffect(() => {
@@ -20,7 +20,6 @@ export default function Description() {
     'романтика',
   ];
 
-
   return (
     <Toolbar>
       <ReadingContent className="p-1 select-text" content={content} />
@@ -30,5 +29,5 @@ export default function Description() {
         ))}
       </div>
     </Toolbar>
-  )
-}
+  );
+};

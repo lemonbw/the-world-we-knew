@@ -44,7 +44,7 @@ export default function ChapterSelector() {
 
   return (
     <div
-      className="relative ml-2 mt-[7px] mr-2 h-[34px] w-[200px] rounded-sm border-2"
+      className="relative mx-2 mt-2.5 h-9.5 w-[200px] rounded-sm border-2"
       ref={divRef}
     >
       <SearchInput
@@ -58,14 +58,14 @@ export default function ChapterSelector() {
       <button
         type="button"
         onClick={toggle}
-        className="material-icons absolute right-0 h-8 w-10 border-l-2 text-lg"
+        className="material-icons absolute top-0 right-0 h-full w-10 border-l-2 text-lg"
       >
         keyboard_arrow_down
       </button>
 
       {isOpen && (
         <div
-          className="mt-8.5 -ml-[1.5px] h-[25.41rem] w-[200px] overflow-x-hidden overflow-y-auto rounded-sm border-1"
+          className="mt-1 -ml-[2px] h-[25.41rem] w-[200px] overflow-x-hidden overflow-y-auto rounded-sm border-1"
           ref={listRef}
           onScroll={handleScroll}
         >
@@ -75,12 +75,13 @@ export default function ChapterSelector() {
                 <tr
                   key={chapter.href}
                   ref={slug === chapter.slug ? chapterRef : null}
-                  className={`z-50 h-[41px] cursor-pointer border-b-2 bg-white dark:bg-black transition-colors duration-1000 ${slug === chapter.slug ? 'font-bold' : ''
-                    }`}
+                  className={`z-50 h-[41px] w-full cursor-pointer border-b-2 bg-white transition-colors duration-1000 dark:bg-black ${
+                    slug === chapter.slug ? 'font-bold' : ''
+                  }`}
                   onMouseEnter={() => handleMouseEnter(chapter.index)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <td className="relative z-10 w-[28.2px] py-2 pr-2 pl-2">
+                  <td className="relative z-10 w-[28.2px] px-2 py-2">
                     <Link
                       href={chapter.href}
                       className={getLinkClasses(chapter.index)}
@@ -89,8 +90,11 @@ export default function ChapterSelector() {
                     </Link>
 
                     <span
-                      className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black dark:bg-white transition-all duration-500 lg:duration-1000 ${hoveredChapter === chapter.index ? 'w-50 lg:w-[22.2vw]' : 'w-0'
-                        }`}
+                      className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 lg:duration-1000 dark:bg-white ${
+                        hoveredChapter === chapter.index
+                          ? 'w-50 lg:w-[22.2vw]'
+                          : 'w-0'
+                      }`}
                     />
                   </td>
 
