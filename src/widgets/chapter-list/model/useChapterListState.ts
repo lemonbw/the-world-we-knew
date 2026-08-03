@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useDeferredValue } from 'react';
 import { useMedia } from 'use-media';
-import chunkChapters from '../lib/chunkChapters';
-import ChapterSort from '../lib/ChapterSort';
+import { chunkChapters } from '@/src/entities/chapter/lib/chunkChapters';
+import { chapterSort } from '@/src/entities/chapter/lib/chapterSort';
 
 export function useChapterListState() {
   const [pageSize, setPageSize] = useState(20);
@@ -26,7 +26,7 @@ export function useChapterListState() {
   const [isAsc, setIsAsc] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(0);
 
-  const sortedChapters = useMemo(() => ChapterSort(isAsc), [isAsc]);
+  const sortedChapters = useMemo(() => chapterSort(isAsc), [isAsc]);
 
   const filteredChapters = useMemo(() => {
     if (!deferredQuery) return sortedChapters;

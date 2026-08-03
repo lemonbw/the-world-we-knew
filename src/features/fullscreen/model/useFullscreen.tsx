@@ -4,7 +4,7 @@ type UseFullscreenProps = {
   element: RefObject<HTMLElement | null>;
 };
 
-export function useFullscreen({ element }: UseFullscreenProps) {
+export const useFullscreen = ({ element }: UseFullscreenProps) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const toggleFullscreen = useCallback(() => {
@@ -60,4 +60,4 @@ export function useFullscreen({ element }: UseFullscreenProps) {
     fullscreen,
     toggleFullscreen,
   };
-}
+};
