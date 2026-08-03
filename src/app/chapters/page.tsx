@@ -1,5 +1,5 @@
-import Background from '@/src/widgets/home/ui/Background';
-import Panel from '@/src/widgets/home/ui/Panel';
+import { Background } from '@/src/widgets/home/ui/Background';
+import { Panel } from '@/src/widgets/home/ui/Panel';
 import ChapterList from '@/src/widgets/chapter-list/ui/ChapterList';
 
 export default function Chapters() {
