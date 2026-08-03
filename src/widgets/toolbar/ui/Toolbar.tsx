@@ -6,6 +6,7 @@ import {
   AlignSelector,
 } from '@/src/features/text-settings/ui';
 import { FullscreenButton } from '@/src/features/fullscreen/ui/FullscreenButton';
+import { useFullscreen } from '@/src/features/fullscreen/model/useFullscreen';
 import { useReadingState } from '../../reading/model/useReadingState';
 
 type ToolbarProps = {
@@ -65,7 +66,7 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
             setCurrentAlign={setCurrentAlign}
           />
         </div>
-        <FullscreenButton element={readingSection} />
+        <FullscreenButton fullscreen={fullscreen} onToggle={toggleFullscreen} />
       </div>
       <div
         className={`-mt-3 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
