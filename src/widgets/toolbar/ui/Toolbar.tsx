@@ -65,8 +65,11 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
             currentAlign={currentAlign}
             setCurrentAlign={setCurrentAlign}
           />
+          <FullscreenButton
+            fullscreen={fullscreen}
+            onToggle={toggleFullscreen}
+          />
         </div>
-        <FullscreenButton fullscreen={fullscreen} onToggle={toggleFullscreen} />
       </div>
       <div
         className={`-mt-3 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
