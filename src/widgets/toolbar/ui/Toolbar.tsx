@@ -1,22 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMedia } from 'use-media';
 import {
   FontSelector,
   FontSizeSelector,
   AlignSelector,
 } from '@/src/features/text-settings/ui';
-import { FullscreenButton } from '@/src/features/fullscreen/ui/FullscreenButton';
-import { useFullscreen } from '@/src/features/fullscreen/model/useFullscreen';
-import { useReadingState } from '../../reading/model/useReadingState';
+import { FullscreenButton } from '@/src/features/fullscreen';
+import { useFullscreen } from '@/src/features/fullscreen';
+import { useTextSettings } from '@/src/features/text-settings';
 
 type ToolbarProps = {
   ChapterSelector?: React.ReactNode;
   children: React.ReactNode;
 };
 
-export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
+export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
   const {
-    readingSection,
     currentSize,
     setCurrentSize,
     currentFont,
@@ -25,7 +24,9 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
     setFontQuery,
     currentAlign,
     setCurrentAlign,
-  } = useReadingState();
+  } = useTextSettings();
+
+  const readingSection = useRef<HTMLElement | null>(null);
 
   const isLarge = useMedia({ minWidth: 1024 });
 
@@ -42,10 +43,10 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-12 flex h-[100vh] w-[80vw] flex-col overflow-y-hidden lg:mt-8`}
+      className={`relative mx-auto mt-12 flex h-screen w-[80vw] flex-col overflow-y-hidden lg:mt-8`}
     >
       <div
-        className={`relative -mb-45 h-62 rotate-x-180 *:rotate-x-180 ${fullscreen ? 'w-[100vw]' : 'w-[80vw]'} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}
+        className={`relative -mb-45 h-62 rotate-x-180 *:rotate-x-180 ${fullscreen ? 'w-screen' : 'w-[80vw]'} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}
       >
         <div
           className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[160vw] flex-none items-center gap-1 lg:-ml-1 lg:w-full`}
@@ -87,4 +88,4 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
       </div>
     </section>
   );
-}
+};

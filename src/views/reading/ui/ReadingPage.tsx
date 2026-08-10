@@ -1,17 +1,17 @@
 'use client';
-import { Toolbar } from '../../toolbar/ui/Toolbar';
-import ReadingContent from '../ui/ReadingContent';
-import ChapterSelector from '@/src/features/chapter-selector/ui/ChapterSelector';
+import { Toolbar } from '@/src/widgets/toolbar';
+import { MarkdownRenderer } from '@/src/shared/ui/MarkdownRenderer';
+import { ChapterSelector } from '@/src/features/chapter-selector';
 
-export default function ReadingPage({ content }: { content: string }) {
+export const ReadingPage = ({ content }: { content: string }) => {
   return (
     <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
       <Toolbar ChapterSelector={<ChapterSelector />}>
-        <ReadingContent
+        <MarkdownRenderer
           className="h-[90vh] overflow-y-auto p-1"
           content={content}
         />
       </Toolbar>
     </main>
   );
-}
+};

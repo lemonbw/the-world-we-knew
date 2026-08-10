@@ -8,13 +8,13 @@ interface SearchInputProps {
   placeholder?: string;
 }
 
-export default function SearchInput({
+export const SearchInput = ({
   query,
   setQuery,
   onClick,
   className,
   placeholder,
-}: SearchInputProps) {
+}: SearchInputProps) => {
   return (
     <div className="mx-auto flex h-8.5 w-50 flex-col items-center gap-2 lg:w-full">
       <input
@@ -27,4 +27,4 @@ export default function SearchInput({
       />
     </div>
   );
-}
+};

@@ -1,13 +1,13 @@
 'use client';
 import Link from 'next/link';
-import usePanelState from '@/src/widgets/home/model/usePanelState';
+import { useNavigationState } from '@/src/entities/navigation';
 
 export const Panel = () => {
-  const section = usePanelState();
+  const section = useNavigationState();
 
   return (
     <div
-      className={`z-5 mt-30 ${section === 'Overview' ? '-mb-10 lg:-mb-6' : ''} flex h-9 w-35 overflow-hidden rounded-[0.55rem] border-2 *:w-1/2 *:pt-[0.2rem] *:pl-[0.3rem] *:text-center *:text-[1.2rem] lg:h-10 lg:w-55 lg:rounded-xl lg:*:pl-4`}
+      className={`z-5 mt-10 ${section === 'Overview' ? '-mb-10 lg:-mb-6' : ''} flex h-9 w-35 overflow-hidden rounded-[0.55rem] border-2 *:w-1/2 *:pt-[0.2rem] *:pl-[0.3rem] *:text-center *:text-[1.2rem] lg:h-10 lg:w-55 lg:rounded-xl lg:*:pl-4`}
     >
       <Link
         href="/"

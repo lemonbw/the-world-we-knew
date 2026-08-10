@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useFontSelectorState() {
+export const useFontSelectorState = () => {
   const [isHidden, setIsHidden] = useState(true);
   const [isHiddenFonts, setIsHiddenFonts] = useState(true);
   const [hoveredFont, setHoveredFont] = useState<string | null>(null);
@@ -13,4 +13,4 @@ export function useFontSelectorState() {
     hoveredFont,
     setHoveredFont,
   };
-}
+};

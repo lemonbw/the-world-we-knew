@@ -10,17 +10,19 @@ const schema = {
   clobberPrefix: '',
 };
 
-type ReadingContentProps = {
+type MarkdownRendererProps = {
   content: string;
   className?: string;
 };
 
-export default function ReadingContent({
+export const MarkdownRenderer = ({
   content,
   className,
-}: ReadingContentProps) {
+}: MarkdownRendererProps) => {
   return (
-    <div className={className}>
+    <div
+      className={`${className}, mx-2 [&_h1]:mb-4 [&_h1]:font-bold [&_h2]:my-4 [&_h2]:font-semibold [&_h3]:my-2 [&_h3]:font-medium [&_hr]:w-[97.5%] [&_li]:ml-1 [&_p]:my-2 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6`}
+    >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[[rehypeSanitize, schema]]}
@@ -29,4 +31,4 @@ export default function ReadingContent({
       </ReactMarkdown>
     </div>
   );
-}
+};

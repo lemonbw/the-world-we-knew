@@ -1,4 +1,4 @@
-export function isFontRendered(font: string) {
+export const isFontRendered = (font: string) => {
   const text = 'mmmmmmmmmmlli';
   const fontSize = '72px';
   const canvas = document.createElement('canvas');
@@ -17,4 +17,4 @@ export function isFontRendered(font: string) {
     const width = context.measureText(text).width;
     return width !== defaultWidths[i];
   });
-}
+};

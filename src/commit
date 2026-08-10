@@ -1,0 +1,1518 @@
+diff --git a/src/app/chapters/page.tsx b/src/app/chapters/page.tsx
+index 257d7b1..90576d5 100644
+--- a/src/app/chapters/page.tsx
++++ b/src/app/chapters/page.tsx
+@@ -1,13 +1,5 @@
+-import { Background } from '@/src/widgets/home/ui/Background';
+-import { Panel } from '@/src/widgets/home/ui/Panel';
+-import ChapterList from '@/src/widgets/chapter-list/ui/ChapterList';
++import { ChaptersPage } from '@/src/views/chapters';
+ 
+ export default function Chapters() {
+-  return (
+-    <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
+-      <Background />
+-      <Panel />
+-      <ChapterList />
+-    </main>
+-  );
++  return <ChaptersPage />;
+ }
+diff --git a/src/app/layout.tsx b/src/app/layout.tsx
+index db86c85..836d8ce 100644
+--- a/src/app/layout.tsx
++++ b/src/app/layout.tsx
+@@ -1,8 +1,9 @@
+ import type { Metadata } from 'next';
+ import { Geist, Geist_Mono } from 'next/font/google';
+ import '@/src/app/globals.css';
+-import Header from '@/src/widgets/header/ui/Header';
+-import Footer from '@/src/widgets/footer/ui/Footer';
++import { Header } from '@/src/widgets/header';
++import { Footer } from '@/src/widgets/footer';
++import { Background } from '@/src/widgets/background';
+ import { Providers } from './providers';
+ 
+ const geistSans = Geist({
+@@ -33,6 +34,7 @@ export default function RootLayout({
+       >
+         <Providers>
+           <Header />
++          <Background />
+           {children}
+           <Footer />
+         </Providers>
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 9b78584..74181ec 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -1,9 +1,9 @@
+-import { Home } from '@/src/widgets/home';
++import { HomePage } from '@/src/views/home';
+ 
+ export default function Page() {
+   return (
+     <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
+-      <Home />
++      <HomePage />
+     </main>
+   );
+ }
+diff --git a/src/app/providers/index.tsx b/src/app/providers/index.tsx
+index 624c9ed..a43e2ab 100644
+--- a/src/app/providers/index.tsx
++++ b/src/app/providers/index.tsx
+@@ -6,6 +6,6 @@ type Props = {
+   children: ReactNode;
+ };
+ 
+-export function Providers({ children }: Props) {
++export const Providers = ({ children }: Props) => {
+   return <>{children}</>;
+-}
++};
+diff --git a/src/app/reading/[slug]/page.tsx b/src/app/reading/[slug]/page.tsx
+index 859ed28..c0f4e02 100644
+--- a/src/app/reading/[slug]/page.tsx
++++ b/src/app/reading/[slug]/page.tsx
+@@ -1,5 +1,5 @@
+-import { getAllChapters, getChapter } from '@/src/entities/chapter/api/storage';
+-import ReadingPage from '@/src/widgets/reading/templates/ReadingPage';
++import { getAllChapters, getChapter } from '@/src/entities/chapter/server';
++import { ReadingPage } from '@/src/views/reading';
+ import { notFound } from 'next/navigation';
+ 
+ export const dynamicParams = false;
+@@ -16,7 +16,6 @@ export default async function Page({
+   params: Promise<{ slug: string }>;
+ }) {
+   const { slug } = await params;
+-
+   const content = getChapter(slug);
+ 
+   if (!content) {
+diff --git a/src/entities/chapter/api/storage.ts b/src/entities/chapter/api/storage.ts
+index 91e1bc8..90998d9 100644
+--- a/src/entities/chapter/api/storage.ts
++++ b/src/entities/chapter/api/storage.ts
+@@ -3,16 +3,16 @@ import path from 'path';
+ 
+ const chaptersPath = path.join(process.cwd(), 'public/chapters');
+ 
+-export function getAllChapters() {
++export const getAllChapters = () => {
+   return fs
+     .readdirSync(chaptersPath)
+     .filter((file) => file.endsWith('.md'))
+     .map((file) => file.replace('.md', ''))
+     .sort();
+-}
++};
+ 
+-export function getChapter(slug: string) {
++export const getChapter = (slug: string) => {
+   const filePath = path.join(chaptersPath, `${slug}.md`);
+ 
+   return fs.readFileSync(filePath, 'utf8');
+-}
++};
+diff --git a/src/entities/chapter/lib/chapterSort.ts b/src/entities/chapter/lib/chapterSort.ts
+index 64540f3..5826b22 100644
+--- a/src/entities/chapter/lib/chapterSort.ts
++++ b/src/entities/chapter/lib/chapterSort.ts
+@@ -1,4 +1,4 @@
+-import { chapters } from '@/src/entities/chapter/model/chapters';
++import { chapters } from '../model/chapters';
+ 
+ export const chapterSort = (order: 'asc' | 'desc') => {
+   return [...chapters].sort((a, b) =>
+diff --git a/src/entities/chapter/lib/chunkChapters.ts b/src/entities/chapter/lib/chunkChapters.ts
+deleted file mode 100644
+index b873bbe..0000000
+--- a/src/entities/chapter/lib/chunkChapters.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-export const chunkChapters = <T>(array: T[], size: number): T[][] => {
+-  const result: T[][] = [];
+-  for (let i = 0; i < array.length; i += size) {
+-    result.push(array.slice(i, i + size));
+-  }
+-  return result;
+-};
+diff --git a/src/entities/chapter/ui/ChapterTable.tsx b/src/entities/chapter/ui/ChapterTable.tsx
+index bf596a7..c1c5e1c 100644
+--- a/src/entities/chapter/ui/ChapterTable.tsx
++++ b/src/entities/chapter/ui/ChapterTable.tsx
+@@ -9,12 +9,12 @@ type ChapterTableProps = {
+   direction: 'toRight' | 'toLeft' | 'toDown' | 'toUp';
+ };
+ 
+-export function ChapterTable({
++export const ChapterTable = ({
+   chapters,
+   emptyRowsCount,
+   listPhase,
+   direction,
+-}: ChapterTableProps) {
++}: ChapterTableProps) => {
+   const NO_HOVER = -2;
+   const [hoveredIndex, setHovered] = useState(NO_HOVER);
+   const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
+@@ -123,4 +123,4 @@ export function ChapterTable({
+       </tbody>
+     </table>
+   );
+-}
++};
+diff --git a/src/features/chapter-pagination/ui/ChapterPagination.tsx b/src/features/chapter-pagination/ui/ChapterPagination.tsx
+index 409a610..98fdb06 100644
+--- a/src/features/chapter-pagination/ui/ChapterPagination.tsx
++++ b/src/features/chapter-pagination/ui/ChapterPagination.tsx
+@@ -10,13 +10,13 @@ type ChapterPaginationProps = {
+   onAction: (actionType: 'start' | 'prev' | 'next' | 'end' | number) => void;
+ };
+ 
+-export function ChapterPagination({
++export const ChapterPagination = ({
+   page,
+   pagesCount,
+   startPage,
+   panelSize,
+   onAction,
+-}: ChapterPaginationProps) {
++}: ChapterPaginationProps) => {
+   const isLarge = useMedia({ minWidth: 1024 });
+   const arrows = isLarge
+     ? { start: '⮜⮜', prev: '⮜', next: '⮞', end: '⮞⮞' }
+@@ -96,4 +96,4 @@ export function ChapterPagination({
+       </button>
+     </nav>
+   );
+-}
++};
+diff --git a/src/features/chapter-selector/model/useChapterDropdown.ts b/src/features/chapter-selector/model/useChapterDropdown.ts
+index d539deb..c88896f 100644
+--- a/src/features/chapter-selector/model/useChapterDropdown.ts
++++ b/src/features/chapter-selector/model/useChapterDropdown.ts
+@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
+ import { useParams } from 'next/navigation';
+ import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
+ 
+-export function useChapterDropdown(totalCount: number) {
++export const useChapterDropdown = (totalCount: number) => {
+   const params = useParams();
+   const slug = params?.slug;
+ 
+@@ -82,4 +82,4 @@ export function useChapterDropdown(totalCount: number) {
+     chapterRef,
+     slug,
+   };
+-}
++};
+diff --git a/src/features/chapter-selector/model/useChapterSearch.ts b/src/features/chapter-selector/model/useChapterSearch.ts
+index 5a5d604..87859a7 100644
+--- a/src/features/chapter-selector/model/useChapterSearch.ts
++++ b/src/features/chapter-selector/model/useChapterSearch.ts
+@@ -1,9 +1,9 @@
+ import { useState, useMemo } from 'react';
+ import { useDeferredValue } from 'react';
+ import { useParams } from 'next/navigation';
+-import { chapters } from '@/src/entities/chapter/model/chapters';
++import { chapters } from '@/src/entities/chapter';
+ 
+-export function useChapterSearch() {
++export const useChapterSearch = () => {
+   const params = useParams();
+   const slug = params?.slug;
+ 
+@@ -32,4 +32,4 @@ export function useChapterSearch() {
+     isSearching,
+     currentChapter,
+   };
+-}
++};
+diff --git a/src/features/chapter-selector/ui/ChapterSelector.tsx b/src/features/chapter-selector/ui/ChapterSelector.tsx
+index 56f492b..6573950 100644
+--- a/src/features/chapter-selector/ui/ChapterSelector.tsx
++++ b/src/features/chapter-selector/ui/ChapterSelector.tsx
+@@ -1,12 +1,12 @@
+ import Link from 'next/link';
+-import { chapters } from '@/src/entities/chapter/model/chapters';
+-import SearchInput from '@/src/shared/ui/SearchInput';
++import { chapters } from '@/src/entities/chapter';
++import { SearchInput } from '@/src/shared/ui/SearchInput';
+ import {
+   useChapterSearch,
+   useChapterDropdown,
+-} from '@/src/features/chapter-selector/model';
++} from '@/src/features/chapter-selector';
+ 
+-export default function ChapterSelector() {
++export const ChapterSelector = () => {
+   const { query, setQuery, listSource, currentChapter } = useChapterSearch();
+ 
+   const {
+@@ -122,4 +122,4 @@ export default function ChapterSelector() {
+       )}
+     </div>
+   );
+-}
++};
+diff --git a/src/features/chapter-sort/ui/ChapterSortButton.tsx b/src/features/chapter-sort/ui/ChapterSortButton.tsx
+index f646200..4cd3514 100644
+--- a/src/features/chapter-sort/ui/ChapterSortButton.tsx
++++ b/src/features/chapter-sort/ui/ChapterSortButton.tsx
+@@ -6,10 +6,10 @@ type ChapterSortButtonProps = {
+   onSortClick: () => void;
+ };
+ 
+-export function ChapterSortButton({
++export const ChapterSortButton = ({
+   isAsc,
+   onSortClick,
+-}: ChapterSortButtonProps) {
++}: ChapterSortButtonProps) => {
+   const [isHovered, setIsHovered] = useState(false);
+   const [isPressed, setIsPressed] = useState(false);
+   const hoverDelayRef = useRef<NodeJS.Timeout | null>(null);
+@@ -48,4 +48,4 @@ export function ChapterSortButton({
+       />
+     </button>
+   );
+-}
++};
+diff --git a/src/features/fullscreen/ui/FullscreenButton.tsx b/src/features/fullscreen/ui/FullscreenButton.tsx
+index 178bf47..1d39ec6 100644
+--- a/src/features/fullscreen/ui/FullscreenButton.tsx
++++ b/src/features/fullscreen/ui/FullscreenButton.tsx
+@@ -3,10 +3,10 @@ type FullscreenButtonProps = {
+   onToggle: () => void;
+ };
+ 
+-export function FullscreenButton({
++export const FullscreenButton = ({
+   fullscreen,
+   onToggle,
+-}: FullscreenButtonProps) {
++}: FullscreenButtonProps) => {
+   return (
+     <button
+       className="material-icons mt-2 ml-7 w-10 text-[2.5rem]! transition-all duration-300 hover:text-[2.7rem]!"
+@@ -15,4 +15,4 @@ export function FullscreenButton({
+       {fullscreen ? 'fullscreen_exit' : 'fullscreen'}
+     </button>
+   );
+-}
++};
+diff --git a/src/features/text-settings/model/index.ts b/src/features/text-settings/model/index.ts
+index 5e069a1..068a873 100644
+--- a/src/features/text-settings/model/index.ts
++++ b/src/features/text-settings/model/index.ts
+@@ -1,2 +1,3 @@
+ export { useFontSelectorState } from './useFontSelectorState';
+ export { useFontSizeSelectorState } from './useFontSizeSelectorState';
++export { useTextSettings } from './useTextSettings';
+diff --git a/src/features/text-settings/model/useFontSelectorState.ts b/src/features/text-settings/model/useFontSelectorState.ts
+index 1b97933..f745459 100644
+--- a/src/features/text-settings/model/useFontSelectorState.ts
++++ b/src/features/text-settings/model/useFontSelectorState.ts
+@@ -1,6 +1,6 @@
+ import { useState } from 'react';
+ 
+-export function useFontSelectorState() {
++export const useFontSelectorState = () => {
+   const [isHidden, setIsHidden] = useState(true);
+   const [isHiddenFonts, setIsHiddenFonts] = useState(true);
+   const [hoveredFont, setHoveredFont] = useState<string | null>(null);
+@@ -13,4 +13,4 @@ export function useFontSelectorState() {
+     hoveredFont,
+     setHoveredFont,
+   };
+-}
++};
+diff --git a/src/features/text-settings/model/useFontSizeSelectorState.ts b/src/features/text-settings/model/useFontSizeSelectorState.ts
+index d951716..182e732 100644
+--- a/src/features/text-settings/model/useFontSizeSelectorState.ts
++++ b/src/features/text-settings/model/useFontSizeSelectorState.ts
+@@ -1,6 +1,6 @@
+ import { useState } from 'react';
+ 
+-export function useFontSizeSelectorState(currentSize: number) {
++export const useFontSizeSelectorState = (currentSize: number) => {
+   const [isHidden, setIsHidden] = useState(true);
+   const [hoveredSize, setHoveredSize] = useState(0);
+   const [tempSize, setTempSize] = useState(currentSize.toString());
+@@ -13,4 +13,4 @@ export function useFontSizeSelectorState(currentSize: number) {
+     tempSize,
+     setTempSize,
+   };
+-}
++};
+diff --git a/src/features/text-settings/ui/AlignSelector.tsx b/src/features/text-settings/ui/AlignSelector.tsx
+index 0a14485..714422a 100644
+--- a/src/features/text-settings/ui/AlignSelector.tsx
++++ b/src/features/text-settings/ui/AlignSelector.tsx
+@@ -3,12 +3,12 @@ type AlignSelectorProps = {
+   setCurrentAlign: (align: 'left' | 'center' | 'right' | 'justify') => void;
+ };
+ 
+-export function AlignSelector({
++export const AlignSelector = ({
+   currentAlign,
+   setCurrentAlign,
+-}: AlignSelectorProps) {
++}: AlignSelectorProps) => {
+   return (
+-    <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:dark:border-black *:text-[2rem]! *:duration-300 *:hover:border-black/10 *:dark:hover:border-white/10">
++    <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:text-[2rem]! *:duration-300 *:hover:border-black/10 *:dark:border-black *:dark:hover:border-white/10">
+       <button
+         className={`material-icons ${currentAlign === 'left' ? 'bg-black/10 dark:bg-white/10' : ''}`}
+         onClick={() => setCurrentAlign('left')}
+@@ -35,4 +35,4 @@ export function AlignSelector({
+       </button>
+     </div>
+   );
+-}
++};
+diff --git a/src/features/text-settings/ui/FontSelector.tsx b/src/features/text-settings/ui/FontSelector.tsx
+index f2a4718..2aedfa3 100644
+--- a/src/features/text-settings/ui/FontSelector.tsx
++++ b/src/features/text-settings/ui/FontSelector.tsx
+@@ -1,8 +1,8 @@
+ import { useDeferredValue } from 'react';
+ import { useAvailableFonts } from '@/src/shared/hooks/fonts/useAvailableFonts';
+-import { useFontSelectorState } from '@/src/features/text-settings/model/';
++import { useFontSelectorState } from '@/src/features/text-settings';
+ import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
+-import SearchInput from '@/src/shared/ui/SearchInput';
++import { SearchInput } from '@/src/shared/ui/SearchInput';
+ 
+ type FontSelectorProps = {
+   currentFont: string;
+@@ -11,12 +11,12 @@ type FontSelectorProps = {
+   setQuery: (query: string) => void;
+ };
+ 
+-export function FontSelector({
++export const FontSelector = ({
+   currentFont,
+   setCurrentFont,
+   query,
+   setQuery,
+-}: FontSelectorProps) {
++}: FontSelectorProps) => {
+   const {
+     isHidden,
+     setIsHidden,
+@@ -103,4 +103,4 @@ export function FontSelector({
+       </div>
+     </div>
+   );
+-}
++};
+diff --git a/src/features/text-settings/ui/FontSizeSelector.tsx b/src/features/text-settings/ui/FontSizeSelector.tsx
+index fe03e95..1a8bc02 100644
+--- a/src/features/text-settings/ui/FontSizeSelector.tsx
++++ b/src/features/text-settings/ui/FontSizeSelector.tsx
+@@ -1,8 +1,8 @@
+ 'use client';
+ import { useEffect } from 'react';
+ import { useMedia } from 'use-media';
+-import { fontSizes } from '@/src/shared/lib/fonts/fontSizes';
+-import { useFontSizeSelectorState } from '@/src/features/text-settings/model';
++import { fontSizes } from '@/src/shared/lib/fonts';
++import { useFontSizeSelectorState } from '@/src/features/text-settings';
+ import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
+ import { parseFontSize } from '@/src/shared/lib/fonts';
+ 
+@@ -11,10 +11,10 @@ type FontSizeSelectorProps = {
+   setCurrentSizeAction: (size: number) => void;
+ };
+ 
+-export function FontSizeSelector({
++export const FontSizeSelector = ({
+   currentSize,
+   setCurrentSizeAction,
+-}: FontSizeSelectorProps) {
++}: FontSizeSelectorProps) => {
+   const {
+     isHidden,
+     setIsHidden,
+@@ -89,4 +89,4 @@ export function FontSizeSelector({
+       </div>
+     </div>
+   );
+-}
++};
+diff --git a/src/shared/hooks/fonts/useAvailableFonts.ts b/src/shared/hooks/fonts/useAvailableFonts.ts
+index e362e73..ff93688 100644
+--- a/src/shared/hooks/fonts/useAvailableFonts.ts
++++ b/src/shared/hooks/fonts/useAvailableFonts.ts
+@@ -1,7 +1,7 @@
+ import { useEffect, useState, useDeferredValue } from 'react';
+ import { systemFonts, isFontRendered } from '@/src/shared/lib/fonts';
+ 
+-export function useAvailableFonts(query: string, showHidden: boolean) {
++export const useAvailableFonts = (query: string, showHidden: boolean) => {
+   const [availableFonts, setAvailableFonts] = useState<string[]>([]);
+   const deferredQuery = useDeferredValue(query);
+ 
+@@ -18,4 +18,4 @@ export function useAvailableFonts(query: string, showHidden: boolean) {
+   );
+ 
+   return filteredList;
+-}
++};
+diff --git a/src/shared/hooks/useClickOutside.ts b/src/shared/hooks/useClickOutside.ts
+index fe24876..5a93edb 100644
+--- a/src/shared/hooks/useClickOutside.ts
++++ b/src/shared/hooks/useClickOutside.ts
+@@ -1,6 +1,8 @@
+ import { useEffect, useRef } from 'react';
+ 
+-export function useClickOutside<T extends HTMLElement>(callback: () => void) {
++export const useClickOutside = <T extends HTMLElement>(
++  callback: () => void,
++) => {
+   const ref = useRef<T>(null);
+ 
+   useEffect(() => {
+@@ -19,4 +21,4 @@ export function useClickOutside<T extends HTMLElement>(callback: () => void) {
+   }, [callback]);
+ 
+   return ref;
+-}
++};
+diff --git a/src/shared/lib/fonts/isFontRendered.ts b/src/shared/lib/fonts/isFontRendered.ts
+index af435a5..c593a62 100644
+--- a/src/shared/lib/fonts/isFontRendered.ts
++++ b/src/shared/lib/fonts/isFontRendered.ts
+@@ -1,4 +1,4 @@
+-export function isFontRendered(font: string) {
++export const isFontRendered = (font: string) => {
+   const text = 'mmmmmmmmmmlli';
+   const fontSize = '72px';
+   const canvas = document.createElement('canvas');
+@@ -17,4 +17,4 @@ export function isFontRendered(font: string) {
+     const width = context.measureText(text).width;
+     return width !== defaultWidths[i];
+   });
+-}
++};
+diff --git a/src/shared/lib/fonts/parseFontSize.ts b/src/shared/lib/fonts/parseFontSize.ts
+index b8a622a..16d7a1d 100644
+--- a/src/shared/lib/fonts/parseFontSize.ts
++++ b/src/shared/lib/fonts/parseFontSize.ts
+@@ -1,8 +1,8 @@
+-export function parseFontSize(
++export const parseFontSize = (
+   input: string,
+   min = 8,
+   max = 120,
+-): number | null {
++): number | null => {
+   const filtered = input.replace(/[^0-9+\-*/().]/g, '');
+   try {
+     const result = Function(`"use strict"; return (${filtered})`)();
+@@ -13,4 +13,4 @@ export function parseFontSize(
+   } catch {
+     return null;
+   }
+-}
++};
+diff --git a/src/shared/ui/SearchInput.tsx b/src/shared/ui/SearchInput.tsx
+index 4ab079f..a11ebcb 100644
+--- a/src/shared/ui/SearchInput.tsx
++++ b/src/shared/ui/SearchInput.tsx
+@@ -8,13 +8,13 @@ interface SearchInputProps {
+   placeholder?: string;
+ }
+ 
+-export default function SearchInput({
++export const SearchInput = ({
+   query,
+   setQuery,
+   onClick,
+   className,
+   placeholder,
+-}: SearchInputProps) {
++}: SearchInputProps) => {
+   return (
+     <div className="mx-auto flex h-8.5 w-50 flex-col items-center gap-2 lg:w-full">
+       <input
+@@ -27,4 +27,4 @@ export default function SearchInput({
+       />
+     </div>
+   );
+-}
++};
+diff --git a/src/widgets/chapter-list/model/useChapterListState.ts b/src/widgets/chapter-list/model/useChapterListState.ts
+index b883a90..7b6646a 100644
+--- a/src/widgets/chapter-list/model/useChapterListState.ts
++++ b/src/widgets/chapter-list/model/useChapterListState.ts
+@@ -1,9 +1,9 @@
+ import { useState, useMemo, useEffect, useDeferredValue } from 'react';
+ import { useMedia } from 'use-media';
+-import { chunkChapters } from '@/src/entities/chapter/lib/chunkChapters';
+-import { chapterSort } from '@/src/entities/chapter/lib/chapterSort';
++import { chunkArray } from '@/src/shared/lib//arrays/chunkArray';
++import { chapterSort } from '@/src/entities/chapter';
+ 
+-export function useChapterListState() {
++export const useChapterListState = () => {
+   const [pageSize, setPageSize] = useState(20);
+ 
+   const [panelSize, setPanelSize] = useState(8);
+@@ -37,7 +37,7 @@ export function useChapterListState() {
+   const listSource = query ? filteredChapters : sortedChapters;
+ 
+   const pages = useMemo(
+-    () => chunkChapters(listSource, pageSize),
++    () => chunkArray(listSource, pageSize),
+     [listSource, pageSize],
+   );
+ 
+@@ -67,4 +67,4 @@ export function useChapterListState() {
+     panelSize,
+     pageSize,
+   };
+-}
++};
+diff --git a/src/widgets/chapter-list/ui/ChapterList.tsx b/src/widgets/chapter-list/ui/ChapterList.tsx
+index dd43630..023cca4 100644
+--- a/src/widgets/chapter-list/ui/ChapterList.tsx
++++ b/src/widgets/chapter-list/ui/ChapterList.tsx
+@@ -1,13 +1,13 @@
+ 'use client';
+ 
+ import { useState } from 'react';
+-import SearchInput from '@/src/shared/ui/SearchInput';
++import { SearchInput } from '@/src/shared/ui/SearchInput';
+ import { useChapterListState } from '../model/useChapterListState';
+-import { ChapterTable } from '@/src/entities/chapter/ui/ChapterTable';
+-import { ChapterSortButton } from '@/src/features/chapter-sort/ui/ChapterSortButton';
+-import { ChapterPagination } from '@/src/features/chapter-pagination/ui/ChapterPagination';
++import { ChapterTable } from '@/src/entities/chapter';
++import { ChapterSortButton } from '@/src/features/chapter-sort';
++import { ChapterPagination } from '@/src/features/chapter-pagination';
+ 
+-export default function ChapterList() {
++export const ChapterList = () => {
+   const {
+     query,
+     setQuery,
+@@ -93,4 +93,4 @@ export default function ChapterList() {
+       </div>
+     </section>
+   );
+-}
++};
+diff --git a/src/widgets/footer/ui/Footer.tsx b/src/widgets/footer/ui/Footer.tsx
+index bc0903d..f213977 100644
+--- a/src/widgets/footer/ui/Footer.tsx
++++ b/src/widgets/footer/ui/Footer.tsx
+@@ -1,4 +1,4 @@
+-export default function Footer() {
++export const Footer = () => {
+   return (
+     <footer className="flex h-21 w-full items-center justify-center text-xs *:mt-2 lg:text-lg">
+       <p className="mr-4 flex w-15 flex-row flex-wrap lg:w-60">
+@@ -20,4 +20,4 @@ export default function Footer() {
+       </div>
+     </footer>
+   );
+-}
++};
+diff --git a/src/widgets/header/model/useHeaderState.ts b/src/widgets/header/model/useHeaderState.ts
+index 0860499..f6e4db6 100644
+--- a/src/widgets/header/model/useHeaderState.ts
++++ b/src/widgets/header/model/useHeaderState.ts
+@@ -1,8 +1,8 @@
+ import { useState, useRef, useEffect } from 'react';
+ import { useMedia } from 'use-media';
+ 
+-export function useHeaderState() {
+-  const isDark = useMedia({ 'prefers-color-scheme': 'dark' })
++export const useHeaderState = () => {
++  const isDark = useMedia({ 'prefers-color-scheme': 'dark' });
+   const [hiddenHeader, setHiddenHeader] = useState(false);
+   const [hiddenNavigation, setHiddenNavigation] = useState(true);
+   const prevScrollY = useRef(0);
+@@ -18,5 +18,11 @@ export function useHeaderState() {
+     return () => window.removeEventListener('scroll', handleScroll);
+   }, []);
+ 
+-  return { isDark, hiddenHeader, setHiddenHeader, hiddenNavigation, setHiddenNavigation };
+-}
++  return {
++    isDark,
++    hiddenHeader,
++    setHiddenHeader,
++    hiddenNavigation,
++    setHiddenNavigation,
++  };
++};
+diff --git a/src/widgets/header/ui/FalseNavLink.tsx b/src/widgets/header/ui/FalseNavLink.tsx
+index 8643ec0..cdf1462 100644
+--- a/src/widgets/header/ui/FalseNavLink.tsx
++++ b/src/widgets/header/ui/FalseNavLink.tsx
+@@ -1,38 +1,50 @@
+-'use client'
+-import { useState } from "react";
+-import Image from "next/image";
++'use client';
++import { useState } from 'react';
++import Image from 'next/image';
+ 
+ type FalseNavLinkProps = {
+-  src: string,
+-  alt: string,
+-  title: string,
+-  message: string,
+-  buttonClassName?: string,
+-  spanClassName?: string,
+-  imageClassName?: string,
++  src: string;
++  alt: string;
++  title: string;
++  message: string;
++  buttonClassName?: string;
++  spanClassName?: string;
++  imageClassName?: string;
+ };
+ 
+-export function FalseNavLink({ src, alt, title, message, buttonClassName, spanClassName, imageClassName }: FalseNavLinkProps) {
+-
++export const FalseNavLink = ({
++  src,
++  alt,
++  title,
++  message,
++  buttonClassName,
++  spanClassName,
++  imageClassName,
++}: FalseNavLinkProps) => {
+   const [isPressed, setIsPressed] = useState(false);
+ 
+   const toggleState = () => {
+     setIsPressed(!isPressed);
+-    //  setTimeout(() => alert(message), 100)
+-  }
++  };
+ 
+   return (
+     <div className="relative inline-block">
+-      <button onClick={() => toggleState()}
+-        className={`${isPressed ? "invisible" : ""} inset-0 ${buttonClassName} group relative`}
++      <button
++        onClick={() => toggleState()}
++        className={`${isPressed ? 'invisible' : ''} inset-0 ${buttonClassName} group relative`}
+       >
+         {title}
+         <span
+-          className={`hidden lg:inline absolute left-0 bottom-0 origin-left h-[2px] w-0 group-hover:w-[102%] bg-black dark:bg-white duration-300 ${spanClassName}`}
++          className={`absolute bottom-0 left-0 hidden h-[2px] w-0 origin-left bg-black duration-300 group-hover:w-[102%] lg:inline dark:bg-white ${spanClassName}`}
+         ></span>
+       </button>
+-      <Image src={src} alt={alt} fill className={`${!isPressed ? "opacity-0 pointer-events-none" : ""} absolute object-contain inset-0 translate-y-[2.5px] ${imageClassName}`} onClick={toggleState} />
++      <Image
++        src={src}
++        alt={alt}
++        fill
++        className={`${!isPressed ? 'pointer-events-none opacity-0' : ''} absolute inset-0 translate-y-[2.5px] object-contain ${imageClassName}`}
++        onClick={toggleState}
++      />
+     </div>
+-  )
+-}
+-
++  );
++};
+diff --git a/src/widgets/header/ui/Hamburger.tsx b/src/widgets/header/ui/Hamburger.tsx
+index 9dc86a9..4e1e68e 100644
+--- a/src/widgets/header/ui/Hamburger.tsx
++++ b/src/widgets/header/ui/Hamburger.tsx
+@@ -2,16 +2,29 @@ type HamburgerProps = {
+   hiddenHeader: boolean;
+   hiddenNavigation: boolean;
+   setHiddenNavigation: (value: boolean) => void;
+-}
++};
+ 
+-export function Hamburger({ hiddenHeader, hiddenNavigation, setHiddenNavigation }: HamburgerProps) {
++export const Hamburger = ({
++  hiddenHeader,
++  hiddenNavigation,
++  setHiddenNavigation,
++}: HamburgerProps) => {
+   const stickClassName: string = `relative block w-8 h-1.5 bg-black dark:bg-white duration-300`;
+ 
+   return (
+-    <button className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden" onClick={() => setHiddenNavigation(!hiddenNavigation)}>
+-      <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 translate-y-[11px]" : ""}`}></span>
+-      <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-135" : ""}`}></span>
+-      <span className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? "rotate-45 -translate-y-[11px]" : ""}`}></span>
++    <button
++      className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden"
++      onClick={() => setHiddenNavigation(!hiddenNavigation)}
++    >
++      <span
++        className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? 'translate-y-[11px] rotate-45' : ''}`}
++      ></span>
++      <span
++        className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? 'rotate-135' : ''}`}
++      ></span>
++      <span
++        className={`${stickClassName} ${!hiddenHeader && !hiddenNavigation ? '-translate-y-[11px] rotate-45' : ''}`}
++      ></span>
+     </button>
+-  )
+-}
++  );
++};
+diff --git a/src/widgets/header/ui/Header.tsx b/src/widgets/header/ui/Header.tsx
+index ba4135b..bf023c2 100644
+--- a/src/widgets/header/ui/Header.tsx
++++ b/src/widgets/header/ui/Header.tsx
+@@ -1,5 +1,6 @@
+ 'use client';
+ import Image from 'next/image';
++import Link from 'next/link';
+ import whiteTitle from '@/src/shared/assets/images/book-card/white-title.svg';
+ import blackTitle from '@/src/shared/assets/images/book-card/black-title.svg';
+ import { useHeaderState } from '../model/useHeaderState';
+@@ -14,16 +15,20 @@ import {
+   whiteNews,
+   blackNews,
+ } from '@/src/shared/assets/images/header';
++import { Panel } from './Panel';
+ 
+-export default function Header() {
++export const Header = () => {
+   const { isDark, hiddenHeader, hiddenNavigation, setHiddenNavigation } =
+     useHeaderState();
+ 
+   return (
+     <header
+-      className={`fixed z-10 flex h-[3.5rem] w-full items-center justify-between bg-white px-2 duration-300 lg:static lg:mt-5 lg:block lg:h-[15vh] lg:duration-500 dark:bg-black ${hiddenHeader ? '-translate-y-full' : 'translate-y-0'} lg:translate-y-0`}
++      className={`fixed z-10 flex h-[3.5rem] w-full items-center justify-between bg-white px-2 duration-300 lg:static lg:mt-5 lg:block lg:h-70 lg:duration-500 dark:bg-black ${hiddenHeader ? '-translate-y-full' : 'translate-y-0'} lg:translate-y-0`}
+     >
+-      <div className="top-0 left-2 z-10 flex h-[2.5rem] items-center justify-center lg:mt-4">
++      <Link
++        href="/"
++        className="top-0 left-2 z-10 flex h-[2.5rem] items-center justify-center lg:mt-4"
++      >
+         <h1 className="relative -ml-5 h-10 w-65 lg:ml-0 lg:h-15 lg:w-180">
+           <span className="sr-only">The World We Knew</span>
+           <Image
+@@ -33,40 +38,46 @@ export default function Header() {
+             className="object-cover"
+           />
+         </h1>
+-      </div>
++      </Link>
+       <Hamburger
+         hiddenHeader={hiddenHeader}
+         hiddenNavigation={hiddenNavigation}
+         setHiddenNavigation={setHiddenNavigation}
+       />
+       <nav
+-        className={`absolute z-5 flex-col justify-between bg-white lg:static lg:flex lg:translate-x-0 lg:flex-row dark:bg-black ${hiddenNavigation ? 'translate-x-full' : 'translate-x-0'} mt-3 mb-4 -ml-2 w-full pl-2 text-[1.3rem] font-medium duration-300 lg:ml-0 lg:pl-0 ${hiddenHeader ? 'translate-x-full' : 'translate-x-0'} mt-10`}
++        className={`absolute z-5 flex-col justify-between bg-white lg:static lg:flex lg:translate-x-0 lg:flex-col dark:bg-black ${hiddenNavigation ? 'translate-x-full' : 'translate-x-0'} mt-3 mb-4 -ml-2 w-full pl-2 text-[1.3rem] font-medium duration-300 lg:ml-0 lg:pl-0 ${hiddenHeader ? 'translate-x-full' : 'translate-x-0'} mt-10`}
+       >
+-        <div className="block gap-24 lg:ml-45 lg:flex lg:text-[1.7rem]">
+-          <NavLink href="/" title="Главная" className="mt-35 lg:mt-0" />
+-          <FalseNavLink
+-            src={isDark ? whiteArchive : blackArchive}
+-            alt="Архив"
+-            title="Архив"
+-            message="Бах!"
+-          />
++        <div className="flex flex-col lg:w-full lg:flex-row lg:justify-between">
++          <div className="block gap-24 lg:ml-45 lg:flex lg:text-[1.7rem]">
++            <NavLink href="/" title="Главная" className="mt-35 lg:mt-0" />
++            <FalseNavLink
++              src={isDark ? whiteArchive : blackArchive}
++              alt="Архив"
++              title="Архив"
++              message="Бах!"
++            />
++          </div>
++
++          <div className="mr-45 block gap-24 lg:flex lg:text-[1.7rem]">
++            <FalseNavLink
++              src={isDark ? whiteMap : blackMap}
++              alt="Карта"
++              title="Карта"
++              message="Увы"
++            />
++            <FalseNavLink
++              src={isDark ? whiteNews : blackNews}
++              alt="Новости"
++              title="Новости"
++              message="Когда-нибудь"
++            />
++          </div>
+         </div>
+ 
+-        <div className="mr-45 block gap-24 lg:flex lg:text-[1.7rem]">
+-          <FalseNavLink
+-            src={isDark ? whiteMap : blackMap}
+-            alt="Карта"
+-            title="Карта"
+-            message="Увы"
+-          />
+-          <FalseNavLink
+-            src={isDark ? whiteNews : blackNews}
+-            alt="Новости"
+-            title="Новости"
+-            message="Когда-нибудь"
+-          />
++        <div className="mx-auto">
++          <Panel />
+         </div>
+       </nav>
+     </header>
+   );
+-}
++};
+diff --git a/src/widgets/header/ui/NavLink.tsx b/src/widgets/header/ui/NavLink.tsx
+index 3268f41..60cb6b3 100644
+--- a/src/widgets/header/ui/NavLink.tsx
++++ b/src/widgets/header/ui/NavLink.tsx
+@@ -2,23 +2,26 @@ import Link from 'next/link';
+ import { ElementType } from 'react';
+ 
+ type NavLinkProps = {
+-  href: string,
+-  title: string,
+-  className?: string,
+-  spanClassName?: string,
++  href: string;
++  title: string;
++  className?: string;
++  spanClassName?: string;
+   as?: ElementType;
+ };
+ 
+-export function NavLink({ href, title, className, spanClassName, as: Component = "span" }: NavLinkProps) {
++export const NavLink = ({
++  href,
++  title,
++  className,
++  spanClassName,
++  as: Component = 'span',
++}: NavLinkProps) => {
+   return (
+-    <Link
+-      href={href}
+-      className={`${className} group relative block`}
+-    >
++    <Link href={href} className={`${className} group relative block`}>
+       <Component>{title}</Component>
+       <span
+-        className={`hidden lg:inline absolute left-0 bottom-0 origin-left h-[2px] w-0 group-hover:w-[102%] bg-black dark:bg-white duration-300 ${spanClassName}`}
++        className={`absolute bottom-0 left-0 hidden h-[2px] w-0 origin-left bg-black duration-300 group-hover:w-[102%] lg:inline dark:bg-white ${spanClassName}`}
+       ></span>
+     </Link>
+-  )
+-}
++  );
++};
+diff --git a/src/widgets/home/index.ts b/src/widgets/home/index.ts
+deleted file mode 100644
+index abc7f55..0000000
+--- a/src/widgets/home/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export { Home } from './ui';
+diff --git a/src/widgets/home/model/usePanelState.ts b/src/widgets/home/model/usePanelState.ts
+deleted file mode 100644
+index d68e234..0000000
+--- a/src/widgets/home/model/usePanelState.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-import { usePathname } from 'next/navigation';
+-
+-export default function usePanelState() {
+-  const pathname = usePathname() ?? '';
+-  const section = pathname === '/chapters' ? 'Chapters' : 'Overview';
+-  return section
+-}
+diff --git a/src/widgets/home/ui/Background.tsx b/src/widgets/home/ui/Background.tsx
+deleted file mode 100644
+index 841b67f..0000000
+--- a/src/widgets/home/ui/Background.tsx
++++ /dev/null
+@@ -1,43 +0,0 @@
+-'use client';
+-import Image from 'next/image';
+-import { useMedia } from 'use-media';
+-import usePanelState from '../model/usePanelState';
+-import blackEyes from '@/src/shared/assets/images/book-card/black-eyes.svg';
+-import whiteEyes from '@/src/shared/assets/images/book-card/white-eyes.svg';
+-import blackChains from '@/src/shared/assets/images/book-card/black-broken-chains-part.svg';
+-import whiteChains from '@/src/shared/assets/images/book-card/white-broken-chains-part.svg';
+-
+-export const Background = () => {
+-  const section = usePanelState();
+-
+-  const isDark = useMedia({ 'prefers-color-scheme': 'dark' });
+-
+-  return (
+-    <article className="pointer-events-none fixed flex w-full flex-col items-center">
+-      <div className="relative h-[30px] w-[200px] lg:h-[37px] lg:w-[260px]">
+-        <Image
+-          src={isDark ? whiteEyes : blackEyes}
+-          alt="eyes"
+-          fill
+-          className={`${section === 'Overview' ? 'mt-[60px] lg:mt-[150px]' : 'z-40 mt-[160px] lg:-mt-[220px]'} ${isDark ? 'opacity-70' : ''} object-contain blur-[1px]`}
+-        />
+-      </div>
+-      <div
+-        className={`${section === 'Overview' ? 'mt-[100px]' : 'mt-50 lg:-mt-[280px]'} relative h-[600px] w-[800px] lg:h-[1000px] lg:w-[1450px]`}
+-      >
+-        <Image
+-          src={isDark ? whiteChains : blackChains}
+-          alt="chains"
+-          fill
+-          className="-mt-[300px] blur-[0.5px] lg:mt-0"
+-        />
+-        <Image
+-          src={isDark ? whiteChains : blackChains}
+-          alt="chains"
+-          fill
+-          className={`${isDark ? 'lg:mt-0' : 'lg:mt-20px'} mt-[80px] rotate-180 blur-[0.5px]`}
+-        />
+-      </div>
+-    </article>
+-  );
+-};
+diff --git a/src/widgets/home/ui/Overview.tsx b/src/widgets/home/ui/Overview.tsx
+deleted file mode 100644
+index 92725fb..0000000
+--- a/src/widgets/home/ui/Overview.tsx
++++ /dev/null
+@@ -1,33 +0,0 @@
+-'use client';
+-import { useState, useEffect } from 'react';
+-import ReadingContent from '../../reading/ui/ReadingContent';
+-import { Toolbar } from '../../toolbar/ui/Toolbar';
+-
+-export const Overview = () => {
+-  const [content, setContent] = useState('');
+-
+-  useEffect(() => {
+-    fetch('/overview.md')
+-      .then((res) => res.text())
+-      .then(setContent);
+-  }, []);
+-
+-  const genres = [
+-    'хоррор',
+-    'военная проза',
+-    'тёмное фэнтези',
+-    'научная фантастика',
+-    'романтика',
+-  ];
+-
+-  return (
+-    <Toolbar>
+-      <ReadingContent className="p-1 select-text" content={content} />
+-      <div className="mt-3 flex flex-row flex-wrap gap-2 p-1 *:rounded-sm *:border-2 *:px-1 *:duration-400 *:hover:bg-black *:hover:text-white *:dark:hover:bg-white *:dark:hover:text-black">
+-        {genres.map((genre) => (
+-          <span key={genre}>{genre}</span>
+-        ))}
+-      </div>
+-    </Toolbar>
+-  );
+-};
+diff --git a/src/widgets/home/ui/Panel.tsx b/src/widgets/home/ui/Panel.tsx
+deleted file mode 100644
+index 8068c0b..0000000
+--- a/src/widgets/home/ui/Panel.tsx
++++ /dev/null
+@@ -1,26 +0,0 @@
+-'use client';
+-import Link from 'next/link';
+-import usePanelState from '@/src/widgets/home/model/usePanelState';
+-
+-export const Panel = () => {
+-  const section = usePanelState();
+-
+-  return (
+-    <div
+-      className={`z-5 mt-30 ${section === 'Overview' ? '-mb-10 lg:-mb-6' : ''} flex h-9 w-35 overflow-hidden rounded-[0.55rem] border-2 *:w-1/2 *:pt-[0.2rem] *:pl-[0.3rem] *:text-center *:text-[1.2rem] lg:h-10 lg:w-55 lg:rounded-xl lg:*:pl-4`}
+-    >
+-      <Link
+-        href="/"
+-        className={`flex lg:text-2xl ${section === 'Overview' ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'}`}
+-      >
+-        Обзор
+-      </Link>
+-      <Link
+-        href="/chapters"
+-        className={`flex lg:text-2xl ${section === 'Chapters' ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'}`}
+-      >
+-        Главы
+-      </Link>
+-    </div>
+-  );
+-};
+diff --git a/src/widgets/home/ui/Rating.tsx b/src/widgets/home/ui/Rating.tsx
+deleted file mode 100644
+index 67cbc4d..0000000
+--- a/src/widgets/home/ui/Rating.tsx
++++ /dev/null
+@@ -1,39 +0,0 @@
+-'use client';
+-
+-import { useState } from 'react';
+-
+-export const Rating = () => {
+-  const [hoveredIndex, SetHoveredIndex] = useState<number | null>(null);
+-
+-  const rating: number = 5;
+-
+-  const getStarType = (i: number) => {
+-    if (hoveredIndex !== null) {
+-      return i <= hoveredIndex ? '★' : '☆';
+-    } else if (i < rating) {
+-      return '★';
+-    } else {
+-      return '☆';
+-    }
+-  };
+-
+-  const stars = Array.from({ length: 5 }, (_, i) => (
+-    <span
+-      className="cursor-pointer text-5xl select-none"
+-      key={i}
+-      onMouseEnter={() => SetHoveredIndex(i)}
+-      onMouseLeave={() => SetHoveredIndex(null)}
+-    >
+-      {getStarType(i)}
+-    </span>
+-  ));
+-  return (
+-    <div
+-      className="flex justify-center"
+-      role="img"
+-      aria-label={`Рейтинг книги: ${rating} из 5`}
+-    >
+-      {stars}
+-    </div>
+-  );
+-};
+diff --git a/src/widgets/home/ui/index.tsx b/src/widgets/home/ui/index.tsx
+deleted file mode 100644
+index 8a14407..0000000
+--- a/src/widgets/home/ui/index.tsx
++++ /dev/null
+@@ -1,13 +0,0 @@
+-import {Background} from './Background';
+-import {Panel} from './Panel';
+-import {Overview} from './Overview';
+-
+-export function Home() {
+-  return (
+-    <>
+-      <Background />
+-      <Panel />
+-      <Overview />
+-    </>
+-  );
+-}
+diff --git a/src/widgets/reading/model/useReadingState.ts b/src/widgets/reading/model/useReadingState.ts
+deleted file mode 100644
+index 681cbb8..0000000
+--- a/src/widgets/reading/model/useReadingState.ts
++++ /dev/null
+@@ -1,28 +0,0 @@
+-'use client';
+-import { useState, useRef } from 'react';
+-
+-export function useReadingState() {
+-  const readingSection = useRef<HTMLElement | null>(null);
+-
+-  const [currentSize, setCurrentSize] = useState(20);
+-
+-  const [currentFont, setCurrentFont] = useState('system-ui');
+-
+-  const [fontQuery, setFontQuery] = useState('');
+-
+-  const [currentAlign, setCurrentAlign] = useState<
+-    'left' | 'center' | 'right' | 'justify'
+-  >('left');
+-
+-  return {
+-    readingSection,
+-    currentSize,
+-    setCurrentSize,
+-    currentFont,
+-    setCurrentFont,
+-    fontQuery,
+-    setFontQuery,
+-    currentAlign,
+-    setCurrentAlign,
+-  };
+-}
+diff --git a/src/widgets/reading/templates/ReadingPage.tsx b/src/widgets/reading/templates/ReadingPage.tsx
+deleted file mode 100644
+index 31cda6d..0000000
+--- a/src/widgets/reading/templates/ReadingPage.tsx
++++ /dev/null
+@@ -1,17 +0,0 @@
+-'use client';
+-import { Toolbar } from '../../toolbar/ui/Toolbar';
+-import ReadingContent from '../ui/ReadingContent';
+-import ChapterSelector from '@/src/features/chapter-selector/ui/ChapterSelector';
+-
+-export default function ReadingPage({ content }: { content: string }) {
+-  return (
+-    <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
+-      <Toolbar ChapterSelector={<ChapterSelector />}>
+-        <ReadingContent
+-          className="h-[90vh] overflow-y-auto p-1"
+-          content={content}
+-        />
+-      </Toolbar>
+-    </main>
+-  );
+-}
+diff --git a/src/widgets/reading/ui/ReadingContent.tsx b/src/widgets/reading/ui/ReadingContent.tsx
+deleted file mode 100644
+index d99c320..0000000
+--- a/src/widgets/reading/ui/ReadingContent.tsx
++++ /dev/null
+@@ -1,32 +0,0 @@
+-'use client';
+-
+-import ReactMarkdown from 'react-markdown';
+-import remarkGfm from 'remark-gfm';
+-import rehypeSanitize from 'rehype-sanitize';
+-import { defaultSchema } from 'hast-util-sanitize';
+-
+-const schema = {
+-  ...defaultSchema,
+-  clobberPrefix: '',
+-};
+-
+-type ReadingContentProps = {
+-  content: string;
+-  className?: string;
+-};
+-
+-export default function ReadingContent({
+-  content,
+-  className,
+-}: ReadingContentProps) {
+-  return (
+-    <div className={className}>
+-      <ReactMarkdown
+-        remarkPlugins={[remarkGfm]}
+-        rehypePlugins={[[rehypeSanitize, schema]]}
+-      >
+-        {content}
+-      </ReactMarkdown>
+-    </div>
+-  );
+-}
+diff --git a/src/widgets/toolbar/ui/Toolbar.tsx b/src/widgets/toolbar/ui/Toolbar.tsx
+index 6af9ed9..d45e372 100644
+--- a/src/widgets/toolbar/ui/Toolbar.tsx
++++ b/src/widgets/toolbar/ui/Toolbar.tsx
+@@ -1,22 +1,21 @@
+-import { useEffect } from 'react';
++import { useEffect, useRef } from 'react';
+ import { useMedia } from 'use-media';
+ import {
+   FontSelector,
+   FontSizeSelector,
+   AlignSelector,
+ } from '@/src/features/text-settings/ui';
+-import { FullscreenButton } from '@/src/features/fullscreen/ui/FullscreenButton';
+-import { useFullscreen } from '@/src/features/fullscreen/model/useFullscreen';
+-import { useReadingState } from '../../reading/model/useReadingState';
++import { FullscreenButton } from '@/src/features/fullscreen';
++import { useFullscreen } from '@/src/features/fullscreen';
++import { useTextSettings } from '@/src/features/text-settings';
+ 
+ type ToolbarProps = {
+   ChapterSelector?: React.ReactNode;
+   children: React.ReactNode;
+ };
+ 
+-export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
++export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
+   const {
+-    readingSection,
+     currentSize,
+     setCurrentSize,
+     currentFont,
+@@ -25,7 +24,9 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
+     setFontQuery,
+     currentAlign,
+     setCurrentAlign,
+-  } = useReadingState();
++  } = useTextSettings();
++
++  const readingSection = useRef<HTMLElement | null>(null);
+ 
+   const isLarge = useMedia({ minWidth: 1024 });
+ 
+@@ -42,10 +43,10 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
+     <section
+       ref={readingSection}
+       id="reading-section"
+-      className={`relative mx-auto mt-12 flex h-[100vh] w-[80vw] flex-col overflow-y-hidden lg:mt-8`}
++      className={`relative mx-auto mt-12 flex h-screen w-[80vw] flex-col overflow-y-hidden lg:mt-8`}
+     >
+       <div
+-        className={`relative -mb-45 h-62 rotate-x-180 *:rotate-x-180 ${fullscreen ? 'w-[100vw]' : 'w-[80vw]'} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}
++        className={`relative -mb-45 h-62 rotate-x-180 *:rotate-x-180 ${fullscreen ? 'w-screen' : 'w-[80vw]'} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}
+       >
+         <div
+           className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[160vw] flex-none items-center gap-1 lg:-ml-1 lg:w-full`}
+@@ -87,4 +88,4 @@ export function Toolbar({ ChapterSelector, children }: ToolbarProps) {
+       </div>
+     </section>
+   );
+-}
++};
+On branch refactor/project-architecture
+Your branch is up to date with 'origin/refactor/project-architecture'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   app/chapters/page.tsx
+	modified:   app/layout.tsx
+	modified:   app/page.tsx
+	modified:   app/providers/index.tsx
+	modified:   app/reading/[slug]/page.tsx
+	modified:   entities/chapter/api/storage.ts
+	modified:   entities/chapter/lib/chapterSort.ts
+	deleted:    entities/chapter/lib/chunkChapters.ts
+	modified:   entities/chapter/ui/ChapterTable.tsx
+	modified:   features/chapter-pagination/ui/ChapterPagination.tsx
+	modified:   features/chapter-selector/model/useChapterDropdown.ts
+	modified:   features/chapter-selector/model/useChapterSearch.ts
+	modified:   features/chapter-selector/ui/ChapterSelector.tsx
+	modified:   features/chapter-sort/ui/ChapterSortButton.tsx
+	modified:   features/fullscreen/ui/FullscreenButton.tsx
+	modified:   features/text-settings/model/index.ts
+	modified:   features/text-settings/model/useFontSelectorState.ts
+	modified:   features/text-settings/model/useFontSizeSelectorState.ts
+	modified:   features/text-settings/ui/AlignSelector.tsx
+	modified:   features/text-settings/ui/FontSelector.tsx
+	modified:   features/text-settings/ui/FontSizeSelector.tsx
+	modified:   shared/hooks/fonts/useAvailableFonts.ts
+	modified:   shared/hooks/useClickOutside.ts
+	modified:   shared/lib/fonts/isFontRendered.ts
+	modified:   shared/lib/fonts/parseFontSize.ts
+	modified:   shared/ui/SearchInput.tsx
+	modified:   widgets/chapter-list/model/useChapterListState.ts
+	modified:   widgets/chapter-list/ui/ChapterList.tsx
+	modified:   widgets/footer/ui/Footer.tsx
+	modified:   widgets/header/model/useHeaderState.ts
+	modified:   widgets/header/ui/FalseNavLink.tsx
+	modified:   widgets/header/ui/Hamburger.tsx
+	modified:   widgets/header/ui/Header.tsx
+	modified:   widgets/header/ui/NavLink.tsx
+	deleted:    widgets/home/index.ts
+	deleted:    widgets/home/model/usePanelState.ts
+	deleted:    widgets/home/ui/Background.tsx
+	deleted:    widgets/home/ui/Overview.tsx
+	deleted:    widgets/home/ui/Panel.tsx
+	deleted:    widgets/home/ui/Rating.tsx
+	deleted:    widgets/home/ui/index.tsx
+	deleted:    widgets/reading/model/useReadingState.ts
+	deleted:    widgets/reading/templates/ReadingPage.tsx
+	deleted:    widgets/reading/ui/ReadingContent.tsx
+	modified:   widgets/toolbar/ui/Toolbar.tsx
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	architecture
+	diff
+	entities/chapter/index.ts
+	entities/chapter/server.ts
+	entities/navigation/
+	features/chapter-pagination/index.ts
+	features/chapter-selector/index.ts
+	features/chapter-sort/index.ts
+	features/fullscreen/index.ts
+	features/text-settings/index.ts
+	features/text-settings/model/useTextSettings.ts
+	shared/lib/arrays/
+	shared/ui/MarkdownRenderer.tsx
+	status
+	views/
+	widgets/background/
+	widgets/chapter-list/index.ts
+	widgets/footer/index.ts
+	widgets/header/index.ts
+	widgets/header/ui/Panel.tsx
+	widgets/toolbar/index.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+.
+├── app
+│   ├── archive
+│   │   └── page.tsx
+│   ├── chapters
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── map
+│   │   └── page.tsx
+│   ├── news
+│   │   └── page.tsx
+│   ├── page.tsx
+│   ├── providers
+│   │   └── index.tsx
+│   └── reading
+│       └── [slug]
+│           └── page.tsx
+├── architecture
+├── diff
+├── entities
+│   ├── chapter
+│   │   ├── api
+│   │   │   └── storage.ts
+│   │   ├── index.ts
+│   │   ├── lib
+│   │   │   └── chapterSort.ts
+│   │   ├── model
+│   │   │   └── chapters.ts
+│   │   ├── server.ts
+│   │   └── ui
+│   │       └── ChapterTable.tsx
+│   └── navigation
+│       ├── index.ts
+│       └── model
+│           └── useNavigationState.ts
+├── features
+│   ├── chapter-pagination
+│   │   ├── index.ts
+│   │   └── ui
+│   │       └── ChapterPagination.tsx
+│   ├── chapter-search
+│   │   └── model
+│   ├── chapter-selector
+│   │   ├── index.ts
+│   │   ├── model
+│   │   │   ├── index.ts
+│   │   │   ├── useChapterDropdown.ts
+│   │   │   └── useChapterSearch.ts
+│   │   └── ui
+│   │       └── ChapterSelector.tsx
+│   ├── chapter-sort
+│   │   ├── index.ts
+│   │   ├── model
+│   │   └── ui
+│   │       └── ChapterSortButton.tsx
+│   ├── fullscreen
+│   │   ├── index.ts
+│   │   ├── model
+│   │   │   └── useFullscreen.tsx
+│   │   └── ui
+│   │       └── FullscreenButton.tsx
+│   └── text-settings
+│       ├── index.ts
+│       ├── model
+│       │   ├── index.ts
+│       │   ├── useFontSelectorState.ts
+│       │   ├── useFontSizeSelectorState.ts
+│       │   └── useTextSettings.ts
+│       └── ui
+│           ├── AlignSelector.tsx
+│           ├── FontSelector.tsx
+│           ├── FontSizeSelector.tsx
+│           └── index.ts
+├── shared
+│   ├── assets
+│   │   └── images
+│   │       ├── book-card
+│   │       │   ├── black-broken-chains-part.svg
+│   │       │   ├── black-eyes.svg
+│   │       │   ├── black-title.svg
+│   │       │   ├── white-broken-chains-part.svg
+│   │       │   ├── white-eyes.svg
+│   │       │   └── white-title.svg
+│   │       └── header
+│   │           ├── black-archive.svg
+│   │           ├── black-main.svg
+│   │           ├── black-map.svg
+│   │           ├── black-news.svg
+│   │           ├── index.ts
+│   │           ├── white-archive.svg
+│   │           ├── white-main.svg
+│   │           ├── white-map.svg
+│   │           └── white-news.svg
+│   ├── hooks
+│   │   ├── fonts
+│   │   │   └── useAvailableFonts.ts
+│   │   └── useClickOutside.ts
+│   ├── lib
+│   │   ├── arrays
+│   │   │   └── chunkArray.ts
+│   │   └── fonts
+│   │       ├── fontSizes.ts
+│   │       ├── index.ts
+│   │       ├── isFontRendered.ts
+│   │       ├── parseFontSize.ts
+│   │       └── systemFonts.ts
+│   ├── types
+│   │   └── markdown-it.d.ts
+│   └── ui
+│       ├── MarkdownRenderer.tsx
+│       └── SearchInput.tsx
+├── status
+├── tree
+├── views
+│   ├── chapters
+│   │   ├── index.ts
+│   │   └── ui
+│   │       └── ChaptersPage.tsx
+│   ├── home
+│   │   ├── index.ts
+│   │   └── ui
+│   │       └── HomePage.tsx
+│   └── reading
+│       ├── index.ts
+│       └── ui
+│           └── ReadingPage.tsx
+└── widgets
+    ├── background
+    │   ├── index.tsx
+    │   └── ui
+    │       └── Background.tsx
+    ├── chapter-list
+    │   ├── index.ts
+    │   ├── model
+    │   │   ├── index.ts
+    │   │   └── useChapterListState.ts
+    │   └── ui
+    │       └── ChapterList.tsx
+    ├── footer
+    │   ├── index.ts
+    │   └── ui
+    │       └── Footer.tsx
+    ├── header
+    │   ├── index.ts
+    │   ├── model
+    │   │   └── useHeaderState.ts
+    │   └── ui
+    │       ├── FalseNavLink.tsx
+    │       ├── Hamburger.tsx
+    │       ├── Header.tsx
+    │       ├── NavLink.tsx
+    │       └── Panel.tsx
+    └── toolbar
+        ├── index.ts
+        └── ui
+            └── Toolbar.tsx
+
+66 directories, 91 files

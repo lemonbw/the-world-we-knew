@@ -3,10 +3,10 @@ type FullscreenButtonProps = {
   onToggle: () => void;
 };
 
-export function FullscreenButton({
+export const FullscreenButton = ({
   fullscreen,
   onToggle,
-}: FullscreenButtonProps) {
+}: FullscreenButtonProps) => {
   return (
     <button
       className="material-icons mt-2 ml-7 w-10 text-[2.5rem]! transition-all duration-300 hover:text-[2.7rem]!"
@@ -15,4 +15,4 @@ export function FullscreenButton({
       {fullscreen ? 'fullscreen_exit' : 'fullscreen'}
     </button>
   );
-}
+};
