@@ -1,1 +1,1 @@
-export { useNavigationState } from './model/useNavigationState.ts';
+export { useNavigationState } from './model/useNavigationState';
