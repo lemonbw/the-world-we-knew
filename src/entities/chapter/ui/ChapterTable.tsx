@@ -9,12 +9,12 @@ type ChapterTableProps = {
   direction: 'toRight' | 'toLeft' | 'toDown' | 'toUp';
 };
 
-export function ChapterTable({
+export const ChapterTable = ({
   chapters,
   emptyRowsCount,
   listPhase,
   direction,
-}: ChapterTableProps) {
+}: ChapterTableProps) => {
   const NO_HOVER = -2;
   const [hoveredIndex, setHovered] = useState(NO_HOVER);
   const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
@@ -123,4 +123,4 @@ export function ChapterTable({
       </tbody>
     </table>
   );
-}
+};
