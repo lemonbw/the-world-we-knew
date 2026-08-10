@@ -2,23 +2,26 @@ import Link from 'next/link';
 import { ElementType } from 'react';
 
 type NavLinkProps = {
-  href: string,
-  title: string,
-  className?: string,
-  spanClassName?: string,
+  href: string;
+  title: string;
+  className?: string;
+  spanClassName?: string;
   as?: ElementType;
 };
 
-export function NavLink({ href, title, className, spanClassName, as: Component = "span" }: NavLinkProps) {
+export const NavLink = ({
+  href,
+  title,
+  className,
+  spanClassName,
+  as: Component = 'span',
+}: NavLinkProps) => {
   return (
-    <Link
-      href={href}
-      className={`${className} group relative block`}
-    >
+    <Link href={href} className={`${className} group relative block`}>
       <Component>{title}</Component>
       <span
-        className={`hidden lg:inline absolute left-0 bottom-0 origin-left h-[2px] w-0 group-hover:w-[102%] bg-black dark:bg-white duration-300 ${spanClassName}`}
+        className={`absolute bottom-0 left-0 hidden h-[2px] w-0 origin-left bg-black duration-300 group-hover:w-[102%] lg:inline dark:bg-white ${spanClassName}`}
       ></span>
     </Link>
-  )
-}
+  );
+};
