@@ -1,8 +1,8 @@
 'use client';
 import { useEffect } from 'react';
 import { useMedia } from 'use-media';
-import { fontSizes } from '@/src/shared/lib/fonts/fontSizes';
-import { useFontSizeSelectorState } from '@/src/features/text-settings/model';
+import { fontSizes } from '@/src/shared/lib/fonts';
+import { useFontSizeSelectorState } from '@/src/features/text-settings';
 import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
 import { parseFontSize } from '@/src/shared/lib/fonts';
 
@@ -11,10 +11,10 @@ type FontSizeSelectorProps = {
   setCurrentSizeAction: (size: number) => void;
 };
 
-export function FontSizeSelector({
+export const FontSizeSelector = ({
   currentSize,
   setCurrentSizeAction,
-}: FontSizeSelectorProps) {
+}: FontSizeSelectorProps) => {
   const {
     isHidden,
     setIsHidden,
@@ -89,4 +89,4 @@ export function FontSizeSelector({
       </div>
     </div>
   );
-}
+};

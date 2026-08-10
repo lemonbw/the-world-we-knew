@@ -6,10 +6,10 @@ type ChapterSortButtonProps = {
   onSortClick: () => void;
 };
 
-export function ChapterSortButton({
+export const ChapterSortButton = ({
   isAsc,
   onSortClick,
-}: ChapterSortButtonProps) {
+}: ChapterSortButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const hoverDelayRef = useRef<NodeJS.Timeout | null>(null);
@@ -48,4 +48,4 @@ export function ChapterSortButton({
       />
     </button>
   );
-}
+};

@@ -1,8 +1,8 @@
 import { useDeferredValue } from 'react';
 import { useAvailableFonts } from '@/src/shared/hooks/fonts/useAvailableFonts';
-import { useFontSelectorState } from '@/src/features/text-settings/model/';
+import { useFontSelectorState } from '@/src/features/text-settings';
 import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
-import SearchInput from '@/src/shared/ui/SearchInput';
+import { SearchInput } from '@/src/shared/ui/SearchInput';
 
 type FontSelectorProps = {
   currentFont: string;
@@ -11,12 +11,12 @@ type FontSelectorProps = {
   setQuery: (query: string) => void;
 };
 
-export function FontSelector({
+export const FontSelector = ({
   currentFont,
   setCurrentFont,
   query,
   setQuery,
-}: FontSelectorProps) {
+}: FontSelectorProps) => {
   const {
     isHidden,
     setIsHidden,
@@ -103,4 +103,4 @@ export function FontSelector({
       </div>
     </div>
   );
-}
+};

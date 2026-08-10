@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import SearchInput from '@/src/shared/ui/SearchInput';
+import { SearchInput } from '@/src/shared/ui/SearchInput';
 import { useChapterListState } from '../model/useChapterListState';
-import { ChapterTable } from '@/src/entities/chapter/ui/ChapterTable';
-import { ChapterSortButton } from '@/src/features/chapter-sort/ui/ChapterSortButton';
-import { ChapterPagination } from '@/src/features/chapter-pagination/ui/ChapterPagination';
+import { ChapterTable } from '@/src/entities/chapter';
+import { ChapterSortButton } from '@/src/features/chapter-sort';
+import { ChapterPagination } from '@/src/features/chapter-pagination';
 
-export default function ChapterList() {
+export const ChapterList = () => {
   const {
     query,
     setQuery,
@@ -93,4 +93,4 @@ export default function ChapterList() {
       </div>
     </section>
   );
-}
+};

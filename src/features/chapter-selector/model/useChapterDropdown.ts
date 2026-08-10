@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
 
-export function useChapterDropdown(totalCount: number) {
+export const useChapterDropdown = (totalCount: number) => {
   const params = useParams();
   const slug = params?.slug;
 
@@ -82,4 +82,4 @@ export function useChapterDropdown(totalCount: number) {
     chapterRef,
     slug,
   };
-}
+};

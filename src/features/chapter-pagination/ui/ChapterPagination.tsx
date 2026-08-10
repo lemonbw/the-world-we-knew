@@ -10,13 +10,13 @@ type ChapterPaginationProps = {
   onAction: (actionType: 'start' | 'prev' | 'next' | 'end' | number) => void;
 };
 
-export function ChapterPagination({
+export const ChapterPagination = ({
   page,
   pagesCount,
   startPage,
   panelSize,
   onAction,
-}: ChapterPaginationProps) {
+}: ChapterPaginationProps) => {
   const isLarge = useMedia({ minWidth: 1024 });
   const arrows = isLarge
     ? { start: '⮜⮜', prev: '⮜', next: '⮞', end: '⮞⮞' }
@@ -96,4 +96,4 @@ export function ChapterPagination({
       </button>
     </nav>
   );
-}
+};

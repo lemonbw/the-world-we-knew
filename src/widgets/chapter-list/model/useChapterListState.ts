@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect, useDeferredValue } from 'react';
 import { useMedia } from 'use-media';
-import { chunkChapters } from '@/src/entities/chapter/lib/chunkChapters';
-import { chapterSort } from '@/src/entities/chapter/lib/chapterSort';
+import { chunkArray } from '@/src/shared/lib//arrays/chunkArray';
+import { chapterSort } from '@/src/entities/chapter';
 
-export function useChapterListState() {
+export const useChapterListState = () => {
   const [pageSize, setPageSize] = useState(20);
 
   const [panelSize, setPanelSize] = useState(8);
@@ -37,7 +37,7 @@ export function useChapterListState() {
   const listSource = query ? filteredChapters : sortedChapters;
 
   const pages = useMemo(
-    () => chunkChapters(listSource, pageSize),
+    () => chunkArray(listSource, pageSize),
     [listSource, pageSize],
   );
 
@@ -67,4 +67,4 @@ export function useChapterListState() {
     panelSize,
     pageSize,
   };
-}
+};

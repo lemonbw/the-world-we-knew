@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { useDeferredValue } from 'react';
 import { useParams } from 'next/navigation';
-import { chapters } from '@/src/entities/chapter/model/chapters';
+import { chapters } from '@/src/entities/chapter';
 
-export function useChapterSearch() {
+export const useChapterSearch = () => {
   const params = useParams();
   const slug = params?.slug;
 
@@ -32,4 +32,4 @@ export function useChapterSearch() {
     isSearching,
     currentChapter,
   };
-}
+};

@@ -1,4 +1,4 @@
-import { chapters } from '@/src/entities/chapter/model/chapters';
+import { chapters } from '../model/chapters';
 
 export const chapterSort = (order: 'asc' | 'desc') => {
   return [...chapters].sort((a, b) =>

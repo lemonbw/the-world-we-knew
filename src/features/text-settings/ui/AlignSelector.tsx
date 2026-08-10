@@ -3,12 +3,12 @@ type AlignSelectorProps = {
   setCurrentAlign: (align: 'left' | 'center' | 'right' | 'justify') => void;
 };
 
-export function AlignSelector({
+export const AlignSelector = ({
   currentAlign,
   setCurrentAlign,
-}: AlignSelectorProps) {
+}: AlignSelectorProps) => {
   return (
-    <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:dark:border-black *:text-[2rem]! *:duration-300 *:hover:border-black/10 *:dark:hover:border-white/10">
+    <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:text-[2rem]! *:duration-300 *:hover:border-black/10 *:dark:border-black *:dark:hover:border-white/10">
       <button
         className={`material-icons ${currentAlign === 'left' ? 'bg-black/10 dark:bg-white/10' : ''}`}
         onClick={() => setCurrentAlign('left')}
@@ -35,4 +35,4 @@ export function AlignSelector({
       </button>
     </div>
   );
-}
+};
