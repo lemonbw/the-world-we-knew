@@ -1,7 +1,7 @@
 import { useEffect, useState, useDeferredValue } from 'react';
 import { systemFonts, isFontRendered } from '@/src/shared/lib/fonts';
 
-export function useAvailableFonts(query: string, showHidden: boolean) {
+export const useAvailableFonts = (query: string, showHidden: boolean) => {
   const [availableFonts, setAvailableFonts] = useState<string[]>([]);
   const deferredQuery = useDeferredValue(query);
 
@@ -18,4 +18,4 @@ export function useAvailableFonts(query: string, showHidden: boolean) {
   );
 
   return filteredList;
-}
+};

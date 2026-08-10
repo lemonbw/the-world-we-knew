@@ -1,4 +1,4 @@
-export default function Footer() {
+export const Footer = () => {
   return (
     <footer className="flex h-21 w-full items-center justify-center text-xs *:mt-2 lg:text-lg">
       <p className="mr-4 flex w-15 flex-row flex-wrap lg:w-60">
@@ -20,4 +20,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};

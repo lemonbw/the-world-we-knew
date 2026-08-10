@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { chapters } from '@/src/entities/chapter/model/chapters';
-import SearchInput from '@/src/shared/ui/SearchInput';
+import { chapters } from '@/src/entities/chapter';
+import { SearchInput } from '@/src/shared/ui/SearchInput';
 import {
   useChapterSearch,
   useChapterDropdown,
-} from '@/src/features/chapter-selector/model';
+} from '@/src/features/chapter-selector';
 
-export default function ChapterSelector() {
+export const ChapterSelector = () => {
   const { query, setQuery, listSource, currentChapter } = useChapterSearch();
 
   const {
@@ -122,4 +122,4 @@ export default function ChapterSelector() {
       )}
     </div>
   );
-}
+};

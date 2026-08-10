@@ -1,5 +1,5 @@
-import { getAllChapters, getChapter } from '@/src/entities/chapter/api/storage';
-import ReadingPage from '@/src/widgets/reading/templates/ReadingPage';
+import { getAllChapters, getChapter } from '@/src/entities/chapter/server';
+import { ReadingPage } from '@/src/views/reading';
 import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
@@ -16,7 +16,6 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
   const content = getChapter(slug);
 
   if (!content) {
