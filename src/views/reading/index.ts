@@ -1,1 +1,1 @@
-export { ReadingPage } from './ui/ReadingPage.tsx';
+export { ReadingPage } from './ui/ReadingPage';
