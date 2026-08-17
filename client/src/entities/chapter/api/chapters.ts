@@ -1,7 +1,7 @@
 const CHAPTERS_API_URL = `${process.env.NEXT_PUBLIC_API_URL}/chapters`;
 const CSRF_API_URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/csrf/`;
 
-async function getCSRFToken() {
+const getCSRFToken = async () => {
   const response = await fetch(CSRF_API_URL, {
     credentials: 'include',
   });
@@ -13,9 +13,9 @@ async function getCSRFToken() {
   const data = await response.json();
 
   return data.csrftoken;
-}
+};
 
-export async function getChapters() {
+export const getChapters = async () => {
   const response = await fetch(CHAPTERS_API_URL);
 
   if (!response.ok) {
@@ -23,9 +23,9 @@ export async function getChapters() {
   }
 
   return response.json();
-}
+};
 
-export async function getChapter(id: number) {
+export const getChapter = async (id: number) => {
   const response = await fetch(`${CHAPTERS_API_URL}/${id}/`);
 
   if (!response.ok) {
@@ -33,16 +33,16 @@ export async function getChapter(id: number) {
   }
 
   return response.json();
-}
+};
 
-export async function createChapter(data: {
+export const createChapter = async (data: {
   title: string;
   slug: string;
   content: string;
   chapter: number;
   volume: number;
   symbols: number;
-}) {
+}) => {
   const csrfToken = await getCSRFToken();
 
   const response = await fetch(CHAPTERS_API_URL, {
@@ -60,9 +60,9 @@ export async function createChapter(data: {
   }
 
   return response.json();
-}
+};
 
-export async function updateChapter(
+export const updateChapter = async (
   id: number,
   data: {
     title?: string;
@@ -72,7 +72,7 @@ export async function updateChapter(
     volume?: number;
     symbols?: number;
   },
-) {
+) => {
   const csrfToken = await getCSRFToken();
 
   const response = await fetch(`${CHAPTERS_API_URL}/${id}/`, {
@@ -90,9 +90,9 @@ export async function updateChapter(
   }
 
   return response.json();
-}
+};
 
-export async function deleteChapter(id: number) {
+export const deleteChapter = async (id: number) => {
   const csrfToken = await getCSRFToken();
 
   const response = await fetch(`${CHAPTERS_API_URL}/${id}/`, {
@@ -106,4 +106,4 @@ export async function deleteChapter(id: number) {
   if (!response.ok) {
     throw new Error('Failed to delete chapter');
   }
-}
+};
