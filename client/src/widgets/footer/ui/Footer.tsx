@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
-    <footer className="flex h-21 w-full items-center justify-center text-xs *:mt-2 lg:text-lg">
-      <p className="mr-4 flex w-15 flex-row flex-wrap lg:w-60">
+    <footer className="relative z-10 mt-auto flex h-21 w-full shrink-0 items-center justify-center bg-white text-sm *:mt-2 lg:text-lg dark:bg-black">
+      <p className="mr-4 flex w-32 flex-row flex-wrap lg:w-60">
         © {new Date().getFullYear()} The World We Knew{' '}
       </p>
       <div className="flex flex-col">
