@@ -1,7 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { Toolbar } from '@/src/widgets/toolbar';
+
+import { useEffect, useState } from 'react';
 import { MarkdownRenderer } from '@/src/shared/ui/MarkdownRenderer';
+import { Toolbar } from '@/src/widgets/toolbar';
 
 export const HomePage = () => {
   const [content, setContent] = useState('');
@@ -13,10 +14,8 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <>
-      <Toolbar>
-        <MarkdownRenderer className="p-1 select-text" content={content} />
-      </Toolbar>
-    </>
+    <Toolbar>
+      <MarkdownRenderer className="p-1 select-text" content={content} />
+    </Toolbar>
   );
 };
