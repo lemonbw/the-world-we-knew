@@ -1,0 +1,26 @@
+'use client';
+import Link from 'next/link';
+import { useNavigationState } from '@/src/entities/navigation';
+
+export const Panel = () => {
+  const section = useNavigationState();
+
+  return (
+    <div
+      className={`z-5 flex h-9 w-35 overflow-hidden rounded-[0.55rem] border-2 *:w-1/2 *:pt-[0.2rem] *:pl-[0.3rem] *:text-center *:text-[1.2rem] lg:mt-10 ${section === 'Overview' ? 'lg:-mb-6' : ''} lg:h-10 lg:w-55 lg:rounded-xl lg:*:pl-4`}
+    >
+      <Link
+        href="/"
+        className={`flex lg:text-2xl ${section === 'Overview' ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'}`}
+      >
+        Обзор
+      </Link>
+      <Link
+        href="/chapters"
+        className={`flex lg:text-2xl ${section === 'Chapters' ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'}`}
+      >
+        Главы
+      </Link>
+    </div>
+  );
+};
