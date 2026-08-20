@@ -43,13 +43,13 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-12 flex h-screen w-[80vw] flex-col overflow-y-hidden lg:mt-8`}
+      className={`relative mx-auto mt-2 flex h-[calc(100dvh-5rem)] w-[calc(100%-1rem)] max-w-6xl flex-col overflow-y-hidden lg:mt-8 lg:h-screen lg:w-[80vw]`}
     >
       <div
-        className={`relative -mb-45 h-62 rotate-x-180 *:rotate-x-180 ${fullscreen ? 'w-screen' : 'w-[80vw]'} overflow-x-auto ${fullscreen ? 'lg:mt-4' : ''}`}
+        className={`relative -mb-45 h-62 w-full rotate-x-180 overflow-x-auto *:rotate-x-180 ${fullscreen ? 'lg:mt-4' : ''}`}
       >
         <div
-          className={`absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-[160vw] flex-none items-center gap-1 lg:-ml-1 lg:w-full`}
+          className="absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-max min-w-full flex-none items-center gap-1 lg:-ml-1 lg:w-full"
         >
           {ChapterSelector}
           <FontSelector
@@ -73,7 +73,7 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
         </div>
       </div>
       <div
-        className={`-mt-3 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
+        className={`-mt-3 min-h-0 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
       >
         <div
           className="h-full p-1"

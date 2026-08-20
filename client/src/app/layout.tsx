@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import '@/src/app/globals.css';
-import { Header } from '@/src/widgets/header';
+import { Header, Panel } from '@/src/widgets/header';
 import { Footer } from '@/src/widgets/footer';
 import { Background } from '@/src/widgets/background';
 import { Providers } from './providers';
@@ -35,6 +35,9 @@ export default function RootLayout({
         <Providers>
           <Header />
           <Background />
+          <div className="relative z-20 flex justify-center pt-32 pb-0 lg:z-10 lg:pt-0">
+            <Panel />
+          </div>
           {children}
           <Footer />
         </Providers>

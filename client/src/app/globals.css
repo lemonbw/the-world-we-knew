@@ -7,6 +7,10 @@
   --foreground: #171717;
 }
 
+html {
+  overflow-x: clip;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -22,10 +26,20 @@
 }
 
 body {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
   background: var(--background);
   color: var(--foreground);
   font-family: 'Noto Sans Symbols', sans-serif;
   user-select: none;
+}
+
+main {
+  position: relative;
+  z-index: 10;
+  flex: 1 0 auto;
+  background-color: transparent !important;
 }
 
 button {
@@ -53,7 +67,11 @@ button {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
+  main {
+    padding-top: 1rem;
+  }
+
   *:focus-visible {
     outline: 1px solid currentColor;
     outline-offset: 1px;

@@ -13,7 +13,7 @@ export const Hamburger = ({
 
   return (
     <button
-      className="z-10 flex h-7 w-10 flex-col justify-between lg:hidden"
+      className="z-30 flex h-7 w-10 flex-col justify-between lg:hidden"
       onClick={() => setHiddenNavigation(!hiddenNavigation)}
     >
       <span
