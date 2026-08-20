@@ -35,10 +35,10 @@ export const ChapterSortButton = ({
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <span className="-ml-5 text-[1rem] lg:text-[1.7rem]">
+      <span className="-ml-5 text-[1.35rem] lg:text-[1.7rem]">
         Сортировка
         <span
-          className={`absolute bottom-[-0.05rem] ml-0.5 inline-block text-[1.05rem] transition-transform duration-800 lg:bottom-[-0.5rem] lg:text-[2.1rem] ${isAsc === 'asc' ? 'rotate-0' : '-rotate-180'}`}
+          className={`absolute bottom-[-0.1rem] ml-0.5 inline-block text-[1.35rem] transition-transform duration-800 lg:bottom-[-0.5rem] lg:text-[2.1rem] ${isAsc === 'asc' ? 'rotate-0' : '-rotate-180'}`}
         >
           ▼
         </span>

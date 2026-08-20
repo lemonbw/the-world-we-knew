@@ -65,16 +65,18 @@ export const ChapterList = () => {
   };
 
   return (
-    <section className="z-10 mx-auto mt-4 w-[80vw]">
+    <section className="z-10 mx-auto mt-4 w-[calc(100%-1rem)] max-w-6xl lg:w-[80vw]">
       <ChapterSortButton isAsc={isAsc} onSortClick={handleSortChange} />
 
       <div className="mt-4 overflow-hidden rounded-xl border-2 bg-white lg:mt-6 dark:bg-black">
-        <SearchInput
-          query={query}
-          setQuery={setQuery}
-          className="mt-3 mb-2 h-5 w-30 rounded border-2 text-center text-[0.7rem] lg:h-8 lg:w-80 lg:text-[1.1rem]"
-          placeholder="Chapter, title, date"
-        />
+        <div className="mb-8 lg:mb-2">
+          <SearchInput
+            query={query}
+            setQuery={setQuery}
+            className="mt-4 h-9 w-[min(94vw,22rem)] rounded border-2 text-center text-[1.05rem] lg:mt-3 lg:h-8 lg:w-80 lg:text-[1.1rem]"
+            placeholder="Chapter, title, date"
+          />
+        </div>
 
         <ChapterTable
           chapters={currentPage}

@@ -81,11 +81,11 @@ export const ChapterTable = ({
         {chapters.map((c) => (
           <tr
             key={c.href}
-            className="cursor-pointer border-b-2 bg-white transition-colors duration-1000 *:text-[0.7rem]! *:lg:text-[1.1rem]! dark:bg-black"
+            className="cursor-pointer border-b-2 bg-white transition-colors duration-1000 *:text-[1rem]! *:lg:text-[1.1rem]! dark:bg-black"
             onMouseEnter={handleRowEnter(c.index)}
             onMouseLeave={handleRowLeave}
           >
-            <td className="relative z-10 w-6 pb-0 pl-1.5 lg:w-[6rem] lg:px-4">
+            <td className="relative z-10 w-[10%] py-3 pl-1.5 lg:w-[6rem] lg:px-4">
               <Link href={c.href} className={getLinkClasses(c.index)}>
                 {c.volume}
               </Link>
@@ -93,22 +93,22 @@ export const ChapterTable = ({
                 className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 lg:duration-1000 dark:bg-white ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'}`}
               />
             </td>
-            <td className="relative z-10 w-6 py-2 lg:w-[7rem] lg:px-4">
+            <td className="relative z-10 w-[12%] py-3 lg:w-[7rem] lg:px-4">
               <Link href={c.href} className={getLinkClasses(c.index)}>
                 {c.chapter}
               </Link>
             </td>
-            <td className="relative z-10 w-23 py-2 lg:w-[16rem] lg:px-4">
+            <td className="relative z-10 w-[38%] break-words py-3 lg:w-[16rem] lg:px-4">
               <Link href={c.href} className={getLinkClasses(c.index)}>
                 {c.title}
               </Link>
             </td>
-            <td className="relative z-10 w-6 py-2 lg:w-[8rem] lg:px-4">
+            <td className="relative z-10 w-[16%] break-words py-3 lg:w-[8rem] lg:px-4">
               <Link href={c.href} className={getLinkClasses(c.index)}>
                 {c.symbols}
               </Link>
             </td>
-            <td className="relative z-10 w-30 py-2 lg:w-[8rem] lg:px-4">
+            <td className="relative z-10 w-[24%] break-words py-3 lg:w-[8rem] lg:px-4">
               <Link href={c.href} className={getLinkClasses(c.index)}>
                 {c.date.toLocaleDateString('ru-RU')}
               </Link>
@@ -117,7 +117,7 @@ export const ChapterTable = ({
         ))}
         {Array.from({ length: emptyRowsCount }, (_, i) => (
           <tr key={`empty-${i}`} className="border-b-2 bg-white dark:bg-black">
-            <td colSpan={5} className="h-[33.6px] lg:h-[43.4px]" />
+            <td colSpan={5} className="h-12 lg:h-[43.4px]" />
           </tr>
         ))}
       </tbody>

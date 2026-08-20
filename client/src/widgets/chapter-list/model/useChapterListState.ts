@@ -13,7 +13,7 @@ export const useChapterListState = () => {
   useEffect(() => {
     if (!isLarge) {
       setPanelSize(4);
-      setPageSize(10);
+      setPageSize(15);
     } else {
       setPanelSize(8);
       setPageSize(20);
