@@ -27,17 +27,7 @@ export const ChapterPagination = ({
         end: 'keyboard_double_arrow_right',
       };
 
-  const [hoveredButton, setHoveredButton] = useState(-1);
   const [triggerIndex, setTriggerIndex] = useState(0);
-  const buttonHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleEnter = (idx: number) => () => {
-    buttonHoverDelayRef.current = setTimeout(() => setHoveredButton(idx), 150);
-  };
-  const handleLeave = () => {
-    if (buttonHoverDelayRef.current) clearTimeout(buttonHoverDelayRef.current);
-    setHoveredButton(-1);
-  };
 
   const trigger = (
     type: 'start' | 'prev' | 'next' | 'end' | number,
@@ -72,9 +62,7 @@ export const ChapterPagination = ({
           <button
             key={pageIndex}
             onClick={() => trigger(pageIndex, 0)}
-            onMouseEnter={handleEnter(pageIndex)}
-            onMouseLeave={handleLeave}
-            className={`mx-0.5 my-2 w-6 rounded-md border-2 border-black px-[2px] py-0 text-center text-[1rem] hover:transition-colors hover:duration-200 lg:mx-1 lg:w-9 lg:px-[4px] lg:text-[1.3rem] lg:hover:duration-500 dark:border-white ${hoveredButton === pageIndex && hoveredButton !== page ? 'bg-black/80 text-white dark:bg-white/80 dark:text-black' : 'text-black dark:bg-black dark:text-white'} ${pageIndex === page ? 'bg-black text-white dark:bg-white/80 dark:text-black!' : 'text-black dark:bg-black'}`}
+            className={`mx-0.5 my-2 w-6 rounded-md border-2 border-black px-[2px] py-0 text-center text-[1rem] transition-colors hover:duration-200 lg:mx-1 lg:w-9 lg:px-[4px] lg:text-[1.3rem] lg:hover:duration-500 dark:border-white ${pageIndex === page ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-black hover:bg-black/90 hover:text-white dark:bg-black dark:text-white hover:dark:bg-white/70 hover:dark:text-black'}`}
           >
             {pageIndex + 1}
           </button>
