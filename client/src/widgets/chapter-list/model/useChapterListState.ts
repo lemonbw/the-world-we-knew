@@ -1,3 +1,4 @@
+'use client';
 import { useState, useMemo, useEffect, useDeferredValue } from 'react';
 import { useMedia } from 'use-media';
 import { chunkArray } from '@/src/shared/lib//arrays/chunkArray';

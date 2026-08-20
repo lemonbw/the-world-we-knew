@@ -1,68 +1,26 @@
 'use client';
-
-import { useState } from 'react';
 import { SearchInput } from '@/src/shared/ui/SearchInput';
-import { useChapterListState } from '../model/useChapterListState';
 import { ChapterTable } from '@/src/entities/chapter';
 import { ChapterSortButton } from '@/src/features/chapter-sort';
 import { ChapterPagination } from '@/src/features/chapter-pagination';
+import { useChapterListController } from '../model/useChapterListController';
 
 export const ChapterList = () => {
   const {
     query,
     setQuery,
     isAsc,
-    setIsAsc,
     page,
-    setPage,
     pages,
     currentPage,
     startPage,
     panelSize,
     pageSize,
-  } = useChapterListState();
-
-  const [direction, setDirection] = useState<
-    'toRight' | 'toLeft' | 'toDown' | 'toUp'
-  >('toRight');
-  const [listPhase, setListPhase] = useState(0);
-
-  const activateTransition = (
-    newDirection: typeof direction,
-    action: () => void,
-  ) => {
-    setDirection(newDirection);
-    setListPhase(1);
-    setTimeout(action, 300);
-    setTimeout(() => setListPhase(2), 300);
-    setTimeout(() => setListPhase(0), 500);
-  };
-
-  const handleSortChange = () => {
-    activateTransition(isAsc === 'asc' ? 'toUp' : 'toDown', () => {
-      setIsAsc((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-    });
-  };
-
-  const handlePaginationAction = (
-    action: 'start' | 'prev' | 'next' | 'end' | number,
-  ) => {
-    if (action === 'start') {
-      activateTransition('toRight', () => setPage(0));
-    } else if (action === 'prev') {
-      activateTransition('toRight', () => setPage((p) => Math.max(p - 1, 0)));
-    } else if (action === 'next') {
-      activateTransition('toLeft', () =>
-        setPage((p) => Math.min(p + 1, pages.length - 1)),
-      );
-    } else if (action === 'end') {
-      activateTransition('toLeft', () => setPage(pages.length - 1));
-    } else if (typeof action === 'number') {
-      activateTransition(action > page ? 'toLeft' : 'toRight', () =>
-        setPage(action),
-      );
-    }
-  };
+    listPhase,
+    direction,
+    handleSortChange,
+    handlePaginationAction,
+  } = useChapterListController();
 
   return (
     <section className="z-10 mx-auto mt-4 w-[calc(100%-1rem)] max-w-6xl lg:w-[80vw]">
