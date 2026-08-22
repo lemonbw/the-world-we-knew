@@ -11,7 +11,7 @@ export const getChapterTableLinkClasses = ({
   listPhase,
   direction,
 }: GetChapterTableLinkClassesParams) => {
-  const base = 'block w-full h-full z-10 transition-all duration-500';
+  const base = 'block w-full h-full z-10 transition-color duration-500';
 
   const color =
     hoveredIndex === index

@@ -32,7 +32,7 @@ export const ChapterSelector = () => {
     : 'Chapter, title, date';
 
   const getLinkClasses = (chapterIndex: number) => {
-    const base = 'block w-full h-full z-10 transition-all duration-500';
+    const base = 'block w-full h-full z-10 transition-color duration-400';
 
     const color =
       hoveredChapter === chapterIndex
