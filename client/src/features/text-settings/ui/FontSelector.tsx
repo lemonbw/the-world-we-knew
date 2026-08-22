@@ -72,8 +72,8 @@ export const FontSelector = ({
             ? 'Недоступные шрифты скрыты'
             : 'Недоступные отображены'}
           <span
-            className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 dark:bg-white ${
-              hoveredFont === 'toggle-hidden' ? 'w-0 lg:w-full' : 'w-0'
+            className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 dark:bg-white ${
+              hoveredFont === 'toggle-hidden' ? 'scale-x-0 lg:scale-x-100' : 'scale-x-0'
             }`}
           ></span>
         </button>
@@ -93,8 +93,8 @@ export const FontSelector = ({
             }`}
           >
             <span
-              className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 dark:bg-white ${
-                hoveredFont === font ? 'w-0 lg:w-full' : 'w-0'
+              className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 dark:bg-white ${
+                hoveredFont === font ? 'scale-x-0 lg:scale-x-100' : 'scale-x-0'
               }`}
             ></span>
             {font}

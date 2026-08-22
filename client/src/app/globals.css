@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&display=swap');
 @import 'tailwindcss';
 @import 'material-icons/iconfont/material-icons.css';
+@import 'lenis/dist/lenis.css';
 
 :root {
   --background: #ffffff;
@@ -31,7 +31,7 @@ body {
   flex-direction: column;
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Noto Sans Symbols', sans-serif;
+  font-family: var(--font-noto-symbols), var(--font-geist-sans), sans-serif;
   user-select: none;
 }
 

@@ -90,10 +90,10 @@ export const ChapterSelector = () => {
                     </Link>
 
                     <span
-                      className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 lg:duration-1000 dark:bg-white ${
+                      className={`absolute bottom-0 left-0 -z-10 h-full w-50 origin-left bg-black transition-transform duration-500 lg:w-[22.2vw] lg:duration-1000 dark:bg-white ${
                         hoveredChapter === chapter.index
-                          ? 'w-50 lg:w-[22.2vw]'
-                          : 'w-0'
+                          ? 'scale-x-100'
+                          : 'scale-x-0'
                       }`}
                     />
                   </td>

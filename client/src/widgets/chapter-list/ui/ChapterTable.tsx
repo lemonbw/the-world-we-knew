@@ -64,8 +64,8 @@ export const ChapterTable = ({
                 </Link>
 
                 <span
-                  className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 lg:duration-1000 dark:bg-white ${
-                    hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
+                  className={`absolute bottom-0 left-0 -z-10 h-full w-[80vw] origin-left bg-black transition-transform duration-500 lg:duration-1000 dark:bg-white ${
+                    hoveredIndex === c.index ? 'scale-x-100' : 'scale-x-0'
                   }`}
                 />
               </td>
