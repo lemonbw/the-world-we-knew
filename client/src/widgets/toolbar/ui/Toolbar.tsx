@@ -43,7 +43,7 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-2 flex h-[calc(100dvh-5rem)] w-[calc(100%-1rem)] max-w-6xl flex-col overflow-y-hidden lg:mt-8 lg:h-screen lg:w-[80vw]`}
+      className={`relative mx-auto mt-2 flex h-[calc(100dvh-5rem)] w-[calc(100%-1rem)] max-w-6xl flex-col overflow-y-hidden lg:mt-2 lg:h-screen lg:w-[80vw]`}
     >
       <div
         className={`relative -mb-45 h-62 w-full rotate-x-180 overflow-x-auto *:rotate-x-180 ${fullscreen ? 'lg:mt-4' : ''}`}

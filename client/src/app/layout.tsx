@@ -35,7 +35,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <Background />
-          <div className="relative z-20 flex justify-center pt-32 pb-0 lg:z-10 lg:pt-0">
+          <div className="relative z-20 flex justify-center pt-32 pb-0 lg:pt-0">
             <Panel />
           </div>
           {children}
