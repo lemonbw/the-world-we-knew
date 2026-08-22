@@ -8,7 +8,7 @@ export const AlignSelector = ({
   setCurrentAlign,
 }: AlignSelectorProps) => {
   return (
-    <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:text-[2rem]! *:duration-300 *:hover:border-black/10 *:dark:border-black *:dark:hover:border-white/10">
+    <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:text-[2rem]! *:duration-300 *:hover:border-black/10 xl:w-37 xl:*:w-15 xl:*:text-[2.5rem]! *:dark:border-black *:dark:hover:border-white/10">
       <button
         className={`material-icons ${currentAlign === 'left' ? 'bg-black/10 dark:bg-white/10' : ''}`}
         onClick={() => setCurrentAlign('left')}
