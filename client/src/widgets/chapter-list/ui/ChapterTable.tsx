@@ -1,6 +1,8 @@
 'use client';
-import { useState, useRef } from 'react';
+
+import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { getChapterTableLinkClasses } from '../lib/getChapterTableLinkClasses';
 
 type ChapterTableProps = {
   chapters: any[];
@@ -28,44 +30,6 @@ export const ChapterTable = ({
     setHovered(NO_HOVER);
   };
 
-  const getLinkClasses = (index: number) => {
-    const base = 'block w-full h-full z-10 transition-all duration-500';
-    const color =
-      hoveredIndex === index
-        ? 'text-white dark:text-black duration-1000 outline-black'
-        : 'text-black dark:text-white outline-white';
-    const opacity = listPhase === 0 ? 'opacity-100' : 'opacity-0';
-
-    const transMap = {
-      toRight:
-        listPhase === 1
-          ? 'translate-x-[30px]'
-          : listPhase === 2
-            ? '-translate-x-[30px]'
-            : 'translate-x-0',
-      toLeft:
-        listPhase === 1
-          ? '-translate-x-[30px]'
-          : listPhase === 2
-            ? 'translate-x-[30px]'
-            : 'translate-x-0',
-      toDown:
-        listPhase === 1
-          ? 'translate-y-[10px]'
-          : listPhase === 2
-            ? '-translate-y-[10px]'
-            : 'translate-y-0',
-      toUp:
-        listPhase === 1
-          ? '-translate-y-[10px]'
-          : listPhase === 2
-            ? 'translate-y-[10px]'
-            : 'translate-y-0',
-    };
-
-    return `${base} ${color} ${opacity} ${transMap[direction]}`;
-  };
-
   return (
     <table className="w-full table-fixed border-collapse bg-white text-[1.1rem] dark:bg-black">
       <thead className="hidden border-b-2 lg:table-header-group">
@@ -77,44 +41,62 @@ export const ChapterTable = ({
           <th className="py-2 text-left lg:w-[8rem] lg:px-4">Дата</th>
         </tr>
       </thead>
+
       <tbody>
-        {chapters.map((c) => (
-          <tr
-            key={c.href}
-            className="cursor-pointer border-b-2 bg-white transition-colors duration-1000 *:text-[1rem]! *:lg:text-[1.1rem]! dark:bg-black"
-            onMouseEnter={handleRowEnter(c.index)}
-            onMouseLeave={handleRowLeave}
-          >
-            <td className="relative z-10 w-[10%] py-3 pl-1.5 lg:w-[6rem] lg:px-4">
-              <Link href={c.href} className={getLinkClasses(c.index)}>
-                {c.volume}
-              </Link>
-              <span
-                className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 lg:duration-1000 dark:bg-white ${hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'}`}
-              />
-            </td>
-            <td className="relative z-10 w-[12%] py-3 lg:w-[7rem] lg:px-4">
-              <Link href={c.href} className={getLinkClasses(c.index)}>
-                {c.chapter}
-              </Link>
-            </td>
-            <td className="relative z-10 w-[38%] break-words py-3 lg:w-[16rem] lg:px-4">
-              <Link href={c.href} className={getLinkClasses(c.index)}>
-                {c.title}
-              </Link>
-            </td>
-            <td className="relative z-10 w-[16%] break-words py-3 lg:w-[8rem] lg:px-4">
-              <Link href={c.href} className={getLinkClasses(c.index)}>
-                {c.symbols}
-              </Link>
-            </td>
-            <td className="relative z-10 w-[24%] break-words py-3 lg:w-[8rem] lg:px-4">
-              <Link href={c.href} className={getLinkClasses(c.index)}>
-                {c.date.toLocaleDateString('ru-RU')}
-              </Link>
-            </td>
-          </tr>
-        ))}
+        {chapters.map((c) => {
+          const linkClasses = getChapterTableLinkClasses({
+            index: c.index,
+            hoveredIndex,
+            listPhase,
+            direction,
+          });
+
+          return (
+            <tr
+              key={c.href}
+              className="cursor-pointer border-b-2 bg-white transition-colors duration-1000 *:text-[1rem]! *:lg:text-[1.1rem]! dark:bg-black"
+              onMouseEnter={handleRowEnter(c.index)}
+              onMouseLeave={handleRowLeave}
+            >
+              <td className="relative z-10 w-[10%] py-3 pl-1.5 lg:w-[6rem] lg:px-4">
+                <Link href={c.href} className={linkClasses}>
+                  {c.volume}
+                </Link>
+
+                <span
+                  className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 lg:duration-1000 dark:bg-white ${
+                    hoveredIndex === c.index ? 'w-[80vw]' : 'w-0'
+                  }`}
+                />
+              </td>
+
+              <td className="relative z-10 w-[12%] py-3 lg:w-[7rem] lg:px-4">
+                <Link href={c.href} className={linkClasses}>
+                  {c.chapter}
+                </Link>
+              </td>
+
+              <td className="relative z-10 w-[38%] py-3 break-words lg:w-[16rem] lg:px-4">
+                <Link href={c.href} className={linkClasses}>
+                  {c.title}
+                </Link>
+              </td>
+
+              <td className="relative z-10 w-[16%] py-3 break-words lg:w-[8rem] lg:px-4">
+                <Link href={c.href} className={linkClasses}>
+                  {c.symbols}
+                </Link>
+              </td>
+
+              <td className="relative z-10 w-[24%] py-3 break-words lg:w-[8rem] lg:px-4">
+                <Link href={c.href} className={linkClasses}>
+                  {c.date.toLocaleDateString('ru-RU')}
+                </Link>
+              </td>
+            </tr>
+          );
+        })}
+
         {Array.from({ length: emptyRowsCount }, (_, i) => (
           <tr key={`empty-${i}`} className="border-b-2 bg-white dark:bg-black">
             <td colSpan={5} className="h-12 lg:h-[43.4px]" />
