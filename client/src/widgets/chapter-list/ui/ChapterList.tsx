@@ -1,6 +1,6 @@
 'use client';
 import { SearchInput } from '@/src/shared/ui/SearchInput';
-import { ChapterTable } from '@/src/entities/chapter';
+import { ChapterTable } from './ChapterTable';
 import { ChapterSortButton } from '@/src/features/chapter-sort';
 import { ChapterPagination } from '@/src/features/chapter-pagination';
 import { useChapterListController } from '../model/useChapterListController';
