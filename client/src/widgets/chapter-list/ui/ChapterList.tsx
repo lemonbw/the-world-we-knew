@@ -27,7 +27,7 @@ export const ChapterList = () => {
       <ChapterSortButton isAsc={isAsc} onSortClick={handleSortChange} />
 
       <div className="mt-4 overflow-hidden rounded-xl border-2 bg-white lg:mt-6 xl:mt-7 dark:bg-black">
-        <div className="mb-8 lg:mb-2 xl:mb-3">
+        <div className="mb-8 lg:-mb-3">
           <SearchInput
             query={query}
             setQuery={setQuery}
