@@ -10,7 +10,7 @@ export const Background = () => {
   const isDark = useMedia({ 'prefers-color-scheme': 'dark' });
 
   return (
-    <article className="pointer-events-none fixed top-20 z-[1] flex w-full flex-col items-center lg:top-65">
+    <article className="pointer-events-none fixed top-20 z-[1] flex w-full flex-col items-center will-change-transform transform-gpu lg:top-65">
       <div className="relative h-[30px] w-[200px] lg:h-[37px] lg:w-[260px]">
         <Image
           src={isDark ? whiteEyes : blackEyes}

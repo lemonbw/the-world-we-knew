@@ -35,7 +35,7 @@ export const FalseNavLink = ({
       >
         {title}
         <span
-          className={`absolute bottom-0 left-0 hidden h-[2px] w-0 origin-left bg-black duration-300 group-hover:w-[102%] lg:inline dark:bg-white ${spanClassName}`}
+          className={`absolute bottom-0 left-0 hidden h-[2px] w-[102%] origin-left scale-x-0 bg-black transition-transform duration-300 group-hover:scale-x-100 lg:inline dark:bg-white ${spanClassName}`}
         ></span>
       </button>
       <Image

@@ -80,7 +80,7 @@ export const FontSizeSelector = ({
             className={`relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${currentSize === size ? 'font-bold' : ''}`}
           >
             <span
-              className={`absolute bottom-0 left-0 -z-10 h-full origin-left bg-black transition-all duration-500 dark:bg-white ${hoveredSize === size ? 'lg:w-full' : 'w-0'}`}
+              className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 dark:bg-white ${hoveredSize === size ? 'scale-x-0 lg:scale-x-100' : 'scale-x-0'}`}
             ></span>
 
             {size}
