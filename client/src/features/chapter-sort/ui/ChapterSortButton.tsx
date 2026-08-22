@@ -30,21 +30,28 @@ export const ChapterSortButton = ({
 
   return (
     <button
-      className="relative mx-auto block cursor-pointer font-bold"
+      className="relative mx-auto block w-fit cursor-pointer font-bold"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <span className="-ml-5 text-[1.35rem] lg:text-[1.7rem]">
+      <span className="text-[1.35rem] lg:text-[1.7rem]">
         Сортировка
-        <span
-          className={`absolute bottom-[-0.1rem] ml-0.5 inline-block text-[1.35rem] transition-transform duration-800 lg:bottom-[-0.5rem] lg:text-[2.1rem] ${isAsc === 'asc' ? 'rotate-0' : '-rotate-180'}`}
+        <svg
+          className={`ml-0.5 inline-block align-middle transition-transform duration-500 lg:ml-1 h-[1.15rem] w-[1.15rem] lg:h-[1.5rem] lg:w-[1.5rem] ${
+            isAsc === 'asc' ? 'rotate-0' : '-rotate-180'
+          }`}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
         >
-          ▼
-        </span>
+          <path d="M5 6L19 6L12 18Z" />
+        </svg>
       </span>
       <span
-        className={`absolute bottom-0 -left-5 hidden h-[2px] origin-left transition-all duration-500 lg:inline-block ${isHovered ? 'w-[130%]' : 'w-0'} ${isPressed ? 'bg-white dark:bg-black' : 'bg-black dark:bg-white'}`}
+        className={`absolute bottom-0 left-0 hidden h-[2px] w-full origin-left transition-transform duration-500 lg:inline-block ${
+          isHovered ? 'scale-x-100' : 'scale-x-0'
+        } ${isPressed ? 'bg-white dark:bg-black' : 'bg-black dark:bg-white'}`}
       />
     </button>
   );
