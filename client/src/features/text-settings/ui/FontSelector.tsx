@@ -32,14 +32,14 @@ export const FontSelector = ({
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true));
 
   const className =
-    'w-[115px] h-full px-1 lg:w-full outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-white dark:bg-black';
+    'w-[115px] h-full px-1 lg:w-full xl:text-lg outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-white dark:bg-black';
 
   return (
     <div
       ref={divRef}
-      className="relative mt-2 ml-1 inline-block h-9 w-[160px] lg:w-[190px]"
+      className="relative mt-2 ml-1 inline-block h-9 w-[160px] lg:w-[190px] xl:h-11 xl:w-[230px]"
     >
-      <div className="flex w-full rounded-sm border-2">
+      <div className="flex h-full w-full rounded-sm border-2">
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -50,14 +50,14 @@ export const FontSelector = ({
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons text-lgbg-white w-[40px] border-l-2 dark:bg-black"
+          className="material-icons text-lgbg-white w-[40px] border-l-2 text-lg xl:w-[44px] xl:text-xl dark:bg-black"
         >
           keyboard_arrow_down
         </button>
       </div>
 
       <div
-        className={`absolute top-10 left-0 z-50 flex h-48 w-full flex-col overflow-y-auto rounded border-1 bg-white text-black shadow dark:bg-black dark:text-white ${
+        className={`absolute top-10 left-0 z-50 flex h-48 w-full flex-col overflow-y-auto rounded border-1 bg-white text-black shadow xl:top-12 dark:bg-black dark:text-white ${
           isHidden ? 'hidden' : ''
         }`}
       >
@@ -73,7 +73,9 @@ export const FontSelector = ({
             : 'Недоступные отображены'}
           <span
             className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 dark:bg-white ${
-              hoveredFont === 'toggle-hidden' ? 'scale-x-0 lg:scale-x-100' : 'scale-x-0'
+              hoveredFont === 'toggle-hidden'
+                ? 'scale-x-0 lg:scale-x-100'
+                : 'scale-x-0'
             }`}
           ></span>
         </button>

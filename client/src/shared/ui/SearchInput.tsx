@@ -16,7 +16,7 @@ export const SearchInput = ({
   placeholder,
 }: SearchInputProps) => {
   return (
-    <div className="mx-auto flex h-8.5 w-50 flex-col items-center gap-2 lg:w-full">
+    <div className="mx-auto flex h-full w-50 flex-col items-center gap-2 lg:w-full">
       <input
         type="search"
         placeholder={placeholder}

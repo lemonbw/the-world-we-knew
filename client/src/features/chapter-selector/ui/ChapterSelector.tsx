@@ -25,7 +25,7 @@ export const ChapterSelector = () => {
   } = useChapterDropdown(chapters.length);
 
   const className =
-    'absolute left-0 w-[158px] -mt-[1px] p-1 h-[33px] outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)]';
+    'w-full h-full px-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] xl:text-lg';
 
   const placeholder = currentChapter
     ? currentChapter.title
@@ -37,39 +37,41 @@ export const ChapterSelector = () => {
     const color =
       hoveredChapter === chapterIndex
         ? 'text-white outline-white dark:text-black duration-1000 dark:outline-black'
-        : 'tex-black outline-black dark:text-white dark:outline-white';
+        : 'text-black outline-black dark:text-white dark:outline-white';
 
     return `${base} ${color}`;
   };
 
   return (
     <div
-      className="relative mx-2 mt-2.5 h-9.5 w-[200px] rounded-sm border-2"
       ref={divRef}
+      className="relative mt-2 ml-1 inline-block h-9 w-[200px] rounded-sm border-2 xl:h-11 xl:w-[230px]"
     >
-      <SearchInput
-        query={query}
-        setQuery={setQuery}
-        onClick={open}
-        className={className}
-        placeholder={placeholder}
-      />
+      <div className="flex h-full w-full">
+        <SearchInput
+          query={query}
+          setQuery={setQuery}
+          onClick={open}
+          className={className}
+          placeholder={placeholder}
+        />
 
-      <button
-        type="button"
-        onClick={toggle}
-        className="material-icons absolute top-0 right-0 h-full w-10 border-l-2 text-lg"
-      >
-        keyboard_arrow_down
-      </button>
+        <button
+          type="button"
+          onClick={toggle}
+          className="material-icons w-[40px] border-l-2 text-lg xl:w-[44px] xl:text-xl"
+        >
+          keyboard_arrow_down
+        </button>
+      </div>
 
       {isOpen && (
         <div
-          className="mt-1 -ml-[2px] h-[25.41rem] w-[200px] overflow-x-hidden overflow-y-auto rounded-sm border-1"
+          className="absolute top-10 left-0 z-50 h-[25.41rem] w-full overflow-x-hidden overflow-y-auto rounded-sm border-1 xl:top-12"
           ref={listRef}
           onScroll={handleScroll}
         >
-          <table className="z-50 w-[200px] rounded-sm bg-black">
+          <table className="w-full rounded-sm bg-black">
             <tbody>
               {listSource.slice(0, visibleCount + 10).map((chapter) => (
                 <tr
@@ -90,7 +92,7 @@ export const ChapterSelector = () => {
                     </Link>
 
                     <span
-                      className={`absolute bottom-0 left-0 -z-10 h-full w-50 origin-left bg-black transition-transform duration-500 lg:w-[22.2vw] lg:duration-1000 dark:bg-white ${
+                      className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 lg:w-[22.2vw] lg:duration-1000 dark:bg-white ${
                         hoveredChapter === chapter.index
                           ? 'scale-x-100'
                           : 'scale-x-0'
