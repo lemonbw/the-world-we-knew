@@ -29,11 +29,13 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
   const readingSection = useRef<HTMLElement | null>(null);
 
   const isLarge = useMedia({ minWidth: 1024 });
+  const is2k = useMedia({ minWidth: 1536 });
 
   useEffect(() => {
-    if (!isLarge) setCurrentSize(16);
-    else setCurrentSize(20);
-  }, [isLarge, setCurrentSize]);
+    if (is2k) setCurrentSize(22);
+    else if (isLarge) setCurrentSize(20);
+    else setCurrentSize(16);
+  }, [isLarge, is2k, setCurrentSize]);
 
   const { fullscreen, toggleFullscreen } = useFullscreen({
     element: readingSection,
@@ -43,14 +45,12 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
     <section
       ref={readingSection}
       id="reading-section"
-      className={`relative mx-auto mt-2 flex h-[calc(100dvh-5rem)] w-[calc(100%-1rem)] max-w-6xl flex-col overflow-y-hidden lg:mt-8 lg:h-screen lg:w-[80vw]`}
+      className={`relative mx-auto mt-2 flex h-[calc(100dvh-5rem)] w-[calc(100%-1rem)] max-w-6xl flex-col overflow-y-hidden lg:mt-2 lg:h-screen lg:w-[80vw] xl:w-[82vw] xl:max-w-[90rem]`}
     >
       <div
         className={`relative -mb-45 h-62 w-full rotate-x-180 overflow-x-auto *:rotate-x-180 ${fullscreen ? 'lg:mt-4' : ''}`}
       >
-        <div
-          className="absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-max min-w-full flex-none items-center gap-1 lg:-ml-1 lg:w-full"
-        >
+        <div className="absolute bottom-0 mb-2 -ml-[0.225rem] flex h-10 w-max min-w-full flex-none items-center gap-1 lg:-ml-1 lg:w-full xl:h-11 xl:gap-1.5">
           {ChapterSelector}
           <FontSelector
             currentFont={currentFont}
@@ -73,7 +73,7 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
         </div>
       </div>
       <div
-        className={`-mt-3 min-h-0 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
+        className={`-mt-1 min-h-0 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black`}
       >
         <div
           className="h-full p-1"

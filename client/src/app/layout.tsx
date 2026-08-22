@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Noto_Sans_Symbols } from 'next/font/google';
 import '@/src/app/globals.css';
 import { Header, Panel } from '@/src/widgets/header';
 import { Footer } from '@/src/widgets/footer';
@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
   subsets: ['latin', 'cyrillic'],
 });
 
+const notoSansSymbols = Noto_Sans_Symbols({
+  variable: '--font-noto-symbols',
+  subsets: ['latin'],
+});
+
 export const metadata: Metadata = {
   title: 'The World We Knew — Leon Gray',
   description:
@@ -30,12 +35,12 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} w-full overflow-x-hidden bg-zinc-50 font-sans antialiased dark:bg-[#010407]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSansSymbols.variable} w-full overflow-x-hidden bg-zinc-50 font-sans antialiased dark:bg-[#010407]`}
       >
         <Providers>
           <Header />
           <Background />
-          <div className="relative z-20 flex justify-center pt-32 pb-0 lg:z-10 lg:pt-0">
+          <div className="relative z-20 flex justify-center pt-32 pb-0 lg:pt-0">
             <Panel />
           </div>
           {children}
