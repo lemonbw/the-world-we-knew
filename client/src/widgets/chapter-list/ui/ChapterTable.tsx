@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { getChapterTableLinkClasses } from '../lib/getChapterTableLinkClasses';
 
@@ -17,18 +16,10 @@ export const ChapterTable = ({
   listPhase,
   direction,
 }: ChapterTableProps) => {
-  const NO_HOVER = -2;
-  const [hoveredIndex, setHovered] = useState(NO_HOVER);
-  const rowHoverDelayRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleRowEnter = (index: number) => () => {
-    rowHoverDelayRef.current = setTimeout(() => setHovered(index), 150);
-  };
-
-  const handleRowLeave = () => {
-    if (rowHoverDelayRef.current) clearTimeout(rowHoverDelayRef.current);
-    setHovered(NO_HOVER);
-  };
+  const linkClasses = getChapterTableLinkClasses({
+    listPhase,
+    direction,
+  });
 
   return (
     <table className="w-full table-fixed border-collapse bg-white text-[1.1rem] xl:text-[1.15rem] dark:bg-black">
@@ -44,19 +35,10 @@ export const ChapterTable = ({
 
       <tbody>
         {chapters.map((c) => {
-          const linkClasses = getChapterTableLinkClasses({
-            index: c.index,
-            hoveredIndex,
-            listPhase,
-            direction,
-          });
-
           return (
             <tr
               key={c.href}
-              className="cursor-pointer border-b-2 bg-white transition-colors duration-1000 *:text-[1rem]! *:lg:text-[1.1rem]! *:xl:text-[1.15rem]! dark:bg-black"
-              onMouseEnter={handleRowEnter(c.index)}
-              onMouseLeave={handleRowLeave}
+              className="group cursor-pointer border-b-2 bg-white transition-colors duration-1000 *:text-[1rem]! *:lg:text-[1.1rem]! *:xl:text-[1.15rem]! dark:bg-black"
             >
               <td className="relative z-10 w-[10%] py-3 pl-1.5 lg:w-[6rem] lg:px-4 xl:w-[7rem] xl:py-4 xl:px-5">
                 <Link href={c.href} className={linkClasses}>
@@ -64,9 +46,7 @@ export const ChapterTable = ({
                 </Link>
 
                 <span
-                  className={`absolute bottom-0 left-0 -z-10 h-full w-[85vw] origin-left bg-black transition-transform duration-500 lg:duration-1000 dark:bg-white ${
-                    hoveredIndex === c.index ? 'scale-x-100' : 'scale-x-0'
-                  }`}
+                  className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-[85vw] origin-left scale-x-0 bg-black transition-transform duration-500 group-hover:scale-x-100 lg:duration-1000 dark:bg-white"
                 />
               </td>
 

@@ -22,8 +22,6 @@ export const FontSelector = ({
     setIsHidden,
     isHiddenFonts,
     setIsHiddenFonts,
-    hoveredFont,
-    setHoveredFont,
   } = useFontSelectorState();
 
   const deferredQuery = useDeferredValue(query);
@@ -63,20 +61,14 @@ export const FontSelector = ({
       >
         <button
           key="toggle-hidden"
-          className="relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black"
+          className="group relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black"
           onClick={() => setIsHiddenFonts(!isHiddenFonts)}
-          onMouseEnter={() => setHoveredFont('toggle-hidden')}
-          onMouseLeave={() => setHoveredFont(null)}
         >
           {isHiddenFonts
             ? 'Недоступные шрифты скрыты'
             : 'Недоступные отображены'}
           <span
-            className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 dark:bg-white ${
-              hoveredFont === 'toggle-hidden'
-                ? 'scale-x-0 lg:scale-x-100'
-                : 'scale-x-0'
-            }`}
+            className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full origin-left scale-x-0 bg-black transition-transform duration-500 lg:group-hover:scale-x-100 dark:bg-white"
           ></span>
         </button>
 
@@ -88,16 +80,12 @@ export const FontSelector = ({
               setCurrentFont(font);
               setIsHidden(true);
             }}
-            onMouseEnter={() => setHoveredFont(font)}
-            onMouseLeave={() => setHoveredFont(null)}
-            className={`relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${
+            className={`group relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${
               currentFont === font ? 'font-bold' : ''
             }`}
           >
             <span
-              className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 dark:bg-white ${
-                hoveredFont === font ? 'scale-x-0 lg:scale-x-100' : 'scale-x-0'
-              }`}
+              className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full origin-left scale-x-0 bg-black transition-transform duration-500 lg:group-hover:scale-x-100 dark:bg-white"
             ></span>
             {font}
           </button>

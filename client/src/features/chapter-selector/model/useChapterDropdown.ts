@@ -8,9 +8,7 @@ export const useChapterDropdown = (totalCount: number) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(10);
-  const [hoveredChapter, setHoveredChapter] = useState<number | null>(null);
 
-  const rowHoverDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const chapterRef = useRef<HTMLTableRowElement>(null);
 
@@ -29,20 +27,6 @@ export const useChapterDropdown = (totalCount: number) => {
       if (next) setVisibleCount(10);
       return next;
     });
-  }, []);
-
-  const handleMouseEnter = useCallback((index: number) => {
-    rowHoverDelayRef.current = setTimeout(() => {
-      setHoveredChapter(index);
-    }, 150);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (rowHoverDelayRef.current) {
-      clearTimeout(rowHoverDelayRef.current);
-      rowHoverDelayRef.current = null;
-    }
-    setHoveredChapter(null);
   }, []);
 
   const handleScroll = useCallback(
@@ -73,9 +57,6 @@ export const useChapterDropdown = (totalCount: number) => {
     close,
     toggle,
     visibleCount,
-    hoveredChapter,
-    handleMouseEnter,
-    handleMouseLeave,
     handleScroll,
     divRef,
     listRef,

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 type ChapterSortButtonProps = {
   isAsc: 'asc' | 'desc';
@@ -10,17 +10,7 @@ export const ChapterSortButton = ({
   isAsc,
   onSortClick,
 }: ChapterSortButtonProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const hoverDelayRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleMouseEnter = () => {
-    hoverDelayRef.current = setTimeout(() => setIsHovered(true), 150);
-  };
-  const handleMouseLeave = () => {
-    if (hoverDelayRef.current) clearTimeout(hoverDelayRef.current);
-    setIsHovered(false);
-  };
 
   const handleClick = () => {
     onSortClick();
@@ -30,9 +20,7 @@ export const ChapterSortButton = ({
 
   return (
     <button
-      className="relative mx-auto block w-fit cursor-pointer font-bold"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className="group relative mx-auto block w-fit cursor-pointer font-bold"
       onClick={handleClick}
     >
       <span className="text-[1.35rem] lg:text-[1.7rem] xl:text-[1.85rem]">
@@ -49,9 +37,9 @@ export const ChapterSortButton = ({
         </svg>
       </span>
       <span
-        className={`absolute bottom-0 left-0 hidden h-[2px] w-full origin-left transition-transform duration-500 lg:inline-block ${
-          isHovered ? 'scale-x-100' : 'scale-x-0'
-        } ${isPressed ? 'bg-white dark:bg-black' : 'bg-black dark:bg-white'}`}
+        className={`absolute bottom-0 left-0 hidden h-[2px] w-full origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100 lg:inline-block ${
+          isPressed ? 'bg-white dark:bg-black' : 'bg-black dark:bg-white'
+        }`}
       />
     </button>
   );
