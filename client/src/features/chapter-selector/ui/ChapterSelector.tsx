@@ -1,10 +1,10 @@
-import Link from 'next/link';
 import { chapters } from '@/src/entities/chapter';
 import { SearchInput } from '@/src/shared/ui/SearchInput';
 import {
   useChapterSearch,
   useChapterDropdown,
 } from '@/src/features/chapter-selector';
+import { ChapterSelectorRow } from './ChapterSelectorRow';
 
 export const ChapterSelector = () => {
   const { query, setQuery, listSource, currentChapter } = useChapterSearch();
@@ -27,9 +27,6 @@ export const ChapterSelector = () => {
   const placeholder = currentChapter
     ? currentChapter.title
     : 'Chapter, title, date';
-
-  const linkClasses =
-    'block w-full h-full z-10 transition-colors duration-400 text-black group-hover:text-white dark:text-white dark:group-hover:text-black outline-black group-hover:outline-white dark:outline-white dark:group-hover:dark:outline-black';
 
   return (
     <div
@@ -56,42 +53,19 @@ export const ChapterSelector = () => {
 
       {isOpen && (
         <div
-          className="absolute top-10 left-0 z-50 h-[25.41rem] w-full overflow-x-hidden overflow-y-auto rounded-sm border-1 xl:top-12"
+          className="absolute top-10 left-0 z-50 h-[411px] w-full overflow-x-hidden overflow-y-auto rounded-sm border-1 xl:top-12"
           ref={listRef}
           onScroll={handleScroll}
         >
           <table className="w-full rounded-sm bg-black">
             <tbody>
               {listSource.slice(0, visibleCount + 10).map((chapter) => (
-                <tr
+                <ChapterSelectorRow
                   key={chapter.href}
                   ref={slug === chapter.slug ? chapterRef : null}
-                  className={`group z-50 h-[41px] w-full cursor-pointer border-b-2 bg-white transition-colors duration-1000 dark:bg-black ${
-                    slug === chapter.slug ? 'font-bold' : ''
-                  }`}
-                >
-                  <td className="relative z-10 w-[28.2px] px-2 py-2">
-                    <Link
-                      href={chapter.href}
-                      className={linkClasses}
-                    >
-                      {chapter.chapter}
-                    </Link>
-
-                    <span
-                      className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full origin-left scale-x-0 bg-black transition-transform duration-500 group-hover:scale-x-100 lg:w-[22.2vw] lg:duration-1000 dark:bg-white"
-                    />
-                  </td>
-
-                  <td className="relative z-10 w-[280px] py-2">
-                    <Link
-                      href={chapter.href}
-                      className={linkClasses}
-                    >
-                      {chapter.title}
-                    </Link>
-                  </td>
-                </tr>
+                  chapter={chapter}
+                  isCurrent={slug === chapter.slug}
+                />
               ))}
 
               {Array.from({

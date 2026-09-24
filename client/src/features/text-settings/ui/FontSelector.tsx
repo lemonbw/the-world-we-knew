@@ -3,6 +3,7 @@ import { useAvailableFonts } from '@/src/shared/hooks/fonts/useAvailableFonts';
 import { useFontSelectorState } from '@/src/features/text-settings';
 import { useClickOutside } from '@/src/shared/hooks/useClickOutside';
 import { SearchInput } from '@/src/shared/ui/SearchInput';
+import { FontOptionButton } from './FontOptionButton';
 
 type FontSelectorProps = {
   currentFont: string;
@@ -17,12 +18,8 @@ export const FontSelector = ({
   query,
   setQuery,
 }: FontSelectorProps) => {
-  const {
-    isHidden,
-    setIsHidden,
-    isHiddenFonts,
-    setIsHiddenFonts,
-  } = useFontSelectorState();
+  const { isHidden, setIsHidden, isHiddenFonts, setIsHiddenFonts } =
+    useFontSelectorState();
 
   const deferredQuery = useDeferredValue(query);
   const filteredList = useAvailableFonts(deferredQuery, !isHiddenFonts);
@@ -55,40 +52,30 @@ export const FontSelector = ({
       </div>
 
       <div
-        className={`absolute top-10 left-0 z-50 flex h-48 w-full flex-col overflow-y-auto rounded border-1 bg-white text-black shadow xl:top-12 dark:bg-black dark:text-white ${
+        className={`absolute top-10 left-0 z-50 flex h-[230px] w-[230px] flex-col overflow-y-auto rounded border-1 bg-white text-black shadow lg:w-[250px] xl:top-12 xl:w-[280px] dark:bg-black dark:text-white ${
           isHidden ? 'hidden' : ''
         }`}
       >
-        <button
+        <FontOptionButton
           key="toggle-hidden"
-          className="group relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black"
+          font="toggle-hidden"
           onClick={() => setIsHiddenFonts(!isHiddenFonts)}
         >
           {isHiddenFonts
             ? 'Недоступные шрифты скрыты'
             : 'Недоступные отображены'}
-          <span
-            className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full origin-left scale-x-0 bg-black transition-transform duration-500 lg:group-hover:scale-x-100 dark:bg-white"
-          ></span>
-        </button>
+        </FontOptionButton>
 
         {filteredList.map((font) => (
-          <button
+          <FontOptionButton
             key={font}
-            type="button"
+            font={font}
+            isCurrent={currentFont === font}
             onClick={() => {
               setCurrentFont(font);
               setIsHidden(true);
             }}
-            className={`group relative border-b-2 px-2 py-1 text-left duration-500 ease-in-out lg:hover:text-white lg:dark:hover:text-black ${
-              currentFont === font ? 'font-bold' : ''
-            }`}
-          >
-            <span
-              className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full origin-left scale-x-0 bg-black transition-transform duration-500 lg:group-hover:scale-x-100 dark:bg-white"
-            ></span>
-            {font}
-          </button>
+          />
         ))}
       </div>
     </div>
