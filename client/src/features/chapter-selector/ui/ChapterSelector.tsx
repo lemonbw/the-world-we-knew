@@ -14,9 +14,6 @@ export const ChapterSelector = () => {
     toggle,
     open,
     visibleCount,
-    hoveredChapter,
-    handleMouseEnter,
-    handleMouseLeave,
     handleScroll,
     divRef,
     listRef,
@@ -31,16 +28,8 @@ export const ChapterSelector = () => {
     ? currentChapter.title
     : 'Chapter, title, date';
 
-  const getLinkClasses = (chapterIndex: number) => {
-    const base = 'block w-full h-full z-10 transition-color duration-400';
-
-    const color =
-      hoveredChapter === chapterIndex
-        ? 'text-white outline-white dark:text-black duration-1000 dark:outline-black'
-        : 'text-black outline-black dark:text-white dark:outline-white';
-
-    return `${base} ${color}`;
-  };
+  const linkClasses =
+    'block w-full h-full z-10 transition-colors duration-400 text-black group-hover:text-white dark:text-white dark:group-hover:text-black outline-black group-hover:outline-white dark:outline-white dark:group-hover:dark:outline-black';
 
   return (
     <div
@@ -77,33 +66,27 @@ export const ChapterSelector = () => {
                 <tr
                   key={chapter.href}
                   ref={slug === chapter.slug ? chapterRef : null}
-                  className={`z-50 h-[41px] w-full cursor-pointer border-b-2 bg-white transition-colors duration-1000 dark:bg-black ${
+                  className={`group z-50 h-[41px] w-full cursor-pointer border-b-2 bg-white transition-colors duration-1000 dark:bg-black ${
                     slug === chapter.slug ? 'font-bold' : ''
                   }`}
-                  onMouseEnter={() => handleMouseEnter(chapter.index)}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <td className="relative z-10 w-[28.2px] px-2 py-2">
                     <Link
                       href={chapter.href}
-                      className={getLinkClasses(chapter.index)}
+                      className={linkClasses}
                     >
                       {chapter.chapter}
                     </Link>
 
                     <span
-                      className={`absolute bottom-0 left-0 -z-10 h-full w-full origin-left bg-black transition-transform duration-500 lg:w-[22.2vw] lg:duration-1000 dark:bg-white ${
-                        hoveredChapter === chapter.index
-                          ? 'scale-x-100'
-                          : 'scale-x-0'
-                      }`}
+                      className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full origin-left scale-x-0 bg-black transition-transform duration-500 group-hover:scale-x-100 lg:w-[22.2vw] lg:duration-1000 dark:bg-white"
                     />
                   </td>
 
                   <td className="relative z-10 w-[280px] py-2">
                     <Link
                       href={chapter.href}
-                      className={getLinkClasses(chapter.index)}
+                      className={linkClasses}
                     >
                       {chapter.title}
                     </Link>

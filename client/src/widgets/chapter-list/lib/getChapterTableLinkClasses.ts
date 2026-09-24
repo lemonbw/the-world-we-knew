@@ -1,22 +1,14 @@
 type GetChapterTableLinkClassesParams = {
-  index: number;
-  hoveredIndex: number;
   listPhase: number;
   direction: 'toRight' | 'toLeft' | 'toDown' | 'toUp';
 };
 
 export const getChapterTableLinkClasses = ({
-  index,
-  hoveredIndex,
   listPhase,
   direction,
 }: GetChapterTableLinkClassesParams) => {
-  const base = 'block w-full h-full z-10 transition-color duration-500';
-
-  const color =
-    hoveredIndex === index
-      ? 'text-white dark:text-black duration-1000 outline-black'
-      : 'text-black dark:text-white outline-white';
+  const base =
+    'block w-full h-full z-10 transition-colors duration-500 text-black group-hover:text-white dark:text-white dark:group-hover:text-black outline-white group-hover:outline-black dark:outline-black dark:group-hover:outline-white';
 
   const opacity = listPhase === 0 ? 'opacity-100' : 'opacity-0';
 
@@ -47,5 +39,5 @@ export const getChapterTableLinkClasses = ({
           : 'translate-y-0',
   };
 
-  return `${base} ${color} ${opacity} ${transMap[direction]}`;
+  return `${base} ${opacity} ${transMap[direction]}`;
 };
