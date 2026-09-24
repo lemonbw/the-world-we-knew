@@ -1,6 +1,7 @@
 'use client';
 import { SearchInput } from '@/src/shared/ui/SearchInput';
 import { ChapterTable } from './ChapterTable';
+import { ChapterManagementToolbar } from './ChapterManagementToolbar';
 import { ChapterSortButton } from '@/src/features/chapter-sort';
 import { ChapterPagination } from '@/src/features/chapter-pagination';
 import { useChapterListController } from '../model/useChapterListController';
@@ -27,6 +28,7 @@ export const ChapterList = () => {
       <ChapterSortButton isAsc={isAsc} onSortClick={handleSortChange} />
 
       <div className="mt-4 overflow-hidden rounded-xl border-2 bg-white lg:mt-6 xl:mt-7 dark:bg-black">
+        <ChapterManagementToolbar />
         <div className="mb-8 lg:-mb-3">
           <SearchInput
             query={query}
