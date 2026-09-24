@@ -8,7 +8,7 @@ export const getChapterTableLinkClasses = ({
   direction,
 }: GetChapterTableLinkClassesParams) => {
   const base =
-    'block w-full h-full z-10 transition-colors duration-500 text-black group-hover:text-white dark:text-white dark:group-hover:text-black outline-white group-hover:outline-black dark:outline-black dark:group-hover:outline-white';
+    'block w-full h-full relative z-10 outline-white dark:outline-black';
 
   const opacity = listPhase === 0 ? 'opacity-100' : 'opacity-0';
 
