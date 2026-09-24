@@ -1,5 +1,6 @@
 const CHAPTERS_API_URL = `${process.env.NEXT_PUBLIC_API_URL}/chapters`;
 const CSRF_API_URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/csrf/`;
+const SUPERUSER_STATUS = `${process.env.NEXT_PUBLIC_API_URL}/auth/superuser/`;
 
 const getCSRFToken = async () => {
   const response = await fetch(CSRF_API_URL, {
@@ -13,6 +14,17 @@ const getCSRFToken = async () => {
   const data = await response.json();
 
   return data.csrftoken;
+};
+
+export const getSuperuserStatus = async () => {
+  const response = await fetch(SUPERUSER_STATUS, {
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch superuser status');
+  }
+  return response.json();
 };
 
 export const getChapters = async () => {
