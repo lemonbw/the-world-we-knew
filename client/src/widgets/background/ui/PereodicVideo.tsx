@@ -23,7 +23,7 @@ export const PereodicVideo = () => {
       src="/videos/rabbit.webm"
       muted
       playsInline
-      className="pointer-events-none fixed top-1/3 -right-30 z-0 size-350 -translate-y-1/3"
+      className="pointer-events-none fixed top-1/3 -right-30 z-[60] size-350 -translate-y-1/3"
     />
   );
 };
