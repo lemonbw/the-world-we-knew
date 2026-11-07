@@ -12,7 +12,7 @@ export const PereodicVideo = () => {
       video.currentTime = 0;
       void video.play();
     };
-    const interval = setInterval(play, 10000);
+    const interval = setInterval(play, 300000);
     play();
     return () => clearInterval(interval);
   }, []);
