@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Noto_Sans_Symbols } from 'next/font/google';
 import '@/src/app/globals.css';
 import { Header, Panel } from '@/src/widgets/header';
 import { Footer } from '@/src/widgets/footer';
-import { Background } from '@/src/widgets/background';
+import { Background, PereodicVideo } from '@/src/widgets/background';
 import { Providers } from './providers';
 
 const geistSans = Geist({
@@ -40,6 +40,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <Background />
+          <PereodicVideo />
           <div className="relative z-20 flex justify-center pt-32 pb-0 lg:pt-0">
             <Panel />
           </div>
