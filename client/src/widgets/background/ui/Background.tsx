@@ -6,6 +6,8 @@ import whiteEyes from '@/src/shared/assets/images/book-card/white-eyes.svg';
 import blackChains from '@/src/shared/assets/images/book-card/black-broken-chains-part.svg';
 import whiteChains from '@/src/shared/assets/images/book-card/white-broken-chains-part.svg';
 
+import room from '@/src/shared/assets/images/background/room.png';
+
 export const Background = () => {
   const isDark = useMedia({ 'prefers-color-scheme': 'dark' });
 
@@ -24,13 +26,13 @@ export const Background = () => {
           src={isDark ? whiteChains : blackChains}
           alt="chains"
           fill
-          className="mt-[100px] object-cover lg:mt-0"
+          className="z-0 mt-[100px] object-cover lg:mt-0"
         />
         <Image
-          src={isDark ? whiteChains : blackChains}
-          alt="chains"
-          fill
-          className={`${isDark ? 'lg:mt-0' : 'lg:mt-20px'} mt-[450px] rotate-180`}
+          src={room}
+          alt="room"
+          loading="lazy"
+          className="absolute top-1/7 left-1/2 z-10 h-250 w-330 -translate-x-1/2 -translate-y-1/2"
         />
       </div>
     </article>
