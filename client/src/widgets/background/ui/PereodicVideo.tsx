@@ -12,7 +12,7 @@ export const PereodicVideo = () => {
       video.currentTime = 0;
       void video.play();
     };
-    const interval = setInterval(play, 10000);
+    const interval = setInterval(play, 300000);
     play();
     return () => clearInterval(interval);
   }, []);
@@ -23,7 +23,7 @@ export const PereodicVideo = () => {
       src="/videos/rabbit.webm"
       muted
       playsInline
-      className="fixed top-1/3 -right-30 z-20 size-350 -translate-y-1/3"
+      className="pointer-events-none fixed top-1/3 -right-30 z-0 size-350 -translate-y-1/3"
     />
   );
 };

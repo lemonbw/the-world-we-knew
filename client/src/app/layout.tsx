@@ -38,9 +38,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${notoSansSymbols.variable} w-full overflow-x-hidden bg-zinc-50 font-sans antialiased dark:bg-[#010407]`}
       >
         <Providers>
+          <PereodicVideo />
           <Header />
           <Background />
-          <PereodicVideo />
           <div className="relative z-20 flex justify-center pt-32 pb-0 lg:pt-0">
             <Panel />
           </div>
