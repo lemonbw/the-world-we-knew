@@ -22,7 +22,7 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed z-50 flex h-[3.5rem] w-full items-center justify-between bg-white px-2 duration-300 lg:relative lg:z-20 lg:mt-5 lg:block lg:h-70 lg:bg-transparent xl:h-76 lg:duration-500 dark:bg-black lg:dark:bg-transparent ${hiddenHeader ? '-translate-y-full' : 'translate-y-0'} lg:translate-y-0`}
+      className={`fixed z-50 flex h-[3.5rem] w-full items-center justify-between bg-white/70 px-2 duration-300 lg:relative lg:z-20 lg:mt-5 lg:block lg:h-70 xl:h-76 lg:duration-500 dark:bg-black/70 ${hiddenHeader ? '-translate-y-full' : 'translate-y-0'} lg:translate-y-0`}
     >
       <Link
         href="/"
@@ -44,7 +44,7 @@ export const Header = () => {
         setHiddenNavigation={setHiddenNavigation}
       />
       <nav
-        className={`absolute z-20 flex-col justify-between bg-white lg:relative lg:flex lg:translate-x-0 lg:flex-col lg:bg-transparent dark:bg-black lg:dark:bg-transparent ${hiddenNavigation ? 'translate-x-full' : 'translate-x-0'} mt-3 mb-4 -ml-2 w-full pl-2 text-[1.3rem] font-medium duration-300 lg:ml-0 lg:pl-0 ${hiddenHeader ? 'translate-x-full' : 'translate-x-0'} mt-10 xl:mt-12`}
+        className={`absolute z-20 flex-col justify-between bg-white/70 lg:relative lg:flex lg:translate-x-0 lg:flex-col lg:bg-transparent dark:bg-black/70 lg:dark:bg-transparent ${hiddenNavigation ? 'translate-x-full' : 'translate-x-0'} mt-3 mb-4 -ml-2 w-full pl-2 text-[1.3rem] font-medium duration-300 lg:ml-0 lg:pl-0 ${hiddenHeader ? 'translate-x-full' : 'translate-x-0'} mt-10 xl:mt-12`}
       >
         <div className="flex flex-col lg:w-full lg:flex-row lg:justify-between">
           <div className="block gap-24 lg:ml-45 lg:flex lg:text-[1.7rem] xl:ml-52 xl:gap-28 xl:text-[1.85rem]">
