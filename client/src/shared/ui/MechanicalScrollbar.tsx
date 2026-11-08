@@ -24,7 +24,7 @@ const GEAR_TYPES = [
 export const MechanicalScrollbar = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRefs = useRef<HTMLDivElement[]>([]);
-  const gearRefs = useRef<HTMLImageElement[]>([]);
+  const gearRefs = useRef<Array<Array<HTMLImageElement | null>>>([[], []]);
   const draggingRef = useRef(false);
   const lastYRef = useRef(0);
   const rotRef = useRef(0);
@@ -67,11 +67,13 @@ export const MechanicalScrollbar = () => {
         const delta = sy - lastYRef.current;
         rotRef.current += delta * 0.35;
         lastYRef.current = sy;
-        gearRefs.current.forEach((g, i) => {
-          if (g) {
-            const dir = i === gearRefs.current.length - 1 ? -1 : i % 2 ? -1 : 1;
-            g.style.transform = `rotate(${rotRef.current * dir}deg)`;
-          }
+        gearRefs.current.forEach((row) => {
+          row.forEach((g, i) => {
+            if (g) {
+              const dir = i === row.length - 1 ? -1 : i % 2 ? -1 : 1;
+              g.style.transform = `rotate(${rotRef.current * dir}deg)`;
+            }
+          });
         });
       }
     };
@@ -142,22 +144,27 @@ export const MechanicalScrollbar = () => {
           ))}
         </div>
       ))}
-      <div className="absolute inset-x-0 bottom-[-20px] h-10 overflow-hidden dark:invert">
-        <div className="flex h-10 w-max flex-row">
-          {Array.from({ length: gearCount }).map((_, i) => (
-            <img
-              key={i}
-              ref={(el) => {
-                if (el) gearRefs.current[i] = el;
-              }}
-              src={GEAR_TYPES[i % GEAR_TYPES.length].src}
-              alt=""
-              className="h-10 w-10 shrink-0"
-              style={{ transformOrigin: 'center' }}
-            />
-          ))}
+      {(['top-[-20px]', 'bottom-[-20px]'] as const).map((position, row) => (
+        <div
+          key={position}
+          className={`absolute inset-x-0 ${position} h-10 overflow-hidden dark:invert`}
+        >
+          <div className="flex h-10 w-max flex-row">
+            {Array.from({ length: gearCount }).map((_, i) => (
+              <img
+                key={i}
+                ref={(el) => {
+                  gearRefs.current[row][i] = el;
+                }}
+                src={GEAR_TYPES[i % GEAR_TYPES.length].src}
+                alt=""
+                className="h-10 w-10 shrink-0"
+                style={{ transformOrigin: 'center' }}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
