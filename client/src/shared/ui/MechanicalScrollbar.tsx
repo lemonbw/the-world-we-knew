@@ -35,8 +35,9 @@ export const MechanicalScrollbar = () => {
     const updateRepeats = () => {
       const h = document.documentElement.scrollHeight;
       const r = Math.ceil((h + window.innerHeight) / 2380) + 2;
-      setRepeats(Math.max(3, r));
-      setGearCount(Math.ceil(window.innerWidth / 40) + 1);
+      setRepeats((prev) => (prev !== Math.max(3, r) ? Math.max(3, r) : prev));
+      const count = Math.ceil(window.innerWidth / 30) + 3;
+      setGearCount((prev) => (prev !== count ? count : prev));
     };
     updateRepeats();
     const ro = new ResizeObserver(updateRepeats);
@@ -71,7 +72,7 @@ export const MechanicalScrollbar = () => {
           row.forEach((g, i) => {
             if (g) {
               const dir = i === row.length - 1 ? -1 : i % 2 ? -1 : 1;
-              g.style.transform = `rotate(${rotRef.current * dir}deg)`;
+              g.style.transform = `rotate(${(rotRef.current % 360) * dir}deg)`;
             }
           });
         });
@@ -122,16 +123,19 @@ export const MechanicalScrollbar = () => {
     <div
       ref={rootRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[6] select-none"
+      className="pointer-events-none fixed inset-0 z-[55] select-none"
       style={{ touchAction: 'none' }}
     >
-      {(['left-0', 'right-0'] as const).map((side, sideIndex) => (
+      {[
+        { side: '-left-3 sm:-left-5', sideIndex: 0 },
+        { side: '-right-3 sm:-right-5', sideIndex: 1 },
+      ].map(({ side, sideIndex }) => (
         <div
           key={side}
           ref={(el) => {
             if (el) trackRefs.current[sideIndex] = el;
           }}
-          className={`pointer-events-auto absolute top-0 ${side} flex w-10 flex-col dark:invert`}
+          className={`pointer-events-auto absolute top-0 ${side} flex w-6 flex-col dark:invert sm:w-10`}
           style={{ willChange: 'transform' }}
         >
           {Array.from({ length: repeats }).map((_, i) => (
@@ -139,16 +143,19 @@ export const MechanicalScrollbar = () => {
               key={i}
               src={chain.src}
               alt=""
-              className="w-10"
-              style={{ height: 2380 }}
+              className="h-auto w-6 sm:w-10"
             />
           ))}
         </div>
       ))}
-      {(['top-[-20px]', 'bottom-[-20px]'] as const).map((position, row) => (
+      {[
+        { position: '-top-5', row: 0 },
+        { position: '-bottom-5', row: 1 },
+      ].map(({ position, row }) => (
         <div
           key={position}
-          className={`absolute inset-x-0 ${position} h-10 overflow-hidden dark:invert`}
+          className={`fixed inset-x-0 ${position} pointer-events-none z-[55] h-10 overflow-hidden dark:invert`}
+          style={{ transform: 'translate3d(0, 0, 0)' }}
         >
           <div className="flex h-10 w-max flex-row">
             {Array.from({ length: gearCount }).map((_, i) => (
@@ -156,11 +163,19 @@ export const MechanicalScrollbar = () => {
                 key={i}
                 ref={(el) => {
                   gearRefs.current[row][i] = el;
+                  if (el) {
+                    const dir = i === gearCount - 1 ? -1 : i % 2 ? -1 : 1;
+                    el.style.transform = `rotate(${(rotRef.current % 360) * dir}deg)`;
+                  }
                 }}
                 src={GEAR_TYPES[i % GEAR_TYPES.length].src}
                 alt=""
                 className="h-10 w-10 shrink-0"
-                style={{ transformOrigin: 'center' }}
+                style={{
+                  transformOrigin: 'center',
+                  willChange: 'transform',
+                  backfaceVisibility: 'hidden',
+                }}
               />
             ))}
           </div>

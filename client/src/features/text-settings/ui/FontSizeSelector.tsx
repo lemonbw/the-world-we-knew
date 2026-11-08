@@ -39,18 +39,18 @@ export const FontSizeSelector = ({
 
   return (
     <div ref={divRef} className="relative mt-2 h-9 xl:h-11">
-      <div className="flex h-full rounded-sm border-2">
+      <div className="flex h-full rounded-sm border-2 bg-white/70 dark:bg-black/70">
         <input
           type="text"
           value={tempSize}
           onChange={(e) => setTempSize(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="h-full w-10 rounded-l-sm bg-white p-1 outline-none! focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] xl:w-12 xl:text-lg dark:bg-black"
+          className="h-full w-10 rounded-l-sm bg-transparent p-1 outline-none! focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] xl:w-12 xl:text-lg"
         />
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons w-6 border-l-2 bg-white text-lg xl:w-8 xl:text-xl dark:bg-black"
+          className="material-icons flex w-6 shrink-0 items-center justify-center border-l-2 bg-transparent text-lg xl:w-8 xl:text-xl"
         >
           keyboard_arrow_down
         </button>

@@ -22,7 +22,7 @@ export const ChapterSelector = () => {
   } = useChapterDropdown(chapters.length);
 
   const className =
-    'w-full h-full px-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] xl:text-lg';
+    'w-full h-full px-1 outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] xl:text-lg bg-transparent';
 
   const placeholder = currentChapter
     ? currentChapter.title
@@ -31,13 +31,14 @@ export const ChapterSelector = () => {
   return (
     <div
       ref={divRef}
-      className="relative mt-2 ml-1 inline-block h-9 w-[200px] rounded-sm border-2 xl:h-11 xl:w-[230px]"
+      className="relative mt-2 ml-1 inline-block h-9 w-[200px] rounded-sm border-2 bg-white/70 dark:bg-black/70 xl:h-11 xl:w-[230px]"
     >
       <div className="flex h-full w-full">
         <SearchInput
           query={query}
           setQuery={setQuery}
           onClick={open}
+          containerClassName="flex h-full flex-1 min-w-0 flex-col items-center"
           className={className}
           placeholder={placeholder}
         />
@@ -45,7 +46,7 @@ export const ChapterSelector = () => {
         <button
           type="button"
           onClick={toggle}
-          className="material-icons w-[40px] border-l-2 text-lg xl:w-[44px] xl:text-xl"
+          className="material-icons flex w-[40px] shrink-0 items-center justify-center border-l-2 bg-transparent text-lg xl:w-[44px] xl:text-xl"
         >
           keyboard_arrow_down
         </button>

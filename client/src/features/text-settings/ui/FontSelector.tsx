@@ -27,25 +27,26 @@ export const FontSelector = ({
   const divRef = useClickOutside<HTMLDivElement>(() => setIsHidden(true));
 
   const className =
-    'w-[115px] h-full px-1 lg:w-full xl:text-lg outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-white dark:bg-black';
+    'w-full h-full px-1 xl:text-lg outline-none! rounded-l-sm focus:shadow-[inset_0_0_0_1.5px_theme(colors.white)] bg-transparent';
 
   return (
     <div
       ref={divRef}
       className="relative mt-2 ml-1 inline-block h-9 w-[160px] lg:w-[190px] xl:h-11 xl:w-[230px]"
     >
-      <div className="flex h-full w-full rounded-sm border-2">
+      <div className="flex h-full w-full rounded-sm border-2 bg-white/70 dark:bg-black/70">
         <SearchInput
           query={query}
           setQuery={setQuery}
           onClick={() => setIsHidden(false)}
+          containerClassName="flex h-full flex-1 min-w-0 flex-col items-center"
           className={className}
           placeholder={currentFont}
         />
         <button
           type="button"
           onClick={() => setIsHidden(!isHidden)}
-          className="material-icons text-lgbg-white w-[40px] border-l-2 text-lg xl:w-[44px] xl:text-xl dark:bg-black"
+          className="material-icons flex w-[40px] shrink-0 items-center justify-center border-l-2 bg-transparent text-lg xl:w-[44px] xl:text-xl"
         >
           keyboard_arrow_down
         </button>

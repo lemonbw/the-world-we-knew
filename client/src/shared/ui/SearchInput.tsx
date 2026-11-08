@@ -5,6 +5,7 @@ interface SearchInputProps {
   setQuery: (value: string) => void;
   onClick?: () => void;
   className?: string;
+  containerClassName?: string;
   placeholder?: string;
 }
 
@@ -13,10 +14,16 @@ export const SearchInput = ({
   setQuery,
   onClick,
   className,
+  containerClassName,
   placeholder,
 }: SearchInputProps) => {
   return (
-    <div className="mx-auto flex h-full w-50 flex-col items-center gap-2 lg:w-full">
+    <div
+      className={
+        containerClassName ||
+        'mx-auto flex h-full w-50 flex-col items-center gap-2 lg:w-full'
+      }
+    >
       <input
         type="search"
         placeholder={placeholder}
