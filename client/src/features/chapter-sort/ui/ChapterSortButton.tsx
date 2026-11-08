@@ -20,7 +20,7 @@ export const ChapterSortButton = ({
 
   return (
     <button
-      className="group relative mx-auto block w-fit cursor-pointer font-bold"
+      className="group relative mx-auto block w-fit cursor-pointer rounded-[0.55rem] border-2 bg-white/70 px-4 py-1 font-bold dark:bg-black/70"
       onClick={handleClick}
     >
       <span className="text-[1.35rem] lg:text-[1.7rem] xl:text-[1.85rem]">
