@@ -35,6 +35,52 @@ body {
   user-select: none;
 }
 
+.soft-header-surface {
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 70%) 0%,
+    rgb(255 255 255 / 70%) 82%,
+    rgb(255 255 255 / 0%) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+}
+
+.soft-footer-surface {
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 70%) 38%,
+    rgb(255 255 255 / 70%) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 38%, #000 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 38%, #000 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .soft-header-surface {
+    background: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 70%) 0%,
+      rgb(0 0 0 / 70%) 82%,
+      rgb(0 0 0 / 0%) 100%
+    );
+  }
+
+  .soft-footer-surface {
+    background: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 0%) 0%,
+      rgb(0 0 0 / 70%) 38%,
+      rgb(0 0 0 / 70%) 100%
+    );
+  }
+}
+
 main {
   position: relative;
   z-index: 10;

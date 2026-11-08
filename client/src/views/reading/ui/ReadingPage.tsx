@@ -10,7 +10,7 @@ type ReadingPageProps = {
 
 export const ReadingPage = ({ content }: ReadingPageProps) => {
   return (
-    <main className="flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-[#010407]">
+    <main className="flex flex-col items-center justify-center overflow-x-hidden">
       <Toolbar ChapterSelector={<ChapterSelector />}>
         <MarkdownRenderer
           className="h-full min-w-0 overflow-y-auto p-1"
