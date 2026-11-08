@@ -63,10 +63,10 @@ export const MechanicalScrollbar = () => {
       trackRefs.current.forEach((track) => {
         if (track) track.style.transform = `translate3d(0, ${-sy}px, 0)`;
       });
+      const delta = sy - lastYRef.current;
+      if (delta === 0) return;
       if (!reduced) {
-        const delta = sy - lastYRef.current;
         rotRef.current += delta * 0.35;
-        lastYRef.current = sy;
         gearRefs.current.forEach((row) => {
           row.forEach((g, i) => {
             if (g) {
@@ -76,6 +76,7 @@ export const MechanicalScrollbar = () => {
           });
         });
       }
+      lastYRef.current = sy;
     };
     const scheduleUpdate = () => {
       if (raf === 0) raf = requestAnimationFrame(update);

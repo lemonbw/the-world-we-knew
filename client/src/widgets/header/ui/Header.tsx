@@ -45,7 +45,7 @@ export const Header = () => {
         setHiddenNavigation={setHiddenNavigation}
       />
       <nav
-        className={`absolute z-20 flex-col justify-between bg-white/70 backdrop-blur-sm lg:relative lg:flex lg:translate-x-0 lg:flex-col lg:bg-transparent lg:backdrop-blur-none dark:bg-black/70 lg:dark:bg-transparent ${hiddenNavigation ? 'translate-x-full' : 'translate-x-0'} mt-3 mb-4 -ml-2 w-full pl-2 text-[1.3rem] font-medium duration-300 lg:ml-0 lg:pl-0 ${hiddenHeader ? 'translate-x-full' : 'translate-x-0'} mt-10 xl:mt-12`}
+        className={`absolute z-20 flex-col justify-between bg-white/70 lg:relative lg:flex lg:translate-x-0 lg:flex-col lg:bg-transparent dark:bg-black/70 lg:dark:bg-transparent ${hiddenNavigation ? 'translate-x-full' : 'translate-x-0'} mt-3 mb-4 -ml-2 w-full pl-2 text-[1.3rem] font-medium duration-300 lg:ml-0 lg:pl-0 ${hiddenHeader ? 'translate-x-full' : 'translate-x-0'} mt-10 xl:mt-12`}
       >
         <div className="flex flex-col lg:w-full lg:flex-row lg:justify-between">
           <div className="block gap-24 lg:ml-45 lg:flex lg:text-[1.7rem] xl:ml-52 xl:gap-28 xl:text-[1.85rem]">

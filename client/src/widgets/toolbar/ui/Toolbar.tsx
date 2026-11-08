@@ -73,7 +73,7 @@ export const Toolbar = ({ ChapterSelector, children }: ToolbarProps) => {
         </div>
       </div>
       <div
-        className={`-mt-1 min-h-0 flex-1 overflow-hidden rounded-2xl border-2 backdrop-blur-[2px] ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black/50`}
+        className={`-mt-1 min-h-0 flex-1 overflow-hidden rounded-2xl border-2 ${fullscreen ? 'mb-4 lg:mb-0' : ''} bg-white dark:bg-black/50`}
       >
         <div
           className="h-full p-1"
