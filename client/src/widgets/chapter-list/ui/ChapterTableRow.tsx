@@ -28,7 +28,7 @@ export const ChapterTableRow = ({
   return (
     <tr
       key={c.href}
-      className="cursor-pointer border-b-2 bg-white *:text-[1rem]! *:lg:text-[1.1rem]! *:xl:text-[1.15rem]! dark:bg-black"
+      className="cursor-pointer border-b-2 bg-transparent *:text-[1rem]! *:lg:text-[1.1rem]! *:xl:text-[1.15rem]!"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
