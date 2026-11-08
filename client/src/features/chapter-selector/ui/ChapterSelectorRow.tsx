@@ -37,7 +37,7 @@ export const ChapterSelectorRow = forwardRef<
   return (
     <tr
       ref={ref}
-      className={`z-50 h-[41px] w-full cursor-pointer border-b-2 bg-transparent ${
+      className={`z-50 h-[41px] w-full cursor-pointer border-b-2 bg-white dark:bg-black ${
         isCurrent ? 'font-bold' : ''
       }`}
       onMouseEnter={onMouseEnter}

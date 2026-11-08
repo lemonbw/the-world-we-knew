@@ -54,11 +54,11 @@ export const ChapterSelector = () => {
 
       {isOpen && (
         <div
-          className="absolute top-10 left-0 z-50 h-[411px] w-full overflow-x-hidden overflow-y-auto rounded-sm border-1 bg-white/70 shadow dark:bg-black/70 xl:top-12"
+          className="absolute top-10 left-0 z-50 h-[411px] w-full overflow-x-hidden overflow-y-auto rounded-sm border-1 xl:top-12"
           ref={listRef}
           onScroll={handleScroll}
         >
-          <table className="w-full rounded-sm bg-transparent">
+          <table className="w-full rounded-sm bg-black">
             <tbody>
               {listSource.slice(0, visibleCount + 10).map((chapter) => (
                 <ChapterSelectorRow
@@ -72,7 +72,7 @@ export const ChapterSelector = () => {
               {Array.from({
                 length: Math.max(0, 10 - listSource.length),
               }).map((_, i) => (
-                <tr key={`empty-${i}`} className="border-b bg-transparent">
+                <tr key={`empty-${i}`} className="border-b bg-black">
                   <td colSpan={2} className="h-[41px]" />
                 </tr>
               ))}
