@@ -5,7 +5,7 @@ import { Header, Panel } from '@/src/widgets/header';
 import { Footer } from '@/src/widgets/footer';
 import { Background, PereodicVideo } from '@/src/widgets/background';
 import { Providers } from './providers';
-import { MechanicalScrollbar } from '@/src/shared/ui/MechanicalScrollbar';
+import { MechanicalScrollbar } from '@/src/widgets/mechanical-scrollbar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

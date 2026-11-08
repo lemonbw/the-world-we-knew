@@ -1,21 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { usePeriodicVideo } from '../model';
 
 export const PereodicVideo = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const play = () => {
-      video.currentTime = 0;
-      void video.play();
-    };
-    const interval = setInterval(play, 300000);
-    play();
-    return () => clearInterval(interval);
-  }, []);
+  const { videoRef } = usePeriodicVideo();
 
   return (
     <video
