@@ -62,7 +62,7 @@ export const ChapterPagination = ({
           <button
             key={pageIndex}
             onClick={() => trigger(pageIndex, 0)}
-            className={`mx-0.5 my-2 w-8 rounded-md border-2 border-black px-[2px] py-0.5 text-center text-[1.2rem] transition-colors hover:duration-200 lg:mx-1 lg:w-9 lg:px-[4px] lg:py-0 lg:text-[1.3rem] lg:hover:duration-500 xl:mx-1 xl:h-9 xl:w-10 xl:text-[1.35rem] dark:border-white ${pageIndex === page ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-black hover:bg-black/90 hover:text-white dark:bg-black dark:text-white hover:dark:bg-white/70 hover:dark:text-black'}`}
+            className={`mx-0.5 my-2 w-8 rounded-md border-2 border-black px-[2px] py-0.5 text-center text-[1.2rem] transition-colors hover:duration-200 lg:mx-1 lg:w-9 lg:px-[4px] lg:py-0 lg:text-[1.3rem] lg:hover:duration-500 xl:mx-1 xl:h-9 xl:w-10 xl:text-[1.35rem] dark:border-white ${pageIndex === page ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-black hover:bg-black/90 hover:text-white dark:bg-black dark:text-white hover:dark:bg-white/95 hover:dark:text-black'}`}
           >
             {pageIndex + 1}
           </button>

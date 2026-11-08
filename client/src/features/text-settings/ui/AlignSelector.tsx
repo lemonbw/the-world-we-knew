@@ -19,7 +19,7 @@ export const AlignSelector = ({
       {ALIGNMENTS.map(({ align, icon }) => (
         <button
           key={align}
-          className={`material-icons bg-white/70 dark:bg-black/70 ${
+          className={`material-icons bg-white/95 dark:bg-black/95 ${
             currentAlign === align
               ? 'opacity-100 shadow-[inset_0_0_0_1.5px_currentColor]'
               : 'opacity-50 hover:opacity-80'

@@ -31,7 +31,7 @@ export const ChapterSelector = () => {
   return (
     <div
       ref={divRef}
-      className="relative mt-2 ml-1 inline-block h-9 w-[200px] rounded-sm border-2 bg-white/70 dark:bg-black/70 xl:h-11 xl:w-[230px]"
+      className="relative mt-2 ml-1 inline-block h-9 w-[200px] rounded-sm border-2 bg-white/95 dark:bg-black/95 xl:h-11 xl:w-[230px]"
     >
       <div className="flex h-full w-full">
         <SearchInput

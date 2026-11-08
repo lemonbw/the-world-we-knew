@@ -27,7 +27,7 @@ export const ChapterList = () => {
     <section className="z-10 mx-auto mt-4 w-[calc(100%-1rem)] max-w-6xl lg:w-[80vw] xl:max-w-[90rem]">
       <ChapterSortButton isAsc={isAsc} onSortClick={handleSortChange} />
 
-      <div className="mt-4 overflow-hidden rounded-xl border-2 bg-white/70 lg:mt-6 xl:mt-7 dark:bg-black/70">
+      <div className="mt-4 overflow-hidden rounded-xl border-2 bg-white/95 lg:mt-6 xl:mt-7 dark:bg-black/95">
         <ChapterManagementToolbar />
         <div className="mb-8 lg:-mb-3">
           <SearchInput

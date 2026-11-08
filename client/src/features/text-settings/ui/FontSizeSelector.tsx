@@ -39,7 +39,7 @@ export const FontSizeSelector = ({
 
   return (
     <div ref={divRef} className="relative mt-2 h-9 xl:h-11">
-      <div className="flex h-full rounded-sm border-2 bg-white/70 dark:bg-black/70">
+      <div className="flex h-full rounded-sm border-2 bg-white/95 dark:bg-black/95">
         <input
           type="text"
           value={tempSize}
