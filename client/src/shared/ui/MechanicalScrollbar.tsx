@@ -123,7 +123,7 @@ export const MechanicalScrollbar = () => {
     <div
       ref={rootRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[6] select-none"
+      className="pointer-events-none fixed inset-x-0 top-0 h-screen h-[100lvh] z-[6] select-none"
       style={{ touchAction: 'none' }}
     >
       {[
