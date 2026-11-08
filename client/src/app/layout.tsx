@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoSansSymbols.variable} w-full overflow-x-hidden bg-zinc-50 font-sans antialiased dark:bg-[#010407]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSansSymbols.variable} w-full bg-zinc-50 font-sans antialiased dark:bg-[#010407]`}
       >
         <Providers>
           <PereodicVideo />

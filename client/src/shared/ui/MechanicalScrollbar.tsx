@@ -123,7 +123,7 @@ export const MechanicalScrollbar = () => {
     <div
       ref={rootRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[55] select-none"
+      className="pointer-events-none fixed inset-0 z-[6] select-none"
       style={{ touchAction: 'none' }}
     >
       {[
@@ -154,8 +154,7 @@ export const MechanicalScrollbar = () => {
       ].map(({ position, row }) => (
         <div
           key={position}
-          className={`fixed inset-x-0 ${position} pointer-events-none z-[55] h-10 overflow-hidden dark:invert`}
-          style={{ transform: 'translate3d(0, 0, 0)' }}
+          className={`absolute inset-x-0 ${position} pointer-events-none h-10 overflow-hidden dark:invert`}
         >
           <div className="flex h-10 w-max flex-row">
             {Array.from({ length: gearCount }).map((_, i) => (

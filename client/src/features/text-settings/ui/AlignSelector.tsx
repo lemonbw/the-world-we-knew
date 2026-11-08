@@ -3,36 +3,32 @@ type AlignSelectorProps = {
   setCurrentAlign: (align: 'left' | 'center' | 'right' | 'justify') => void;
 };
 
+const ALIGNMENTS = [
+  { align: 'left', icon: 'format_align_left' },
+  { align: 'center', icon: 'format_align_center' },
+  { align: 'right', icon: 'format_align_right' },
+  { align: 'justify', icon: 'format_align_justify' },
+] as const;
+
 export const AlignSelector = ({
   currentAlign,
   setCurrentAlign,
 }: AlignSelectorProps) => {
   return (
     <div className="mt-2 flex w-30 gap-1 *:w-10 *:rounded-sm *:border-1 *:border-white *:text-[2rem]! *:duration-300 *:hover:border-black/10 xl:w-37 xl:*:w-15 xl:*:text-[2.5rem]! *:dark:border-black *:dark:hover:border-white/10">
-      <button
-        className={`material-icons ${currentAlign === 'left' ? 'bg-black/20 dark:bg-white/20' : 'bg-white/70 dark:bg-black/70'}`}
-        onClick={() => setCurrentAlign('left')}
-      >
-        format_align_left
-      </button>
-      <button
-        className={`material-icons ${currentAlign === 'center' ? 'bg-black/20 dark:bg-white/20' : 'bg-white/70 dark:bg-black/70'}`}
-        onClick={() => setCurrentAlign('center')}
-      >
-        format_align_center
-      </button>
-      <button
-        className={`material-icons ${currentAlign === 'right' ? 'bg-black/20 dark:bg-white/20' : 'bg-white/70 dark:bg-black/70'}`}
-        onClick={() => setCurrentAlign('right')}
-      >
-        format_align_right
-      </button>
-      <button
-        className={`material-icons ${currentAlign === 'justify' ? 'bg-black/20 dark:bg-white/20' : 'bg-white/70 dark:bg-black/70'}`}
-        onClick={() => setCurrentAlign('justify')}
-      >
-        format_align_justify
-      </button>
+      {ALIGNMENTS.map(({ align, icon }) => (
+        <button
+          key={align}
+          className={`material-icons bg-white/70 dark:bg-black/70 ${
+            currentAlign === align
+              ? 'opacity-100 shadow-[inset_0_0_0_1.5px_currentColor]'
+              : 'opacity-50 hover:opacity-80'
+          }`}
+          onClick={() => setCurrentAlign(align)}
+        >
+          {icon}
+        </button>
+      ))}
     </div>
   );
 };
