@@ -14,7 +14,7 @@ export const Background = () => {
           src={room}
           alt="room"
           loading="lazy"
-          className="absolute inset-0 top-30 z-10 h-full w-full object-contain"
+          className="absolute inset-0 top-20 z-10 h-full w-full object-contain"
         />
       </div>
     </article>
