@@ -23,7 +23,7 @@ const GEAR_TYPES = [
 
 export const MechanicalScrollbar = () => {
   const rootRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const trackRefs = useRef<HTMLDivElement[]>([]);
   const gearRefs = useRef<HTMLImageElement[]>([]);
   const draggingRef = useRef(false);
   const lastYRef = useRef(0);
@@ -50,8 +50,7 @@ export const MechanicalScrollbar = () => {
 
   useEffect(() => {
     const root = rootRef.current;
-    const track = trackRef.current;
-    if (!root || !track) return;
+    if (!root) return;
 
     const reduced = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -61,7 +60,9 @@ export const MechanicalScrollbar = () => {
     const update = () => {
       raf = 0;
       const sy = window.scrollY;
-      track.style.transform = `translate3d(0, ${-sy}px, 0)`;
+      trackRefs.current.forEach((track) => {
+        if (track) track.style.transform = `translate3d(0, ${-sy}px, 0)`;
+      });
       if (!reduced) {
         const delta = sy - lastYRef.current;
         rotRef.current += delta * 0.35;
@@ -121,21 +122,26 @@ export const MechanicalScrollbar = () => {
       className="pointer-events-none fixed inset-0 z-[6] select-none"
       style={{ touchAction: 'none' }}
     >
-      <div
-        ref={trackRef}
-        className="pointer-events-auto absolute top-0 right-0 flex w-10 flex-col dark:invert"
-        style={{ willChange: 'transform' }}
-      >
-        {Array.from({ length: repeats }).map((_, i) => (
-          <img
-            key={i}
-            src={chain.src}
-            alt=""
-            className="w-10"
-            style={{ height: 2380 }}
-          />
-        ))}
-      </div>
+      {(['left-0', 'right-0'] as const).map((side, sideIndex) => (
+        <div
+          key={side}
+          ref={(el) => {
+            if (el) trackRefs.current[sideIndex] = el;
+          }}
+          className={`pointer-events-auto absolute top-0 ${side} flex w-10 flex-col dark:invert`}
+          style={{ willChange: 'transform' }}
+        >
+          {Array.from({ length: repeats }).map((_, i) => (
+            <img
+              key={i}
+              src={chain.src}
+              alt=""
+              className="w-10"
+              style={{ height: 2380 }}
+            />
+          ))}
+        </div>
+      ))}
       <div className="absolute inset-x-0 bottom-[-20px] h-10 overflow-hidden dark:invert">
         <div className="flex h-10 w-max flex-row">
           {Array.from({ length: gearCount }).map((_, i) => (
