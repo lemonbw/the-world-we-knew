@@ -5,6 +5,7 @@ import { Header, Panel } from '@/src/widgets/header';
 import { Footer } from '@/src/widgets/footer';
 import { Background, PereodicVideo } from '@/src/widgets/background';
 import { Providers } from './providers';
+import { MechanicalScrollbar } from '@/src/shared/ui/MechanicalScrollbar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -46,6 +47,7 @@ export default function RootLayout({
           </div>
           {children}
           <Footer />
+          <MechanicalScrollbar />
         </Providers>
       </body>
     </html>
